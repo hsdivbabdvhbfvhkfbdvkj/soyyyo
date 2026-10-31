@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080b12">
+  <title>HyperSex | Generador de Sensibilidad</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+  <div class="keyauth-lock" id="keyauthLock">
+    <form class="keyauth-card" id="keyauthForm">
+      <span class="brand-mark">H</span>
+      <small>HYPERSEX ACCESS</small>
+      <h2>Inicia sesión</h2>
+      <label>Usuario<input id="keyauthUsername" autocomplete="username" required></label>
+      <label>Contraseña<input id="keyauthPassword" type="password" autocomplete="current-password" required></label>
+      <div class="keyauth-status" id="keyauthStatus" role="status"></div>
+      <button type="submit">Acceder</button>
+    </form>
+  </div>
+
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="HyperSex inicio">
+      <span class="brand-mark">H</span>
+      <span id="brandName">HYPER<span>SEX</span></span>
+    </a>
+    <div class="top-actions">
+      <div class="status"><i></i> Compatible Android + iOS</div>
+      <button class="admin-open" id="adminOpen" type="button">Administrar</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="eyebrow" id="heroEyebrow">CONTROL CENTER</div>
+      <h1 id="heroTitle">Encuentra tu <span>sensibilidad perfecta</span></h1>
+      <p id="heroDescription">Configura tu dispositivo y genera ajustes pensados para mejorar tu precisión y comodidad.</p>
+      <div class="custom-actions" id="customActions"></div>
+    </section>
+
+    <section class="system-strip" aria-label="Estado del sistema">
+      <div class="system-item">
+        <span class="system-icon">01</span>
+        <div><small>PLATAFORMA</small><strong id="systemPlatform">Android</strong></div>
+      </div>
+      <div class="system-item">
+        <span class="system-icon pulse">02</span>
+        <div><small>MOTOR</small><strong>Online</strong></div>
+      </div>
+      <div class="system-item">
+        <span class="system-icon">03</span>
+        <div><small>PERFIL</small><strong id="systemProfile">Precisión</strong></div>
+      </div>
+      <div class="system-item">
+        <span class="system-icon">04</span>
+        <div><small>RANGO</small><strong>1 — 200</strong></div>
+      </div>
+    </section>
+
+    <nav class="platform-switch" aria-label="Seleccionar plataforma">
+      <button class="platform active" data-device="android" type="button">
+        <span class="platform-icon">A</span>
+        <span><small>PERFIL</small><strong>Android</strong></span>
+      </button>
+      <button class="platform" data-device="ios" type="button">
+        <span class="platform-icon">i</span>
+        <span><small>PERFIL</small><strong>iOS</strong></span>
+      </button>
+    </nav>
+    <button class="launch-game" id="launchGame" type="button" title="Abrir Free Fire">
+      <span class="launch-icon">F</span>
+      <span class="launch-copy">
+        <small>JUEGO INSTALADO</small>
+        <strong>Abrir Free Fire en <b id="launchPlatform">Android</b></strong>
+      </span>
+      <span class="launch-arrow">→</span>
+    </button>
+    <button class="dns-profile" id="downloadDnsProfile" type="button" hidden>
+      <span class="dns-icon">DNS</span>
+      <span class="launch-copy">
+        <small>PERFIL iOS</small>
+        <strong>Instalar Hyper Auxilio</strong>
+      </span>
+      <span class="launch-arrow">↓</span>
+    </button>
+    <div class="dns-status" id="dnsStatus" role="status"></div>
+
+    <section class="dashboard">
+      <aside class="panel setup-panel">
+        <div class="panel-heading">
+          <span>01</span>
+          <div>
+            <small>CONFIGURACIÓN</small>
+            <h2>Tu perfil</h2>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label for="dpi">DPI del dispositivo</label>
+          <div class="range-row">
+            <input id="dpi" type="range" min="240" max="800" step="20" value="480">
+            <output id="dpiValue" for="dpi">480</output>
+          </div>
+        </div>
+
+        <div class="aux-panel">
+          <div class="aux-head">
+            <div>
+              <small>EXPERIMENTAL</small>
+              <strong>Auxilio</strong>
+            </div>
+            <button class="toggle" id="auxToggle" type="button" role="switch" aria-checked="false" aria-label="Activar auxilio">
+              <i></i>
+            </button>
+          </div>
+          <p>Perfil compatible con configuraciones de Android e iOS dentro de esta interfaz.</p>
+          <div class="aux-strength disabled" id="auxStrength">
+            <div><span>Intensidad</span><strong id="auxValue">50%</strong></div>
+            <input id="auxRange" type="range" min="0" max="100" value="50" disabled>
+          </div>
+          <div class="aux-actions">
+            <button id="calibrateAux" type="button" disabled>Calibrar</button>
+            <button id="resetAux" type="button">Restablecer</button>
+          </div>
+          <div class="aux-status" id="auxStatus">Auxilio desactivado</div>
+        </div>
+
+        <div class="field-group">
+          <label>Estilo de juego</label>
+          <div class="style-grid">
+            <button class="style-card selected" data-style="precision" type="button">
+              <span class="style-icon">◎</span>
+              <span><strong>Precisión</strong><small>Apunta y controla</small></span>
+            </button>
+            <button class="style-card" data-style="balanced" type="button">
+              <span class="style-icon">◉</span>
+              <span><strong>Equilibrado</strong><small>Versátil</small></span>
+            </button>
+            <button class="style-card" data-style="aggressive" type="button">
+              <span class="style-icon">↗</span>
+              <span><strong>Acelerado</strong><small>Movilidad rápida</small></span>
+            </button>
+          </div>
+        </div>
+
+        <button class="generate-button" id="generate" type="button">
+          <span>Generar sensibilidad</span>
+          <span class="arrow">→</span>
+        </button>
+      </aside>
+
+      <section class="panel result-panel" aria-live="polite">
+        <div class="panel-heading">
+          <span>02</span>
+          <div>
+            <small>PERFIL GENERADO</small>
+            <h2>Tu sensibilidad</h2>
+          </div>
+          <div class="profile-badge" id="profileBadge">Android / Precisión</div>
+        </div>
+
+        <div class="settings-grid">
+          <div class="setting">
+            <div class="setting-title"><span>General</span><strong id="generalValue">184</strong></div>
+            <div class="meter"><i id="generalBar" style="width:92%"></i></div>
+          </div>
+          <div class="setting">
+            <div class="setting-title"><span>Mira roja</span><strong id="redValue">176</strong></div>
+            <div class="meter"><i id="redBar" style="width:88%"></i></div>
+          </div>
+          <div class="setting">
+            <div class="setting-title"><span>2x</span><strong id="x2Value">164</strong></div>
+            <div class="meter"><i id="x2Bar" style="width:82%"></i></div>
+          </div>
+          <div class="setting">
+            <div class="setting-title"><span>4x</span><strong id="x4Value">152</strong></div>
+            <div class="meter"><i id="x4Bar" style="width:76%"></i></div>
+          </div>
+          <div class="setting">
+            <div class="setting-title"><span>Sniper</span><strong id="sniperValue">140</strong></div>
+            <div class="meter"><i id="sniperBar" style="width:70%"></i></div>
+          </div>
+          <div class="setting">
+            <div class="setting-title"><span>Libre</span><strong id="freeValue">172</strong></div>
+            <div class="meter"><i id="freeBar" style="width:86%"></i></div>
+          </div>
+        </div>
+
+        <div class="tip">
+          <span class="tip-icon">i</span>
+          <div>
+            <strong>Consejo HyperSex</strong>
+            <p>Prueba el perfil durante 10 minutos y ajusta un punto a la vez hasta encontrar tu punto de comodidad.</p>
+          </div>
+        </div>
+
+        <div class="result-actions">
+          <button class="copy-button" id="copy" type="button">Copiar configuración</button>
+          <span id="copyStatus"></span>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <footer>
+    <span>HYPERSEX LABS</span>
+    <span>PROFILES / 2026</span>
+  </footer>
+
+  <div class="admin-overlay" id="adminOverlay"></div>
+  <div class="admin-lock" id="adminLock" aria-hidden="true">
+    <form class="admin-lock-card" id="adminLockForm">
+      <span class="brand-mark">H</span>
+      <small>ACCESO RESTRINGIDO</small>
+      <h2>Administrador HyperSex</h2>
+      <label for="adminPassword">Contraseña</label>
+      <div class="password-row">
+        <input id="adminPassword" name="hypersex-admin-password" type="password" autocomplete="off" inputmode="text" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="Ingresa la contraseña">
+        <button class="password-toggle" id="passwordToggle" type="button" aria-label="Mostrar contraseña">Ver</button>
+      </div>
+      <div class="lock-status" id="lockStatus"></div>
+      <button class="admin-save lock-submit" type="submit">Entrar al administrador</button>
+      <button class="lock-cancel" id="lockCancel" type="button">Cancelar</button>
+    </form>
+  </div>
+  <aside class="admin-panel" id="adminPanel" aria-hidden="true">
+    <div class="admin-header">
+      <div>
+        <small>PANEL DE CONTROL</small>
+        <h2>Administrador</h2>
+      </div>
+      <button id="adminClose" class="icon-button" type="button" aria-label="Cerrar administrador">×</button>
+    </div>
+
+    <div class="admin-tabs">
+      <button class="active" data-admin-tab="content" type="button">Contenido</button>
+      <button data-admin-tab="design" type="button">Diseño</button>
+      <button data-admin-tab="actions" type="button">Botones</button>
+      <button data-admin-tab="advanced" type="button">Avanzado</button>
+    </div>
+
+    <div class="admin-section active" data-admin-section="content">
+      <label>Nombre de marca<input id="adminBrand" value="HYPERSEX"></label>
+      <label>Etiqueta superior<input id="adminEyebrow" value="CONTROL CENTER"></label>
+      <label>Título<input id="adminTitle" value="Encuentra tu sensibilidad perfecta"></label>
+      <label>Descripción<textarea id="adminDescription" rows="3">Configura tu dispositivo y genera ajustes pensados para mejorar tu precisión y comodidad.</textarea></label>
+      <label>Imagen de portada<input id="adminImage" type="file" accept="image/*"></label>
+      <div class="image-preview" id="imagePreview">Sin imagen</div>
+    </div>
+
+    <div class="admin-section" data-admin-section="design">
+      <div class="theme-presets">
+        <button data-theme="hyper" type="button">Hyper</button>
+        <button data-theme="cyan" type="button">Cyber</button>
+        <button data-theme="gold" type="button">Gold</button>
+        <button data-theme="light" type="button">Claro</button>
+      </div>
+      <label>Color principal<input id="adminAccent" type="color" value="#ff3b7a"></label>
+      <label>Color secundario<input id="adminAccentTwo" type="color" value="#ff6b2b"></label>
+      <label>Fondo general<input id="adminBackground" type="color" value="#080b12"></label>
+      <label>Color de texto<input id="adminText" type="color" value="#f5f6fa"></label>
+      <label>Color de paneles<input id="adminSurface" type="color" value="#10141f"></label>
+      <label>Radio de tarjetas<select id="adminRadius">
+        <option value="5px">Cuadrado</option>
+        <option value="10px" selected>Suave</option>
+        <option value="18px">Redondo</option>
+      </select></label>
+      <label>Modo de fondo<select id="adminBackdrop">
+        <option value="grid">Rejilla</option>
+        <option value="radial">Radial</option>
+        <option value="plain">Plano</option>
+      </select></label>
+      <label>Tipografía<select id="adminFont">
+        <option value="modern">Moderna</option>
+        <option value="condensed">Condensada</option>
+        <option value="rounded">Redondeada</option>
+      </select></label>
+      <label>Ancho de contenido<select id="adminWidth">
+        <option value="1180px">Amplio</option>
+        <option value="1040px">Medio</option>
+        <option value="920px">Compacto</option>
+      </select></label>
+      <label>Escala de interfaz<input id="adminScale" type="range" min="85" max="115" value="100"></label>
+      <label>Opacidad de paneles<input id="adminOpacity" type="range" min="40" max="100" value="88"></label>
+      <label>Desenfoque del fondo<input id="adminBlur" type="range" min="0" max="30" value="18"></label>
+      <label>Espacio entre secciones<input id="adminSpacing" type="range" min="8" max="36" value="18"></label>
+      <label>Color de bordes<input id="adminLine" type="color" value="#2b3040"></label>
+      <label>Grosor de bordes<input id="adminBorderWidth" type="range" min="0" max="3" value="1"></label>
+      <label>Brillo exterior<input id="adminGlow" type="range" min="0" max="50" value="10"></label>
+      <label>Sombras<select id="adminShadow">
+        <option value="none">Sin sombras</option>
+        <option value="soft">Suaves</option>
+        <option value="strong">Fuertes</option>
+      </select></label>
+      <label>Animaciones<select id="adminAnimation">
+        <option value="none">Sin animaciÃ³n</option>
+        <option value="smooth" selected>Suave</option>
+        <option value="energetic">EnÃ©rgica</option>
+      </select></label>
+      <label>DecoraciÃ³n<select id="adminDecoration">
+        <option value="grid">Rejilla</option>
+        <option value="dots">Puntos</option>
+        <option value="lines">LÃ­neas</option>
+        <option value="none">Ninguna</option>
+      </select></label>
+      <label class="admin-switch-row">Vista previa en vivo<input id="livePreview" type="checkbox" checked></label>
+      <label>Diseño de paneles<select id="adminLayout">
+        <option value="default">Configuración izquierda</option>
+        <option value="reverse">Configuración derecha</option>
+        <option value="stack">Una columna</option>
+      </select></label>
+      <label class="admin-switch-row">Mostrar plataformas<input id="showPlatforms" type="checkbox" checked></label>
+      <label class="admin-switch-row">Mostrar barra superior<input id="showHeader" type="checkbox" checked></label>
+      <label class="admin-switch-row">Mostrar pie de página<input id="showFooter" type="checkbox" checked></label>
+      <label class="admin-switch-row">Mostrar consejo<input id="showTip" type="checkbox" checked></label>
+      <div class="advanced-actions">
+        <button id="exportConfig" type="button">Exportar diseño</button>
+        <button id="importConfigButton" type="button">Importar diseño</button>
+        <input id="importConfig" type="file" accept="application/json" hidden>
+      </div>
+      <div class="ipa-import">
+        <label for="importIpa">Importar mini IPA
+          <input id="importIpa" type="file" accept=".ipa,.zip,application/octet-stream">
+        </label>
+        <button id="scanIpa" type="button">Extraer imágenes</button>
+        <div id="ipaStatus" class="ipa-status">Solo se importan imágenes. El IPA no se instala ni ejecuta.</div>
+        <div id="ipaGallery" class="ipa-gallery"></div>
+      </div>
+    </div>
+
+    <div class="admin-section" data-admin-section="actions">
+      <label>Texto del botón<input id="buttonText" value="Abrir panel"></label>
+      <label>Acción<select id="buttonAction">
+        <option value="generate">Generar sensibilidad</option>
+        <option value="copy">Copiar configuración</option>
+        <option value="scroll">Ir al generador</option>
+        <option value="alert">Mostrar mensaje</option>
+      </select></label>
+      <button class="secondary-action" id="addButton" type="button">Agregar botón</button>
+      <div class="admin-button-list" id="adminButtonList"></div>
+    </div>
+
+    <div class="admin-section" data-admin-section="advanced">
+      <label>Texto de estado<input id="adminStatus" value="Compatible Android + iOS"></label>
+      <label>Texto del generador<input id="adminGenerateText" value="Generar sensibilidad"></label>
+      <label>Texto de copiar<input id="adminCopyText" value="Copiar configuración"></label>
+      <label>Título del consejo<input id="adminTipTitle" value="Consejo HyperSex"></label>
+      <label>Texto del consejo<textarea id="adminTipText" rows="3">Prueba el perfil durante 10 minutos y ajusta un punto a la vez hasta encontrar tu punto de comodidad.</textarea></label>
+      <label>Pie izquierdo<input id="adminFooterLeft" value="HYPERSEX LABS"></label>
+      <label>Pie derecho<input id="adminFooterRight" value="PROFILES / 2026"></label>
+      <label>Año automático<select id="adminAutoYear">
+        <option value="yes">Activado</option>
+        <option value="no">Desactivado</option>
+      </select></label>
+      <label class="admin-switch-row">Mostrar estado<input id="showStatus" type="checkbox" checked></label>
+      <label class="admin-switch-row">Mostrar botón Free Fire<input id="showLaunch" type="checkbox" checked></label>
+      <label class="admin-switch-row">Mostrar panel de sensibilidad<input id="showSensitivity" type="checkbox" checked></label>
+      <label class="admin-switch-row">Mostrar configuración auxiliar<input id="showAux" type="checkbox" checked></label>
+      <label>Mensaje al copiar<input id="adminCopiedText" value="Configuración copiada"></label>
+      <label>Mensaje de error<input id="adminErrorText" value="No se pudo copiar"></label>
+    </div>
+
+    <div class="admin-footer">
+      <button class="admin-reset" id="adminReset" type="button">Restablecer</button>
+      <button class="admin-save" id="adminSave" type="button">Guardar cambios</button>
+    </div>
+  </aside>
+
+  <script src="script.js?v=3"></script>
+</body>
+</html>
