@@ -1622,3 +1622,63 @@ footer {
     box-shadow: 10px 14px 0 -7px rgba(7,12,25,.96), 20px 24px 45px rgba(0,0,0,.62);
   }
 }
+
+/* DEFINITIVE PROFESSIONAL LOGIN */
+.keyauth-lock .keyauth-card {
+  width: min(440px, calc(100vw - 32px));
+  gap: 18px;
+  padding: 28px;
+  border-radius: 12px;
+}
+.login-hud {
+  height: 28px;
+  margin: -28px -28px 0;
+  padding: 0 28px 0 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 8px;
+  letter-spacing: 1.7px;
+  border-bottom: 1px solid rgba(123,164,255,.12);
+  background: rgba(0,0,0,.16);
+}
+.login-hud strong { display: flex; align-items: center; gap: 7px; color: #78e4ae; font-size: 7px; }
+.login-hud strong i { width: 5px; height: 5px; }
+.login-brand { display: flex; align-items: center; justify-content: center; gap: 12px; text-align: left; }
+.login-brand .brand-mark {
+  width: 48px;
+  height: 48px;
+  margin: 0;
+  font-size: 21px;
+  transform: none;
+}
+.login-brand div { display: grid; gap: 2px; }
+.login-brand div small { color: #fff; font-size: 15px; font-weight: 800; letter-spacing: 2px; }
+.login-brand div span { color: #73809a; font-size: 8px; letter-spacing: 2px; }
+.login-title { text-align: left; }
+.login-title > small { color: #7798ce; font-size: 8px; letter-spacing: 2px; }
+.keyauth-card h2 { font-size: 30px; letter-spacing: -.5px; }
+.keyauth-subtitle { margin: 5px 0 0; text-align: left; color: #8490a5; font-size: 12px; text-transform: none; letter-spacing: 0; }
+.keyauth-card label { color: #8e99ad; font-size: 9px; letter-spacing: 1px; }
+.login-key-field {
+  height: 52px;
+  display: grid;
+  grid-template-columns: 42px 1fr;
+  align-items: center;
+  border: 1px solid rgba(122,161,220,.22);
+  border-radius: 6px;
+  background: rgba(2,6,16,.72);
+  box-shadow: inset 0 0 18px rgba(50,100,190,.05);
+}
+.login-key-field span { height: 100%; display: grid; place-items: center; border-right: 1px solid rgba(122,161,220,.14); color: #76a9ff; font-size: 11px; }
+.login-key-field input { height: 50px !important; border: 0 !important; border-radius: 0 !important; box-shadow: none !important; background: transparent !important; }
+.keyauth-card button { display: flex; align-items: center; justify-content: center; gap: 10px; border-radius: 6px; font-size: 12px; letter-spacing: .4px; }
+.keyauth-card button b { font-size: 18px; }
+.login-discord { height: 38px; margin-top: -5px; border-radius: 6px; font-size: 10px; }
+.login-frame, .login-grid-lines { border-radius: 12px; }
+
+@media (max-width: 560px) {
+  .keyauth-lock .keyauth-card { width: min(390px, calc(100vw - 24px)); padding: 24px 20px 20px; }
+  .login-hud { margin: -24px -20px 0; padding-inline: 20px 14px; }
+  .keyauth-card h2 { font-size: 26px; }
+}
