@@ -36,6 +36,7 @@
   </header>
 
   <main>
+    <div class="interface-neon" aria-hidden="true">HYPERSEX</div>
     <section class="hero">
       <div class="eyebrow" id="heroEyebrow">CONTROL CENTER</div>
       <h1 id="heroTitle">Encuentra tu <span>sensibilidad perfecta</span></h1>
@@ -80,6 +81,25 @@
       </span>
       <span class="launch-arrow">→</span>
     </button>
+    <div class="emulator-actions">
+      <button class="emulator-button" id="openAllBluestacks" type="button" title="Abrir todas las instancias de BlueStacks">
+        <span class="emulator-icon">BS</span>
+        <span class="launch-copy">
+          <small>BLUESTACKS</small>
+          <strong>Todas las versiones</strong>
+        </span>
+        <span class="launch-arrow">+</span>
+      </button>
+      <button class="emulator-button" id="openBluestacks" type="button" title="Abrir el emulador BlueStacks">
+        <span class="emulator-icon">EMU</span>
+        <span class="launch-copy">
+          <small>EMULADOR PC</small>
+          <strong>Abrir BlueStacks</strong>
+        </span>
+        <span class="launch-arrow">→</span>
+      </button>
+    </div>
+    <div class="emulator-status" id="emulatorStatus" role="status"></div>
     <button class="dns-profile" id="downloadDnsProfile" type="button" hidden>
       <span class="dns-icon">DNS</span>
       <span class="launch-copy">
@@ -371,6 +391,6 @@
     </div>
   </aside>
 
-  <script src="script.js?v=7"></script>
+  <script src="script.js?v=10"></script>
 </body>
 </html>

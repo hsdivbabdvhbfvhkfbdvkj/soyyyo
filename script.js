@@ -138,6 +138,49 @@ function getDeviceId() {
 
 const keyauthDeviceId = getDeviceId();
 
+function playWelcomeSound() {
+  const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+  if (!AudioContextClass) return;
+
+  const context = new AudioContextClass();
+  const master = context.createGain();
+  master.gain.setValueAtTime(0.0001, context.currentTime);
+  master.gain.exponentialRampToValueAtTime(0.18, context.currentTime + 0.02);
+  master.gain.exponentialRampToValueAtTime(0.0001, context.currentTime + 1.45);
+  master.connect(context.destination);
+
+  [
+    [392.00, 0.00, 0.32],
+    [493.88, 0.09, 0.32],
+    [587.33, 0.18, 0.42],
+    [783.99, 0.32, 0.68]
+  ].forEach(([frequency, delay, duration]) => {
+    const oscillator = context.createOscillator();
+    const gain = context.createGain();
+    oscillator.type = "sine";
+    oscillator.frequency.setValueAtTime(frequency, context.currentTime + delay);
+    gain.gain.setValueAtTime(0.0001, context.currentTime + delay);
+    gain.gain.exponentialRampToValueAtTime(0.7, context.currentTime + delay + 0.025);
+    gain.gain.exponentialRampToValueAtTime(0.0001, context.currentTime + delay + duration);
+    oscillator.connect(gain).connect(master);
+    oscillator.start(context.currentTime + delay);
+    oscillator.stop(context.currentTime + delay + duration + 0.05);
+  });
+
+  if ("speechSynthesis" in window) {
+    window.setTimeout(() => {
+      window.speechSynthesis.cancel();
+      const welcome = new SpeechSynthesisUtterance("Bienvenido a HyperSex");
+      welcome.lang = "es-ES";
+      welcome.rate = 0.95;
+      welcome.pitch = 1.1;
+      window.speechSynthesis.speak(welcome);
+    }, 450);
+  }
+
+  window.setTimeout(() => context.close(), 2200);
+}
+
 async function initializeKeyAuth() {
   const status = document.querySelector("#keyauthStatus");
   status.textContent = "Conectando...";
@@ -174,6 +217,7 @@ document.querySelector("#keyauthForm").addEventListener("submit", async (event) 
     if (!result.success) throw new Error(result.message || "Credenciales o licencia invalidas.");
     const expiresAt = parseKeyAuthExpiration(result);
     if (expiresAt) startLicenseCountdown(expiresAt);
+    playWelcomeSound();
     document.querySelector("#keyauthLock").classList.add("hidden");
     status.textContent = "";
   } catch (error) {
@@ -187,6 +231,28 @@ const launchGame = document.querySelector("#launchGame");
 const launchPlatform = document.querySelector("#launchPlatform");
 const downloadDnsProfile = document.querySelector("#downloadDnsProfile");
 const dnsStatus = document.querySelector("#dnsStatus");
+const emulatorStatus = document.querySelector("#emulatorStatus");
+
+function launchDesktopApp(protocol, statusText) {
+  emulatorStatus.textContent = statusText;
+  window.location.assign(protocol);
+  window.setTimeout(() => {
+    emulatorStatus.textContent = document.hidden
+      ? "BlueStacks abierto."
+      : "Si no abre, verifica que BlueStacks esté instalado en Windows.";
+  }, 1800);
+}
+
+document.querySelector("#openBluestacks").addEventListener("click", () => {
+  launchDesktopApp("bluestacks://", "Abriendo BlueStacks...");
+});
+
+document.querySelector("#openAllBluestacks").addEventListener("click", () => {
+  launchDesktopApp(
+    "bluestacks://multi-instance",
+    "Abriendo todas las instancias disponibles..."
+  );
+});
 
 const styleProfiles = {
   precision: { general: 184, red: 176, x2: 164, x4: 152, sniper: 140, free: 172, label: "Precisión" },
