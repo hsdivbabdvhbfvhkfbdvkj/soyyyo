@@ -984,25 +984,16 @@ document.querySelector("#adminSave").addEventListener("click", () => {
     copiedText: document.querySelector("#adminCopiedText").value.trim(),
     errorText: document.querySelector("#adminErrorText").value.trim()
   };
-  const cleanConfig = JSON.parse(JSON.stringify(savedConfig));
-  fetch("/api/config", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "X-Admin-Password": "Hypersex2022@"
-    },
-    body: JSON.stringify({ config: cleanConfig })
-  }).then(async (response) => {
-    const result = await response.json();
-    if (!response.ok || !result.success) throw new Error(result.message || "No se pudo publicar el diseño.");
+  try {
+    const cleanConfig = JSON.parse(JSON.stringify(savedConfig));
     localStorage.setItem("hypersex-admin-config", JSON.stringify(cleanConfig));
     applyConfig(savedConfig);
     openAdmin(false);
-    window.alert("Diseño publicado para todos.");
-  }).catch((error) => {
-    localStorage.setItem("hypersex-admin-config", JSON.stringify(cleanConfig));
-    window.alert(error.message);
-  });
+    window.alert("Diseño guardado correctamente.");
+  } catch (error) {
+    console.error("No se pudo guardar el diseño:", error);
+    window.alert("No se pudo guardar en este navegador. La configuración contiene datos demasiado grandes.");
+  }
 });
 
 const themes = {
@@ -1178,21 +1169,15 @@ document.querySelector("#adminReset").addEventListener("click", () => {
   applyConfig(savedConfig);
 });
 
-async function loadPublicConfig() {
-  let remoteConfig = {};
-  try {
-    const response = await fetch("/api/config", { cache: "no-store" });
-    const result = await response.json();
-    if (response.ok && result.success && result.config) remoteConfig = result.config;
-  } catch {}
-
-  let localConfig = {};
-  try {
-    localConfig = JSON.parse(localStorage.getItem("hypersex-admin-config")) || {};
-  } catch {}
-
-  savedConfig = { ...defaultConfig, ...localConfig, ...remoteConfig, buttons: remoteConfig.buttons || localConfig.buttons || [], sections: remoteConfig.sections || localConfig.sections || [] };
-  loadAdminFields(savedConfig);
-  applyConfig(savedConfig);
+try {
+  savedConfig = {
+    ...defaultConfig,
+    ...JSON.parse(localStorage.getItem("hypersex-admin-config") || "{}"),
+    buttons: JSON.parse(localStorage.getItem("hypersex-admin-config") || "{}").buttons || [],
+    sections: JSON.parse(localStorage.getItem("hypersex-admin-config") || "{}").sections || []
+  };
+} catch {
+  savedConfig = { ...defaultConfig, buttons: [], sections: [] };
 }
-loadPublicConfig();
+loadAdminFields(savedConfig);
+applyConfig(savedConfig);
