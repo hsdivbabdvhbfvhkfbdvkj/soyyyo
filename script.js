@@ -205,6 +205,7 @@ if (keyauthLock && keyauthCard && !prefersReducedMotion && window.matchMedia("(h
 document.querySelector("#keyauthForm").addEventListener("submit", async (event) => {
   event.preventDefault();
   const status = document.querySelector("#keyauthStatus");
+  status.classList.remove("key-in-use");
   status.textContent = "Validando licencia...";
   try {
     if (!keyauthSessionId) await initializeKeyAuth();
@@ -219,7 +220,16 @@ document.querySelector("#keyauthForm").addEventListener("submit", async (event) 
       })
     });
     const result = await response.json();
-    if (!result.success) throw new Error(result.message || "Credenciales o licencia invalidas.");
+    if (!result.success) {
+      const rawMessage = String(result.message || "Credenciales o licencia invalidas.");
+      const normalized = rawMessage.toLowerCase();
+      const keyInUse = /key.*used|used.*key|already.*(session|logged|online)|already.*use|hwid|hardware.*id|otra sesi[oó]n|sesión.*activa/.test(normalized);
+      if (keyInUse) {
+        status.classList.add("key-in-use");
+        throw new Error("KEY EN USO EN OTRO DISPOSITIVO");
+      }
+      throw new Error(rawMessage);
+    }
     const expiresAt = parseKeyAuthExpiration(result);
     if (expiresAt) startLicenseCountdown(expiresAt);
     playWelcomeSound();
@@ -577,7 +587,8 @@ const defaultConfig = {
   copiedText: "Configuración copiada",
   errorText: "No se pudo copiar",
   image: "",
-  buttons: []
+  buttons: [],
+  sections: []
 };
 
 let savedConfig = { ...defaultConfig };
@@ -648,7 +659,8 @@ document.querySelectorAll("[data-admin-tab]").forEach((tab) => {
   });
 });
 
-function executeButtonAction(action) {
+function executeButtonAction(action, url) {
+  if (action === "url" && url) window.open(url, "_blank", "noopener,noreferrer");
   if (action === "generate") generateButton.click();
   if (action === "copy") copyButton.click();
   if (action === "scroll") document.querySelector(".dashboard").scrollIntoView({ behavior: "smooth" });
@@ -666,7 +678,8 @@ function renderCustomButtons(buttons) {
     button.type = "button";
     button.className = "custom-action";
     button.textContent = buttonConfig.text;
-    button.addEventListener("click", () => executeButtonAction(buttonConfig.action));
+    if (buttonConfig.color) button.style.background = buttonConfig.color;
+    button.addEventListener("click", () => executeButtonAction(buttonConfig.action, buttonConfig.url));
     container.appendChild(button);
 
     const row = document.createElement("div");
@@ -753,6 +766,7 @@ function applyConfig(config) {
     document.querySelector(".hero").appendChild(image);
   }
   renderCustomButtons(config.buttons);
+  renderCustomSections(config.sections || []);
 }
 
 function loadAdminFields(config) {
@@ -830,12 +844,75 @@ document.querySelector("#adminImage").addEventListener("change", (event) => {
   reader.readAsDataURL(file);
 });
 
+let pendingSectionImage = "";
+document.querySelector("#sectionImage").addEventListener("change", (event) => {
+  const [file] = event.target.files;
+  if (!file) return;
+  const reader = new FileReader();
+  reader.addEventListener("load", () => {
+    pendingSectionImage = reader.result;
+    document.querySelector("#sectionImagePreview").innerHTML = `<img src="${reader.result}" alt="Vista previa">`;
+  });
+  reader.readAsDataURL(file);
+});
+
+function renderCustomSections(sections) {
+  const container = document.querySelector("#customSections");
+  const list = document.querySelector("#adminSectionList");
+  container.replaceChildren();
+  list.replaceChildren();
+
+  sections.forEach((section, index) => {
+    const article = document.createElement("article");
+    article.className = "custom-section";
+    if (section.image) {
+      const image = document.createElement("img");
+      image.src = section.image;
+      image.alt = section.title;
+      article.appendChild(image);
+    }
+    const copy = document.createElement("div");
+    copy.innerHTML = `<small>SECCIÓN ${String(index + 1).padStart(2, "0")}</small><h2>${section.title}</h2><p>${section.text}</p>`;
+    article.appendChild(copy);
+    container.appendChild(article);
+
+    const row = document.createElement("div");
+    row.className = "admin-added-button";
+    const label = document.createElement("span");
+    label.textContent = section.title;
+    const remove = document.createElement("button");
+    remove.type = "button";
+    remove.textContent = "Eliminar";
+    remove.addEventListener("click", () => {
+      savedConfig.sections.splice(index, 1);
+      renderCustomSections(savedConfig.sections);
+    });
+    row.append(label, remove);
+    list.appendChild(row);
+  });
+}
+
+document.querySelector("#addSection").addEventListener("click", () => {
+  const title = document.querySelector("#sectionTitle").value.trim();
+  const text = document.querySelector("#sectionText").value.trim();
+  if (!title && !text && !pendingSectionImage) return;
+  savedConfig.sections.push({ title: title || "Nueva sección", text, image: pendingSectionImage });
+  renderCustomSections(savedConfig.sections);
+  document.querySelector("#sectionTitle").value = "";
+  document.querySelector("#sectionText").value = "";
+  document.querySelector("#sectionImage").value = "";
+  document.querySelector("#sectionImagePreview").textContent = "Sin imagen";
+  pendingSectionImage = "";
+});
+
 document.querySelector("#addButton").addEventListener("click", () => {
   const text = document.querySelector("#buttonText").value.trim();
   if (!text) return;
   savedConfig.buttons.push({
     text,
-    action: document.querySelector("#buttonAction").value
+    action: document.querySelector("#buttonAction").value,
+    url: document.querySelector("#buttonUrl").value.trim(),
+    color: document.querySelector("#buttonColor").value
   });
   renderCustomButtons(savedConfig.buttons);
   document.querySelector("#buttonText").value = "";

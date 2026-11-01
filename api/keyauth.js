@@ -55,7 +55,14 @@ module.exports = async function handler(request, response) {
     const text = await keyauthResponse.text();
 
     try {
-      return response.status(keyauthResponse.ok ? 200 : 502).json(JSON.parse(text));
+      const parsed = JSON.parse(text);
+      if (action === "license" && !parsed.success) {
+        const message = String(parsed.message || "").toLowerCase();
+        if (/key.*used|used.*key|already.*(session|logged|online)|hwid|hardware.*id|otra sesi[oó]n/.test(message)) {
+          parsed.message = "KEY EN USO EN OTRO DISPOSITIVO";
+        }
+      }
+      return response.status(keyauthResponse.ok ? 200 : 502).json(parsed);
     } catch {
       return response.status(502).json({
         success: false,

@@ -229,6 +229,21 @@ body::after {
 .login-discord svg { width: 19px; height: 19px; color: #5865f2; }
 .login-discord:hover { background: rgba(88,101,242,.22); }
 .keyauth-status { min-height: 18px; color: #ff789f; font-size: 11px; }
+.keyauth-status.key-in-use {
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 2px 0 -4px;
+  border: 1px solid rgba(255, 92, 128, .38);
+  border-radius: 6px;
+  color: #ff91aa;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  background: rgba(255, 58, 102, .09);
+  box-shadow: 0 0 24px rgba(255, 58, 102, .08);
+}
 .keyauth-time {
   padding: 10px;
   border: 1px solid rgba(255,255,255,.08);
