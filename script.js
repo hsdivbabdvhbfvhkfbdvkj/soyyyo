@@ -232,21 +232,17 @@ function launchDesktopApp(protocol, statusText) {
   }, 1800);
 }
 
-document.querySelector("#openBluestacks").addEventListener("click", () => {
-  launchDesktopApp("bluestacks://", "Abriendo BlueStacks...");
-});
-
-document.querySelector("#openAllBluestacks").addEventListener("click", () => {
-  launchDesktopApp(
-    "bluestacks://multi-instance",
-    "Abriendo todas las instancias disponibles..."
-  );
-});
 
 const styleProfiles = {
   precision: { general: 184, red: 176, x2: 164, x4: 152, sniper: 140, free: 172, label: "Precisión" },
   balanced: { general: 176, red: 168, x2: 160, x4: 156, sniper: 148, free: 164, label: "Equilibrado" },
   aggressive: { general: 192, red: 186, x2: 176, x4: 168, sniper: 156, free: 182, label: "Acelerado" }
+};
+
+const pcStyleProfiles = {
+  precision: { general: 92, red: 88, x2: 82, x4: 76, sniper: 68, free: 84, label: "Precisión PC" },
+  balanced: { general: 104, red: 98, x2: 92, x4: 86, sniper: 78, free: 96, label: "Equilibrado PC" },
+  aggressive: { general: 118, red: 112, x2: 106, x4: 98, sniper: 88, free: 108, label: "Acelerado PC" }
 };
 
 const dpiInput = document.querySelector("#dpi");
@@ -346,6 +342,11 @@ launchGame.addEventListener("click", () => {
     return;
   }
 
+  if (state.device === "pc") {
+    window.location.assign("bluestacks://com.dts.freefireth");
+    return;
+  }
+
   window.location.href =
     "intent://launch/#Intent;scheme=freefire;package=com.dts.freefireth;end";
 });
@@ -369,7 +370,7 @@ function configureDpiRange() {
   }
   dpiValue.textContent = dpiInput.value;
   document.querySelector("#profileBadge").textContent =
-    `${state.device === "pc" ? "PC" : state.device === "ios" ? "iOS" : "Android"} / ${styleProfiles[state.style].label}`;
+    `${state.device === "pc" ? "PC" : state.device === "ios" ? "iOS" : "Android"} / ${(state.device === "pc" ? pcStyleProfiles : styleProfiles)[state.style].label}`;
   document.querySelector("#systemProfile").textContent = styleProfiles[state.style].label;
 }
 
@@ -424,26 +425,27 @@ document.querySelectorAll("[data-style]").forEach((button) => {
     button.classList.add("selected");
     state.style = button.dataset.style;
     document.querySelector("#profileBadge").textContent =
-      `${state.device === "ios" ? "iOS" : "Android"} / ${styleProfiles[state.style].label}`;
+      `${state.device === "pc" ? "PC" : state.device === "ios" ? "iOS" : "Android"} / ${(state.device === "pc" ? pcStyleProfiles : styleProfiles)[state.style].label}`;
   });
 });
 
 function getGeneratedProfile() {
-  const base = styleProfiles[state.style];
+  const base = state.device === "pc" ? pcStyleProfiles[state.style] : styleProfiles[state.style];
   const referenceDpi = state.device === "ios" ? 60 : state.device === "pc" ? 800 : 480;
   const dpiStep = state.device === "ios" ? 15 : state.device === "pc" ? 100 : 80;
   const dpiFactor = Math.round((Number(dpiInput.value) - referenceDpi) / dpiStep);
-  const deviceFactor = state.device === "ios" ? -2 : state.device === "pc" ? 3 : 0;
+  const deviceFactor = state.device === "ios" ? -2 : 0;
   const adjustment = dpiFactor + deviceFactor;
+  const maximum = state.device === "pc" ? 150 : 200;
 
   return {
     label: base.label,
-    general: Math.max(30, Math.min(200, base.general + adjustment * 2)),
-    red: Math.max(30, Math.min(200, base.red + adjustment * 2)),
-    x2: Math.max(30, Math.min(200, base.x2 + adjustment * 2)),
-    x4: Math.max(30, Math.min(200, base.x4 + adjustment * 2)),
-    sniper: Math.max(30, Math.min(200, base.sniper + adjustment * 2)),
-    free: Math.max(30, Math.min(200, base.free + adjustment * 2))
+    general: Math.max(30, Math.min(maximum, base.general + adjustment * (state.device === "pc" ? 1 : 2))),
+    red: Math.max(30, Math.min(maximum, base.red + adjustment * (state.device === "pc" ? 1 : 2))),
+    x2: Math.max(30, Math.min(maximum, base.x2 + adjustment * (state.device === "pc" ? 1 : 2))),
+    x4: Math.max(30, Math.min(maximum, base.x4 + adjustment * (state.device === "pc" ? 1 : 2))),
+    sniper: Math.max(30, Math.min(maximum, base.sniper + adjustment * (state.device === "pc" ? 1 : 2))),
+    free: Math.max(30, Math.min(maximum, base.free + adjustment * (state.device === "pc" ? 1 : 2)))
   };
 }
 

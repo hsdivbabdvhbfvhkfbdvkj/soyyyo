@@ -687,7 +687,7 @@ h1 span {
 
 .emulator-actions {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr;
   gap: 12px;
   margin-bottom: 10px;
 }
