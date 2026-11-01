@@ -1434,3 +1434,59 @@ footer {
   background: color-mix(in srgb, var(--surface) calc(var(--admin-panel-opacity) * 100%), transparent);
   backdrop-filter: blur(var(--admin-blur));
 }
+
+/* Professional compact workspace */
+:root { --radius: 6px; --line: rgba(165,184,215,.13); }
+.topbar { height: 78px; border-bottom: 1px solid rgba(165,184,215,.09); }
+.hero { min-height: 250px; display: grid; align-content: center; padding-block: 44px; }
+.dashboard { grid-template-columns: minmax(300px,.86fr) minmax(420px,1.14fr); }
+.settings-grid { gap: 14px 18px; }
+.platform-switch { grid-template-columns: repeat(3,minmax(0,1fr)); }
+.system-strip, .platform-switch { overflow-x: auto; }
+
+@media (max-width: 850px) {
+  .dashboard { grid-template-columns: minmax(0,42%) minmax(0,58%); gap: 10px; }
+  .setup-panel, .result-panel { padding: 18px 14px; }
+  .system-strip { grid-template-columns: repeat(4,minmax(112px,1fr)); }
+  .settings-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .hero { min-height: 220px; }
+}
+
+@media (max-width: 560px) {
+  .topbar, main, footer { width: calc(100% - 20px); }
+  .topbar { height: 64px; }
+  .top-actions { gap: 7px; }
+  .status { display: none; }
+  .brand { font-size: 13px; }
+  .hero { min-height: 190px; padding: 28px 0; }
+  h1 { font-size: 36px; line-height: .98; }
+  .hero p { max-width: 92%; font-size: 13px; }
+  .dashboard { grid-template-columns: minmax(0,42%) minmax(0,58%); gap: 8px; }
+  .setup-panel, .result-panel { padding: 14px 10px; }
+  .panel-heading { gap: 8px; }
+  .panel-heading > span { display: none; }
+  .panel-heading h2 { font-size: 17px; }
+  .panel-heading small { font-size: 8px; }
+  .profile-badge { display: none; }
+  .style-grid { grid-template-columns: 1fr; }
+  .style-card { padding: 8px 7px; }
+  .style-card small { display: none; }
+  .style-card strong { font-size: 11px; }
+  .settings-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px 8px; }
+  .setting-title strong { font-size: 18px; }
+  .setting-title span { font-size: 10px; }
+  .system-strip { grid-template-columns: repeat(4,minmax(92px,1fr)); }
+  .system-item { padding: 12px 8px; }
+  .system-item strong { font-size: 10px; }
+  .platform { min-width: 0; padding-inline: 7px; }
+  .platform small { font-size: 7px; }
+  .platform strong { font-size: 10px; }
+  .platform-icon { width: 25px; height: 25px; }
+  .launch-game { height: 62px; }
+  .launch-copy strong { font-size: 12px; }
+  .launch-copy small { font-size: 8px; }
+  .tip { padding: 12px 10px; }
+  .tip p { font-size: 10px; }
+  .result-actions { flex-wrap: wrap; gap: 8px; }
+  .copy-button { width: 100%; padding-inline: 8px; font-size: 11px; }
+}
