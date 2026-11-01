@@ -19,6 +19,13 @@
 
 * { box-sizing: border-box; }
 
+html {
+  width: 100%;
+  min-height: 100%;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 .keyauth-lock {
   position: fixed;
   inset: 0;
@@ -278,7 +285,9 @@ body::after {
 body {
   margin: 0;
   min-height: 100vh;
+  min-height: 100dvh;
   overflow-x: hidden;
+  overscroll-behavior: none;
   color: var(--text);
   font-family: "DM Sans", sans-serif;
   background:
@@ -1469,7 +1478,41 @@ footer {
 
 @media (max-width: 560px) {
   .topbar, main, footer { width: calc(100% - 20px); }
-  .topbar { height: 64px; }
+  html,
+  body {
+    width: 100%;
+    overflow-x: hidden;
+    touch-action: pan-x pan-y;
+  }
+  body {
+    -webkit-user-select: none;
+    user-select: none;
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  input,
+  textarea,
+  select {
+    -webkit-user-select: text;
+    user-select: text;
+    font-size: 16px;
+  }
+  button,
+  a,
+  label {
+    -webkit-tap-highlight-color: transparent;
+  }
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    height: calc(64px + env(safe-area-inset-top));
+    padding-top: env(safe-area-inset-top);
+  }
+  main {
+    width: calc(100% - 20px);
+    padding-bottom: calc(32px + env(safe-area-inset-bottom));
+  }
   .top-actions { gap: 7px; }
   .dashboard {
     grid-template-columns: 1fr;
