@@ -985,19 +985,38 @@ document.querySelector("#adminSave").addEventListener("click", () => {
     errorText: document.querySelector("#adminErrorText").value.trim()
   };
   try {
-    const serialized = JSON.stringify(savedConfig);
-    localStorage.setItem("hypersex-admin-config", serialized);
+    const cleanConfig = JSON.parse(JSON.stringify(savedConfig));
+    const withoutImages = {
+      ...cleanConfig,
+      image: "",
+      sections: Array.isArray(cleanConfig.sections)
+        ? cleanConfig.sections.map((section) => ({ ...section, image: "" }))
+        : []
+    };
+
+    try {
+      localStorage.setItem("hypersex-admin-config", JSON.stringify(cleanConfig));
+    } catch (quotaError) {
+      localStorage.removeItem("hypersex-admin-config");
+      try {
+        localStorage.setItem("hypersex-admin-config", JSON.stringify(withoutImages));
+        if (cleanConfig.image || cleanConfig.sections?.some((section) => section.image)) {
+          window.alert("Diseño guardado. Las imágenes se omitieron por superar el límite del navegador.");
+        }
+      } catch {
+        window.alert("Este navegador bloquea el almacenamiento. Permite cookies/datos de sitio o abre la página sin modo privado.");
+        return;
+      }
+    }
+
     applyConfig(savedConfig);
     openAdmin(false);
-    window.alert("Diseño guardado correctamente.");
-  } catch (error) {
-    const hasLargeImages = Boolean(savedConfig.image) ||
-      (Array.isArray(savedConfig.sections) && savedConfig.sections.some((section) => Boolean(section.image)));
-    if (hasLargeImages) {
-      window.alert("Las imágenes son demasiado grandes para guardarlas. Comprímelas o elimina una antes de guardar.");
-      return;
+    if (localStorage.getItem("hypersex-admin-config") === JSON.stringify(cleanConfig)) {
+      window.alert("Diseño guardado correctamente.");
     }
-    window.alert("No se pudo guardar la configuración. Comprueba que el navegador permita almacenamiento local.");
+  } catch (error) {
+    console.error("Admin save failed:", error);
+    window.alert(`No se pudo guardar: ${error.message || "error desconocido"}`);
   }
 });
 
