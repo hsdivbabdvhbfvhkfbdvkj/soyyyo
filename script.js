@@ -270,6 +270,9 @@ document.querySelectorAll("[data-device]").forEach((button) => {
     state.device = button.dataset.device;
     configureDpiRange();
     downloadDnsProfile.hidden = state.device !== "ios";
+    document.querySelector(".emulator-actions").hidden = state.device !== "pc";
+    launchGame.querySelector(".launch-copy small").textContent =
+      state.device === "pc" ? "EMULADOR PC" : "JUEGO INSTALADO";
     dnsStatus.textContent = "";
     launchPlatform.textContent = state.device === "pc" ? "PC" : state.device === "ios" ? "iOS" : "Android";
     document.querySelector("#systemPlatform").textContent = launchPlatform.textContent;
@@ -369,6 +372,10 @@ function configureDpiRange() {
     dpiInput.value = "480";
   }
   dpiValue.textContent = dpiInput.value;
+  document.querySelector("#systemPlatform").textContent =
+    state.device === "pc" ? "PC" : state.device === "ios" ? "iOS" : "Android";
+  document.querySelector(".system-item:last-child strong").textContent =
+    state.device === "pc" ? "1 - 150" : "1 - 200";
   document.querySelector("#profileBadge").textContent =
     `${state.device === "pc" ? "PC" : state.device === "ios" ? "iOS" : "Android"} / ${(state.device === "pc" ? pcStyleProfiles : styleProfiles)[state.style].label}`;
   document.querySelector("#systemProfile").textContent = styleProfiles[state.style].label;
@@ -533,6 +540,11 @@ const defaultConfig = {
   animation: "smooth",
   decoration: "grid",
   livePreview: true,
+  loginTitle: "Ingresa tu key",
+  loginSubtitle: "Sistema premium de sensibilidad",
+  loginButton: "Acceder",
+  loginSmall: "HYPERSEX ACCESS",
+  loginPosition: "center",
   status: "Compatible Android + iOS",
   generateText: "Generar sensibilidad",
   copyText: "Copiar configuración",
@@ -657,6 +669,11 @@ function renderCustomButtons(buttons) {
 }
 
 function applyConfig(config) {
+  document.querySelector("#keyauthForm h2").textContent = config.loginTitle;
+  document.querySelector(".keyauth-subtitle").textContent = config.loginSubtitle;
+  document.querySelector("#keyauthForm button[type='submit']").textContent = config.loginButton;
+  document.querySelector("#keyauthForm > small").textContent = config.loginSmall;
+  document.querySelector(".keyauth-lock").dataset.loginPosition = config.loginPosition;
   document.querySelector("#brandName").textContent = config.brand;
   document.querySelector("#heroEyebrow").textContent = config.eyebrow;
   document.querySelector("#heroTitle").textContent = config.title;
@@ -722,6 +739,11 @@ function applyConfig(config) {
 }
 
 function loadAdminFields(config) {
+  document.querySelector("#adminLoginTitle").value = config.loginTitle;
+  document.querySelector("#adminLoginSubtitle").value = config.loginSubtitle;
+  document.querySelector("#adminLoginButton").value = config.loginButton;
+  document.querySelector("#adminLoginSmall").value = config.loginSmall;
+  document.querySelector("#adminLoginPosition").value = config.loginPosition;
   document.querySelector("#adminBrand").value = config.brand;
   document.querySelector("#adminEyebrow").value = config.eyebrow;
   document.querySelector("#adminTitle").value = config.title;
@@ -834,6 +856,11 @@ document.querySelector("#adminSave").addEventListener("click", () => {
     animation: document.querySelector("#adminAnimation").value,
     decoration: document.querySelector("#adminDecoration").value,
     livePreview: document.querySelector("#livePreview").checked,
+    loginTitle: document.querySelector("#adminLoginTitle").value.trim() || defaultConfig.loginTitle,
+    loginSubtitle: document.querySelector("#adminLoginSubtitle").value.trim() || defaultConfig.loginSubtitle,
+    loginButton: document.querySelector("#adminLoginButton").value.trim() || defaultConfig.loginButton,
+    loginSmall: document.querySelector("#adminLoginSmall").value.trim() || defaultConfig.loginSmall,
+    loginPosition: document.querySelector("#adminLoginPosition").value,
     status: document.querySelector("#adminStatus").value.trim(),
     generateText: document.querySelector("#adminGenerateText").value.trim(),
     copyText: document.querySelector("#adminCopyText").value.trim(),

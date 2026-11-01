@@ -35,6 +35,33 @@
 
 .keyauth-lock.hidden { display: none; }
 
+.keyauth-lock[data-login-position="left"] {
+  justify-items: start;
+}
+.keyauth-lock[data-login-position="right"] {
+  justify-items: end;
+}
+
+.keyauth-lock[data-login-position="left"] .keyauth-card,
+.keyauth-lock[data-login-position="right"] .keyauth-card {
+  margin-inline: clamp(8px, 5vw, 72px);
+}
+
+.keyauth-lock .keyauth-card {
+  border-radius: 6px 28px 28px 28px;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background:
+    linear-gradient(115deg, transparent 0 58%, rgba(40, 111, 255, .09) 58% 58.2%, transparent 58.2%),
+    radial-gradient(circle at 70% 25%, rgba(54, 125, 255, .14), transparent 30%);
+}
+
 .keyauth-lock::before {
   content: "";
   position: absolute;
