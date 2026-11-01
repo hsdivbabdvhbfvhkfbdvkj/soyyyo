@@ -539,7 +539,7 @@ const adminPanel = document.querySelector("#adminPanel");
 const adminOverlay = document.querySelector("#adminOverlay");
 const defaultConfig = {
   brand: "HYPERSEX",
-  eyebrow: "CONTROL CENTER",
+  eyebrow: "Hypersex tu mejor opcion",
   title: "Encuentra tu sensibilidad perfecta",
   description: "Configura tu dispositivo y genera ajustes pensados para mejorar tu precisión y comodidad.",
   accent: "#d8dde5",
@@ -984,40 +984,25 @@ document.querySelector("#adminSave").addEventListener("click", () => {
     copiedText: document.querySelector("#adminCopiedText").value.trim(),
     errorText: document.querySelector("#adminErrorText").value.trim()
   };
-  try {
-    const cleanConfig = JSON.parse(JSON.stringify(savedConfig));
-    const withoutImages = {
-      ...cleanConfig,
-      image: "",
-      sections: Array.isArray(cleanConfig.sections)
-        ? cleanConfig.sections.map((section) => ({ ...section, image: "" }))
-        : []
-    };
-
-    try {
-      localStorage.setItem("hypersex-admin-config", JSON.stringify(cleanConfig));
-    } catch (quotaError) {
-      localStorage.removeItem("hypersex-admin-config");
-      try {
-        localStorage.setItem("hypersex-admin-config", JSON.stringify(withoutImages));
-        if (cleanConfig.image || cleanConfig.sections?.some((section) => section.image)) {
-          window.alert("Diseño guardado. Las imágenes se omitieron por superar el límite del navegador.");
-        }
-      } catch {
-        window.alert("Este navegador bloquea el almacenamiento. Permite cookies/datos de sitio o abre la página sin modo privado.");
-        return;
-      }
-    }
-
+  const cleanConfig = JSON.parse(JSON.stringify(savedConfig));
+  fetch("/api/config", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-Admin-Password": "Hypersex2022@"
+    },
+    body: JSON.stringify({ config: cleanConfig })
+  }).then(async (response) => {
+    const result = await response.json();
+    if (!response.ok || !result.success) throw new Error(result.message || "No se pudo publicar el diseño.");
+    localStorage.setItem("hypersex-admin-config", JSON.stringify(cleanConfig));
     applyConfig(savedConfig);
     openAdmin(false);
-    if (localStorage.getItem("hypersex-admin-config") === JSON.stringify(cleanConfig)) {
-      window.alert("Diseño guardado correctamente.");
-    }
-  } catch (error) {
-    console.error("Admin save failed:", error);
-    window.alert(`No se pudo guardar: ${error.message || "error desconocido"}`);
-  }
+    window.alert("Diseño publicado para todos.");
+  }).catch((error) => {
+    localStorage.setItem("hypersex-admin-config", JSON.stringify(cleanConfig));
+    window.alert(error.message);
+  });
 });
 
 const themes = {
@@ -1193,10 +1178,21 @@ document.querySelector("#adminReset").addEventListener("click", () => {
   applyConfig(savedConfig);
 });
 
-try {
-  savedConfig = { ...defaultConfig, ...JSON.parse(localStorage.getItem("hypersex-admin-config")) };
-} catch {
-  savedConfig = { ...defaultConfig };
+async function loadPublicConfig() {
+  let remoteConfig = {};
+  try {
+    const response = await fetch("/api/config", { cache: "no-store" });
+    const result = await response.json();
+    if (response.ok && result.success && result.config) remoteConfig = result.config;
+  } catch {}
+
+  let localConfig = {};
+  try {
+    localConfig = JSON.parse(localStorage.getItem("hypersex-admin-config")) || {};
+  } catch {}
+
+  savedConfig = { ...defaultConfig, ...localConfig, ...remoteConfig, buttons: remoteConfig.buttons || localConfig.buttons || [], sections: remoteConfig.sections || localConfig.sections || [] };
+  loadAdminFields(savedConfig);
+  applyConfig(savedConfig);
 }
-loadAdminFields(savedConfig);
-applyConfig(savedConfig);
+loadPublicConfig();

@@ -1649,6 +1649,40 @@ footer {
   }
 }
 
+/* PROFESSIONAL ADMIN PANEL */
+.admin-panel {
+  width: min(520px, 94vw);
+  max-width: none;
+  background: linear-gradient(160deg, rgba(15,21,35,.98), rgba(5,8,16,.98));
+  border-left: 1px solid rgba(123,164,255,.18);
+  box-shadow: -28px 0 90px rgba(0,0,0,.62);
+}
+.admin-header { position: sticky; top: 0; z-index: 8; margin: -26px -26px 18px; padding: 22px 26px; background: rgba(8,12,24,.96); backdrop-filter: blur(18px); border-bottom: 1px solid rgba(123,164,255,.12); }
+.admin-tabs { position: sticky; top: 87px; z-index: 7; display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; padding: 7px; margin-bottom: 18px; border: 1px solid rgba(123,164,255,.10); background: rgba(2,5,12,.75); }
+.admin-tabs button { height: 38px; padding: 0 5px; color: #929caf; font-size: 10px; }
+.admin-tabs button.active { color: #fff; border-color: rgba(109,158,255,.35); background: rgba(71,119,207,.18); }
+.admin-section { gap: 14px; }
+.admin-section label { gap: 7px; color: #929caf; font-size: 10px; letter-spacing:.3px; }
+.admin-section input, .admin-section textarea, .admin-section select { min-height: 42px; border-radius: 6px; border-color: rgba(123,164,255,.14); background: rgba(255,255,255,.035); }
+.admin-footer { bottom: 0; margin-inline:-26px; padding:16px 26px 22px; border-top:1px solid rgba(123,164,255,.12); background:rgba(8,12,24,.98); }
+.builder-heading, .builder-group { display:grid; gap:12px; }
+.builder-heading { margin-bottom:8px; }
+.builder-heading small { color:#78aaff; letter-spacing:1.7px; }
+.builder-list { display:grid; gap:8px; }
+.custom-sections { display:grid; gap:var(--admin-spacing); margin-top:var(--admin-spacing); }
+.custom-section { display:grid; grid-template-columns:minmax(180px,.8fr) 1fr; align-items:center; gap:28px; padding:24px; border:1px solid var(--line); border-radius:var(--radius); background:color-mix(in srgb,var(--surface) 88%,transparent); }
+.custom-section img { width:100%; max-height:260px; border-radius:var(--radius); object-fit:cover; }
+.custom-section small { color:#7da8ee; letter-spacing:2px; }
+.custom-section h2 { margin:8px 0; }
+.custom-section p { margin:0; color:var(--muted); line-height:1.6; }
+
+@media (max-width:560px) {
+  .admin-panel { width:100vw; }
+  .admin-header { margin:-18px -18px 14px; padding:18px; }
+  .admin-tabs { top:78px; }
+  .custom-section { grid-template-columns:1fr; }
+}
+
 /* DEFINITIVE PROFESSIONAL LOGIN */
 .keyauth-lock .keyauth-card {
   width: min(440px, calc(100vw - 32px));
