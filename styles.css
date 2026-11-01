@@ -135,6 +135,14 @@
 
 .keyauth-card > small { color: var(--muted); letter-spacing: 3px; }
 .keyauth-card h2 { margin: 0; font-family: "Space Grotesk", sans-serif; }
+.keyauth-subtitle {
+  margin: -10px 0 2px;
+  color: #75aaff;
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-align: center;
+  text-transform: uppercase;
+}
 .keyauth-card label { display: grid; gap: 8px; color: var(--muted); font-size: 11px; }
 .keyauth-card input {
   height: 48px;
@@ -182,6 +190,12 @@
     left: 50%;
     transform: translateX(-50%);
     opacity: .7;
+  }
+}
+
+@media (max-width: 760px) {
+  .emulator-actions {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -673,12 +687,13 @@ h1 span {
 
 .emulator-actions {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 12px;
   margin-bottom: 10px;
 }
 
 .emulator-button {
+  text-decoration: none;
   min-height: 58px;
   display: flex;
   align-items: center;

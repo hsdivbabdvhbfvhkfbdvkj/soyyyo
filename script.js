@@ -167,17 +167,6 @@ function playWelcomeSound() {
     oscillator.stop(context.currentTime + delay + duration + 0.05);
   });
 
-  if ("speechSynthesis" in window) {
-    window.setTimeout(() => {
-      window.speechSynthesis.cancel();
-      const welcome = new SpeechSynthesisUtterance("Bienvenido a HyperSex");
-      welcome.lang = "es-ES";
-      welcome.rate = 0.95;
-      welcome.pitch = 1.1;
-      window.speechSynthesis.speak(welcome);
-    }, 450);
-  }
-
   window.setTimeout(() => context.close(), 2200);
 }
 
@@ -286,8 +275,8 @@ document.querySelectorAll("[data-device]").forEach((button) => {
     configureDpiRange();
     downloadDnsProfile.hidden = state.device !== "ios";
     dnsStatus.textContent = "";
-    launchPlatform.textContent = state.device === "ios" ? "iOS" : "Android";
-    document.querySelector("#systemPlatform").textContent = state.device === "ios" ? "iOS" : "Android";
+    launchPlatform.textContent = state.device === "pc" ? "PC" : state.device === "ios" ? "iOS" : "Android";
+    document.querySelector("#systemPlatform").textContent = launchPlatform.textContent;
   });
 });
 
@@ -367,6 +356,11 @@ function configureDpiRange() {
     dpiInput.max = "120";
     dpiInput.step = "1";
     dpiInput.value = "60";
+  } else if (state.device === "pc") {
+    dpiInput.min = "400";
+    dpiInput.max = "1600";
+    dpiInput.step = "50";
+    dpiInput.value = "800";
   } else {
     dpiInput.min = "240";
     dpiInput.max = "800";
@@ -375,7 +369,7 @@ function configureDpiRange() {
   }
   dpiValue.textContent = dpiInput.value;
   document.querySelector("#profileBadge").textContent =
-    `${state.device === "ios" ? "iOS" : "Android"} / ${styleProfiles[state.style].label}`;
+    `${state.device === "pc" ? "PC" : state.device === "ios" ? "iOS" : "Android"} / ${styleProfiles[state.style].label}`;
   document.querySelector("#systemProfile").textContent = styleProfiles[state.style].label;
 }
 
@@ -436,10 +430,10 @@ document.querySelectorAll("[data-style]").forEach((button) => {
 
 function getGeneratedProfile() {
   const base = styleProfiles[state.style];
-  const referenceDpi = state.device === "ios" ? 60 : 480;
-  const dpiStep = state.device === "ios" ? 15 : 80;
+  const referenceDpi = state.device === "ios" ? 60 : state.device === "pc" ? 800 : 480;
+  const dpiStep = state.device === "ios" ? 15 : state.device === "pc" ? 100 : 80;
   const dpiFactor = Math.round((Number(dpiInput.value) - referenceDpi) / dpiStep);
-  const deviceFactor = state.device === "ios" ? -2 : 0;
+  const deviceFactor = state.device === "ios" ? -2 : state.device === "pc" ? 3 : 0;
   const adjustment = dpiFactor + deviceFactor;
 
   return {
