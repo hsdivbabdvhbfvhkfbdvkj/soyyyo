@@ -243,6 +243,7 @@
         </div>
       </section>
     </section>
+    <section class="custom-sections" id="customSections" aria-live="polite"></section>
   </main>
 
   <footer>
@@ -279,6 +280,7 @@
       <button class="active" data-admin-tab="content" type="button">Contenido</button>
       <button data-admin-tab="design" type="button">Diseño</button>
       <button data-admin-tab="actions" type="button">Botones</button>
+      <button data-admin-tab="builder" type="button">Constructor</button>
       <button data-admin-tab="advanced" type="button">Avanzado</button>
     </div>
 
@@ -374,13 +376,28 @@
     <div class="admin-section" data-admin-section="actions">
       <label>Texto del botón<input id="buttonText" value="Abrir panel"></label>
       <label>Acción<select id="buttonAction">
+        <option value="url">Abrir enlace personalizado</option>
         <option value="generate">Generar sensibilidad</option>
         <option value="copy">Copiar configuración</option>
         <option value="scroll">Ir al generador</option>
         <option value="alert">Mostrar mensaje</option>
       </select></label>
+      <label>URL o enlace<input id="buttonUrl" type="url" placeholder="https://ejemplo.com"></label>
+      <label>Color del botón<input id="buttonColor" type="color" value="#5865f2"></label>
       <button class="secondary-action" id="addButton" type="button">Agregar botón</button>
       <div class="admin-button-list" id="adminButtonList"></div>
+    </div>
+
+    <div class="admin-section" data-admin-section="builder">
+      <div class="builder-group">
+        <div class="builder-heading"><small>SECCIÓN PERSONALIZADA</small><strong>Crear contenido</strong></div>
+        <label>Título de la sección<input id="sectionTitle" placeholder="Ej. Nuevas funciones"></label>
+        <label>Texto de la sección<textarea id="sectionText" rows="4" placeholder="Escribe aquí el contenido..."></textarea></label>
+        <label>Imagen de la sección<input id="sectionImage" type="file" accept="image/*"></label>
+        <div class="image-preview" id="sectionImagePreview">Sin imagen</div>
+        <button class="secondary-action" id="addSection" type="button">Agregar sección</button>
+        <div class="builder-list" id="adminSectionList"></div>
+      </div>
     </div>
 
     <div class="admin-section" data-admin-section="advanced">

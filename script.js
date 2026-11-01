@@ -821,6 +821,27 @@ function loadAdminFields(config) {
   showImagePreview(config.image);
 }
 
+function compressImage(file, maxWidth = 1600, quality = 0.78) {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const image = new Image();
+      image.onload = () => {
+        const scale = Math.min(1, maxWidth / image.naturalWidth);
+        const canvas = document.createElement("canvas");
+        canvas.width = Math.round(image.naturalWidth * scale);
+        canvas.height = Math.round(image.naturalHeight * scale);
+        canvas.getContext("2d").drawImage(image, 0, 0, canvas.width, canvas.height);
+        resolve(canvas.toDataURL("image/jpeg", quality));
+      };
+      image.onerror = () => resolve(reader.result);
+      image.src = reader.result;
+    };
+    reader.onerror = () => resolve("");
+    reader.readAsDataURL(file);
+  });
+}
+
 function showImagePreview(source) {
   const preview = document.querySelector("#imagePreview");
   preview.replaceChildren();
@@ -833,27 +854,20 @@ function showImagePreview(source) {
   preview.appendChild(image);
 }
 
-document.querySelector("#adminImage").addEventListener("change", (event) => {
+document.querySelector("#adminImage").addEventListener("change", async (event) => {
   const [file] = event.target.files;
   if (!file) return;
-  const reader = new FileReader();
-  reader.addEventListener("load", () => {
-    savedConfig.image = reader.result;
-    showImagePreview(reader.result);
-  });
-  reader.readAsDataURL(file);
+  const source = await compressImage(file);
+  savedConfig.image = source;
+  showImagePreview(source);
 });
 
 let pendingSectionImage = "";
-document.querySelector("#sectionImage").addEventListener("change", (event) => {
+document.querySelector("#sectionImage").addEventListener("change", async (event) => {
   const [file] = event.target.files;
   if (!file) return;
-  const reader = new FileReader();
-  reader.addEventListener("load", () => {
-    pendingSectionImage = reader.result;
-    document.querySelector("#sectionImagePreview").innerHTML = `<img src="${reader.result}" alt="Vista previa">`;
-  });
-  reader.readAsDataURL(file);
+  pendingSectionImage = await compressImage(file);
+  document.querySelector("#sectionImagePreview").innerHTML = `<img src="${pendingSectionImage}" alt="Vista previa">`;
 });
 
 function renderCustomSections(sections) {
@@ -970,9 +984,19 @@ document.querySelector("#adminSave").addEventListener("click", () => {
     copiedText: document.querySelector("#adminCopiedText").value.trim(),
     errorText: document.querySelector("#adminErrorText").value.trim()
   };
-  localStorage.setItem("hypersex-admin-config", JSON.stringify(savedConfig));
-  applyConfig(savedConfig);
-  openAdmin(false);
+  try {
+    localStorage.setItem("hypersex-admin-config", JSON.stringify(savedConfig));
+    const saveStatus = document.querySelector("#lockStatus") || document.querySelector("#adminSave");
+    applyConfig(savedConfig);
+    openAdmin(false);
+  } catch (error) {
+    window.alert("No se pudo guardar todo el diseño porque las fotos ocupan demasiado espacio. Se eliminarán y volverás a subir imágenes más pequeñas.");
+    savedConfig.image = "";
+    savedConfig.sections = savedConfig.sections.map((section) => ({ ...section, image: "" }));
+    localStorage.setItem("hypersex-admin-config", JSON.stringify(savedConfig));
+    applyConfig(savedConfig);
+    openAdmin(false);
+  }
 });
 
 const themes = {

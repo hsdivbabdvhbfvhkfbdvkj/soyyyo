@@ -1471,12 +1471,23 @@ footer {
   .topbar, main, footer { width: calc(100% - 20px); }
   .topbar { height: 64px; }
   .top-actions { gap: 7px; }
+  .dashboard {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    overflow: visible;
+  }
+  .setup-panel,
+  .result-panel { width: 100%; padding: 18px 14px; }
+  .settings-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .style-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .style-card { min-width: 0; }
+  .platform-switch { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .status { display: none; }
   .brand { font-size: 13px; }
   .hero { min-height: 190px; padding: 28px 0; }
   h1 { font-size: 36px; line-height: .98; }
   .hero p { max-width: 92%; font-size: 13px; }
-  .dashboard { grid-template-columns: minmax(0,42%) minmax(0,58%); gap: 8px; }
+  .dashboard { grid-template-columns: 1fr; gap: 14px; }
   .setup-panel, .result-panel { padding: 14px 10px; }
   .panel-heading { gap: 8px; }
   .panel-heading > span { display: none; }
