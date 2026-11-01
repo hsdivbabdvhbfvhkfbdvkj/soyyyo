@@ -186,6 +186,22 @@ async function initializeKeyAuth() {
   }
 }
 
+const keyauthLock = document.querySelector("#keyauthLock");
+const keyauthCard = document.querySelector("#keyauthForm");
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+if (keyauthLock && keyauthCard && !prefersReducedMotion && window.matchMedia("(hover: hover)").matches) {
+  keyauthLock.addEventListener("pointermove", (event) => {
+    const bounds = keyauthLock.getBoundingClientRect();
+    const x = (event.clientX - bounds.left) / bounds.width - 0.5;
+    const y = (event.clientY - bounds.top) / bounds.height - 0.5;
+    keyauthCard.style.transform = `rotateX(${4 - y * 9}deg) rotateY(${-3 + x * 10}deg) translateZ(0)`;
+  });
+  keyauthLock.addEventListener("pointerleave", () => {
+    keyauthCard.style.transform = "rotateX(4deg) rotateY(-3deg) translateZ(0)";
+  });
+}
+
 document.querySelector("#keyauthForm").addEventListener("submit", async (event) => {
   event.preventDefault();
   const status = document.querySelector("#keyauthStatus");
