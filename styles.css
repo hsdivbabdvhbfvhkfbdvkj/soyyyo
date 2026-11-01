@@ -160,6 +160,24 @@ body::after {
   padding: 1px;
 }
 
+.login-hud {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: -14px -14px 0;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(118,170,255,.14);
+  color: #75aaff;
+  font-size: 9px;
+  letter-spacing: 2px;
+}
+.login-hud i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #5cffb1;
+  box-shadow: 0 0 12px #5cffb1;
+}
 .keyauth-card > small { color: var(--muted); letter-spacing: 3px; }
 .keyauth-card h2 { margin: 0; font-family: "Space Grotesk", sans-serif; }
 .keyauth-subtitle {
@@ -194,6 +212,22 @@ body::after {
   box-shadow: 0 12px 28px rgba(65, 123, 255, .28);
   cursor: pointer;
 }
+.login-discord {
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  border: 1px solid rgba(88,101,242,.55);
+  border-radius: 8px;
+  color: #cdd4ff;
+  font-size: 11px;
+  font-weight: 700;
+  text-decoration: none;
+  background: rgba(88,101,242,.12);
+}
+.login-discord svg { width: 19px; height: 19px; color: #5865f2; }
+.login-discord:hover { background: rgba(88,101,242,.22); }
 .keyauth-status { min-height: 18px; color: #ff789f; font-size: 11px; }
 .keyauth-time {
   padding: 10px;
