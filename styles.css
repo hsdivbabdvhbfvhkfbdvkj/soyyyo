@@ -1558,85 +1558,67 @@ footer {
   .keyauth-card input, .keyauth-card button { height: 48px; }
 }
 
-/* PREMIUM 3D LOGIN */
+/* CARD-ONLY 3D LOGIN */
 .keyauth-lock {
-  perspective: 1200px;
+  perspective: 1300px;
   isolation: isolate;
 }
-.keyauth-lock::after {
-  content: "";
-  position: absolute;
-  width: min(720px, 90vw);
-  height: min(720px, 90vw);
-  border: 1px solid rgba(105,161,255,.08);
-  border-radius: 50%;
-  box-shadow:
-    0 0 0 70px rgba(105,161,255,.018),
-    0 0 0 140px rgba(105,161,255,.012),
-    inset 0 0 90px rgba(105,161,255,.025);
-  animation: loginOrbit 18s linear infinite;
-}
+.keyauth-lock::after,
+.login-orbit,
+.login-shadow-platform { display: none; }
 .keyauth-lock .keyauth-card {
   transform-style: preserve-3d;
-  transform: rotateX(4deg) rotateY(-3deg) translateZ(0);
-  transition: transform .18s ease-out;
+  transform: rotateX(3deg) rotateY(-3deg) translateZ(0);
+  transition: transform .16s ease-out, box-shadow .16s ease-out;
   will-change: transform;
+  box-shadow:
+    24px 28px 0 -14px rgba(7,12,25,.96),
+    18px 22px 0 -9px rgba(35,62,105,.72),
+    42px 48px 70px rgba(0,0,0,.72),
+    0 0 70px rgba(42,103,224,.16),
+    inset 0 1px rgba(255,255,255,.10);
 }
 .keyauth-lock .keyauth-card::before {
   content: "";
   position: absolute;
-  inset: 0;
+  inset: 7px;
   z-index: -1;
   border-radius: inherit;
-  background: linear-gradient(115deg, rgba(255,255,255,.09), transparent 24%, transparent 70%, rgba(91,156,255,.08));
-  transform: translateZ(-12px);
+  border: 1px solid rgba(255,255,255,.025);
+  background: linear-gradient(125deg, rgba(255,255,255,.075), transparent 28%, transparent 70%, rgba(91,156,255,.075));
+  transform: translateZ(-10px);
 }
-.login-orbit {
-  position: absolute;
-  width: 180%;
-  height: 180%;
-  left: -40%;
-  top: -40%;
-  border: 1px solid rgba(105,161,255,.08);
-  border-radius: 50%;
-  transform: translateZ(-55px) rotateX(68deg);
-  pointer-events: none;
+.keyauth-card > *:not(.login-frame):not(.login-grid-lines) {
+  transform: translateZ(22px);
 }
-.login-orbit i {
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  left: 18%;
-  top: 16%;
-  border-radius: 50%;
-  background: #7eb1ff;
-  box-shadow: 0 0 18px #7eb1ff;
+.login-frame { transform: translateZ(14px); }
+.login-grid-lines { transform: translateZ(8px); }
+.login-hud {
+  background: linear-gradient(90deg, rgba(74,134,255,.07), transparent);
 }
-.login-shadow-platform {
-  position: absolute;
-  width: 82%;
-  height: 48px;
-  left: 9%;
-  bottom: -82px;
-  border-radius: 50%;
-  background: rgba(0,0,0,.78);
-  filter: blur(18px);
-  transform: rotateX(74deg) translateZ(-30px);
-  pointer-events: none;
-}
-.keyauth-card > * { transform: translateZ(18px); }
-.login-hud, .login-frame, .login-grid-lines, .login-orbit, .login-shadow-platform { transform-style: preserve-3d; }
-.login-frame { transform: translateZ(12px); }
 .keyauth-card .brand-mark {
-  box-shadow: 0 12px 35px rgba(92,156,255,.28), inset 0 0 12px rgba(255,255,255,.12);
+  transform: translateZ(38px) rotateX(-3deg);
+  box-shadow:
+    10px 12px 0 rgba(5,10,23,.82),
+    0 18px 38px rgba(92,156,255,.28),
+    inset 0 1px rgba(255,255,255,.18);
+}
+.keyauth-card input,
+.keyauth-card button,
+.login-discord {
+  transform: translateZ(28px);
+  box-shadow: 0 12px 24px rgba(0,0,0,.26);
 }
 .keyauth-card button {
-  box-shadow: 0 16px 34px rgba(65,123,255,.32), inset 0 1px rgba(255,255,255,.5);
+  box-shadow:
+    0 8px 0 rgba(43,82,148,.78),
+    0 18px 34px rgba(65,123,255,.32),
+    inset 0 1px rgba(255,255,255,.5);
 }
-@keyframes loginOrbit { to { transform: rotate(360deg); } }
 
 @media (hover: none), (max-width: 560px) {
-  .keyauth-lock .keyauth-card { transform: none; }
-  .keyauth-lock::after { width: 480px; height: 480px; }
-  .login-shadow-platform { display: none; }
+  .keyauth-lock .keyauth-card {
+    transform: rotateX(1deg) rotateY(-1deg);
+    box-shadow: 10px 14px 0 -7px rgba(7,12,25,.96), 20px 24px 45px rgba(0,0,0,.62);
+  }
 }

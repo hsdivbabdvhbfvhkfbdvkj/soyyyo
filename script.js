@@ -195,10 +195,10 @@ if (keyauthLock && keyauthCard && !prefersReducedMotion && window.matchMedia("(h
     const bounds = keyauthLock.getBoundingClientRect();
     const x = (event.clientX - bounds.left) / bounds.width - 0.5;
     const y = (event.clientY - bounds.top) / bounds.height - 0.5;
-    keyauthCard.style.transform = `rotateX(${4 - y * 9}deg) rotateY(${-3 + x * 10}deg) translateZ(0)`;
+    keyauthCard.style.transform = `rotateX(${3 - y * 6}deg) rotateY(${-3 + x * 7}deg) translateZ(12px)`;
   });
   keyauthLock.addEventListener("pointerleave", () => {
-    keyauthCard.style.transform = "rotateX(4deg) rotateY(-3deg) translateZ(0)";
+    keyauthCard.style.transform = "rotateX(3deg) rotateY(-3deg) translateZ(0)";
   });
 }
 
