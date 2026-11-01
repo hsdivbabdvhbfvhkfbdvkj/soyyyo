@@ -985,17 +985,19 @@ document.querySelector("#adminSave").addEventListener("click", () => {
     errorText: document.querySelector("#adminErrorText").value.trim()
   };
   try {
-    localStorage.setItem("hypersex-admin-config", JSON.stringify(savedConfig));
-    const saveStatus = document.querySelector("#lockStatus") || document.querySelector("#adminSave");
+    const serialized = JSON.stringify(savedConfig);
+    localStorage.setItem("hypersex-admin-config", serialized);
     applyConfig(savedConfig);
     openAdmin(false);
+    window.alert("Diseño guardado correctamente.");
   } catch (error) {
-    window.alert("No se pudo guardar todo el diseño porque las fotos ocupan demasiado espacio. Se eliminarán y volverás a subir imágenes más pequeñas.");
-    savedConfig.image = "";
-    savedConfig.sections = savedConfig.sections.map((section) => ({ ...section, image: "" }));
-    localStorage.setItem("hypersex-admin-config", JSON.stringify(savedConfig));
-    applyConfig(savedConfig);
-    openAdmin(false);
+    const hasLargeImages = Boolean(savedConfig.image) ||
+      (Array.isArray(savedConfig.sections) && savedConfig.sections.some((section) => Boolean(section.image)));
+    if (hasLargeImages) {
+      window.alert("Las imágenes son demasiado grandes para guardarlas. Comprímelas o elimina una antes de guardar.");
+      return;
+    }
+    window.alert("No se pudo guardar la configuración. Comprueba que el navegador permita almacenamiento local.");
   }
 });
 
