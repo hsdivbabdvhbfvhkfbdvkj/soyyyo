@@ -1490,3 +1490,70 @@ footer {
   .result-actions { flex-wrap: wrap; gap: 8px; }
   .copy-button { width: 100%; padding-inline: 8px; font-size: 11px; }
 }
+
+/* NEXT-GEN LOGIN INTERFACE */
+.keyauth-lock {
+  background:
+    linear-gradient(rgba(64, 130, 255, .055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(64, 130, 255, .055) 1px, transparent 1px),
+    radial-gradient(circle at 50% 50%, rgba(45, 105, 230, .16), transparent 29%),
+    linear-gradient(145deg, rgba(2, 4, 10, .98), rgba(4, 9, 24, .94)),
+    url("IMG_5697.jpg") center / cover fixed no-repeat;
+  background-size: 32px 32px, 32px 32px, auto, auto, cover;
+}
+.keyauth-lock::before {
+  background:
+    linear-gradient(90deg, transparent 49.9%, rgba(91,156,255,.12) 50%, transparent 50.1%),
+    linear-gradient(transparent 49.9%, rgba(91,156,255,.08) 50%, transparent 50.1%),
+    radial-gradient(circle at 50% 50%, transparent 0 23%, rgba(91,156,255,.06) 23.2% 23.35%, transparent 23.55%),
+    radial-gradient(circle at 50% 50%, transparent 0 34%, rgba(91,156,255,.04) 34.2% 34.35%, transparent 34.55%);
+}
+.keyauth-neon { display: none; }
+.keyauth-lock .keyauth-card {
+  width: min(420px, calc(100vw - 32px));
+  gap: 14px;
+  overflow: hidden;
+  border-radius: 3px 18px 18px 18px;
+  background: linear-gradient(150deg, rgba(8,14,29,.97), rgba(3,6,15,.94));
+  border-color: rgba(105,161,255,.42);
+  box-shadow: 0 36px 120px rgba(0,0,0,.82), 0 0 80px rgba(42,103,224,.16), inset 0 0 35px rgba(55,119,255,.035);
+}
+.login-frame {
+  position: absolute;
+  inset: 9px;
+  border: 1px solid rgba(105,161,255,.09);
+  border-left-color: rgba(105,161,255,.5);
+  border-bottom-color: rgba(105,161,255,.28);
+  clip-path: polygon(0 0, 28% 0, 28% 1px, 72% 1px, 72% 0, 100% 0, 100% 100%, 75% 100%, 75% calc(100% - 1px), 25% calc(100% - 1px), 25% 100%, 0 100%);
+  pointer-events: none;
+}
+.login-grid-lines {
+  position: absolute;
+  inset: 0;
+  opacity: .22;
+  pointer-events: none;
+  background: repeating-linear-gradient(90deg, transparent 0 31px, rgba(105,161,255,.08) 32px, transparent 33px);
+  mask-image: linear-gradient(180deg, black, transparent 42%);
+}
+.login-hud { position: relative; z-index: 2; font-family: "Space Grotesk", sans-serif; }
+.login-hud i { animation: loginPulse 1.8s ease-in-out infinite; }
+@keyframes loginPulse { 50% { opacity: .3; box-shadow: 0 0 3px #5cffb1; } }
+.keyauth-card .brand-mark {
+  width: 54px;
+  height: 54px;
+  margin-top: 4px;
+  border-radius: 4px;
+  box-shadow: 0 0 28px rgba(92,156,255,.3);
+}
+.keyauth-card h2 { font-size: 27px; letter-spacing: 0; }
+.keyauth-subtitle { text-align: left; margin-left: 0; }
+.keyauth-card input { height: 52px; border-radius: 3px; text-transform: uppercase; letter-spacing: 1.5px; }
+.keyauth-card button { height: 50px; border-radius: 3px; text-transform: uppercase; letter-spacing: 1px; }
+.login-discord { border-radius: 3px; }
+
+@media (max-width: 560px) {
+  .keyauth-lock { padding: 16px; }
+  .keyauth-lock .keyauth-card { padding: 28px 22px 22px; gap: 12px; }
+  .keyauth-card h2 { font-size: 24px; }
+  .keyauth-card input, .keyauth-card button { height: 48px; }
+}
