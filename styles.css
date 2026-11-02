@@ -50,7 +50,9 @@
   display: grid;
   place-items: center;
   flex: 0 0 42px;
+  width: 42px;
   height: 42px;
+  object-fit: cover;
   border-radius: 5px;
   background: linear-gradient(135deg, #58a6ff, #1d4f8f);
   color: white;

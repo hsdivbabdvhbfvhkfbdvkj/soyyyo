@@ -162,7 +162,7 @@ function showWelcomePlayer() {
   welcomePlayer = document.createElement("div");
   welcomePlayer.className = "welcome-player";
   welcomePlayer.innerHTML = `
-    <div class="welcome-player-cover">A</div>
+    <img class="welcome-player-cover" src="donde-hubo-fuego-cover.jpg" alt="Portada de Donde hubo fuego">
     <div class="welcome-player-info">
       <strong>Donde hubo fuego</strong>
       <span>Anuel AA · reproductor</span>
