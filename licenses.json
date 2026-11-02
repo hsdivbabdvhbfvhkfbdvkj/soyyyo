@@ -167,7 +167,9 @@
       "createdAt": 1793620263101,
       "expiresAt": 1793706663100,
       "maxDevices": 1,
-      "hwids": [],
+      "hwids": [
+        "hypersex-site-check"
+      ],
       "revoked": false
     }
   ]
