@@ -3,41 +3,11 @@
   "users": [],
   "licenses": [
     {
-      "hash": "bb9269d363c7333b06643b36d393fd63111284d478ba63cb04d360d99a84ba5a",
-      "owner": "",
-      "createdAt": 1793606426931,
-      "expiresAt": 1796203255543,
-      "maxDevices": 1,
-      "hwids": [],
-      "revoked": true
-    },
-    {
-      "hash": "84806b3329c83d2153309105d10473c2683e9c927ed0b26486fdd309bccabd98",
-      "owner": "",
-      "createdAt": 1793606428595,
-      "expiresAt": 1793865628595,
-      "maxDevices": 1,
-      "hwids": [
-        "test-device-final"
-      ],
-      "revoked": false
-    },
-    {
-      "hash": "7465228a930b4e2e3fa75c583702a81f2fa5c01d9fc007fbdf696df8ffb9dea7",
-      "owner": "prueba",
-      "createdAt": 1793606886445,
-      "expiresAt": 1796198886445,
-      "maxDevices": 1,
-      "hwids": [
-        "test-device-001"
-      ],
-      "revoked": false
-    },
-    {
-      "hash": "2bbd92be0769557d3583a473127bce12e98d9e568cc2ebadf73a7fa525a57c40",
-      "owner": "",
-      "createdAt": 1793609073175,
-      "expiresAt": 1796201073175,
+      "hash": "55e086d84e50495736862e85b009c5347134437553122b0293527c81cab66f6c",
+      "encryptedKey": "UWis71BEJPqbJOfY8AvJnhz5D2bzgCfandnnepAudVB3npBQMaPCI+tKow87x9xl",
+      "owner": "sebastian65",
+      "createdAt": 1793612091938,
+      "expiresAt": 1793698491937,
       "maxDevices": 1,
       "hwids": [
         "c324995a-a6d5-4619-bcf1-f14a8f6a1b5c"
