@@ -307,7 +307,6 @@ document.querySelector("#keyauthForm").addEventListener("submit", async (event) 
     }
     document.querySelector("#keyauthLock").classList.add("hidden");
     status.textContent = "";
-    showFreeFirePermission();
   } catch (error) {
     welcomeAudio?.pause();
     if (welcomeAudio) welcomeAudio.currentTime = 0;
@@ -324,7 +323,6 @@ const launchPlatform = document.querySelector("#launchPlatform");
 const downloadDnsProfile = document.querySelector("#downloadDnsProfile");
 const dnsStatus = document.querySelector("#dnsStatus");
 const emulatorStatus = document.querySelector("#emulatorStatus");
-const freeFirePermission = document.querySelector("#freeFirePermission");
 
 function launchDesktopApp(protocol, statusText) {
   emulatorStatus.textContent = statusText;
@@ -460,18 +458,7 @@ function launchFreeFire() {
     "intent://launch/#Intent;scheme=freefire;package=com.dts.freefireth;end";
 }
 
-function showFreeFirePermission() {
-  if (freeFirePermission && !freeFirePermission.open) freeFirePermission.showModal();
-}
-
 launchGame.addEventListener("click", launchFreeFire);
-document.querySelector("#allowFreeFire").addEventListener("click", () => {
-  freeFirePermission.close("allow");
-  launchFreeFire();
-});
-document.querySelector("#denyFreeFire").addEventListener("click", () => {
-  freeFirePermission.close("deny");
-});
 
 function configureDpiRange() {
   if (state.device === "ios") {
