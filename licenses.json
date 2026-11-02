@@ -149,6 +149,16 @@
       "maxDevices": 1,
       "hwids": [],
       "revoked": false
+    },
+    {
+      "hash": "863c546dc63020604f84df5be774e7b28ea1826a36ec8875a005b50192818886",
+      "encryptedKey": "jyx7GXj6wAa4HinsEPOOu/ahC17PculO5bm4xJfgW5PvlU0ld1RgHILIrCAx/rKC",
+      "owner": "hwid-check",
+      "createdAt": 1793619681524,
+      "expiresAt": 1793706081524,
+      "maxDevices": 1,
+      "hwids": [],
+      "revoked": false
     }
   ]
 }
