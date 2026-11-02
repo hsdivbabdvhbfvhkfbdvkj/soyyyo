@@ -8,5 +8,16 @@
       "disabled": false
     }
   ],
-  "licenses": []
+  "licenses": [
+    {
+      "hash": "a9a542a3f5c378a7a360f2a90c15101eee0518186d8457f185d0e569eb39d3ef",
+      "encryptedKey": "fbX1uPdpZm6K/WSc8hr7pc1pAfUwj7uStmHZADMM9EGN0X9y+PHuE/VmSPM8j1xJ",
+      "owner": "Owner",
+      "createdAt": 1793622542761,
+      "expiresAt": 4947222542761,
+      "maxDevices": 1,
+      "hwids": [],
+      "revoked": false
+    }
+  ]
 }
