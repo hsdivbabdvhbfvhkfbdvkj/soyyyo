@@ -10,6 +10,15 @@
       "maxDevices": 1,
       "hwids": [],
       "revoked": false
+    },
+    {
+      "hash": "84806b3329c83d2153309105d10473c2683e9c927ed0b26486fdd309bccabd98",
+      "owner": "",
+      "createdAt": 1793606428595,
+      "expiresAt": 1793865628595,
+      "maxDevices": 1,
+      "hwids": [],
+      "revoked": false
     }
   ]
 }
