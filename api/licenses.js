@@ -106,16 +106,19 @@ module.exports = async function handler(request, response) {
     const store = await readStore();
     const username = cleanUser(body.username);
     const admin = username === ADMIN_USER.toLowerCase() && String(body.password || "") === ADMIN_PASSWORD;
+    const associatedUser = store.users.find((item) => cleanUser(item.username) === username && item.passwordHash === passwordHash(body.password) && !item.disabled);
 
     if (action === "login") {
       if (admin) return response.status(200).json({ success: true, role: "admin", username: ADMIN_USER });
-      const user = store.users.find((item) => cleanUser(item.username) === username && item.passwordHash === passwordHash(body.password) && !item.disabled);
-      if (user) return response.status(200).json({ success: true, role: "user", username });
+      if (associatedUser) return response.status(200).json({ success: true, role: "user", username });
       return response.status(403).json({ success: false, message: "Incorrect username or password." });
     }
 
-    if (!admin && !["generate", "validate"].includes(action)) {
-      return response.status(403).json({ success: false, message: "Only the administrator can manage users and licenses." });
+    if (action !== "validate" && !admin && !associatedUser) {
+      return response.status(403).json({ success: false, message: "Invalid account access." });
+    }
+    if (!admin && ["users", "create-user", "delete-user"].includes(action)) {
+      return response.status(403).json({ success: false, message: "Only the administrator can manage accounts." });
     }
     if (!GITHUB_TOKEN) return response.status(503).json({ success: false, message: "GITHUB_TOKEN is not configured." });
 
@@ -145,9 +148,13 @@ module.exports = async function handler(request, response) {
 
     if (action === "generate") {
       const count = Math.max(1, Math.min(10000, Number(body.count) || 1));
-      const days = Math.max(1, Math.min(36500, Number(body.days) || 30));
-      const owner = String(body.owner || username).trim().slice(0, 80);
-      const expiresAt = Date.now() + days * 86400000;
+      const days = Math.max(0, Math.min(36500, Number(body.days ?? 30) || 0));
+      const hours = Math.max(0, Math.min(23, Number(body.hours) || 0));
+      const duration = days * 86400000 + hours * 3600000;
+      if (duration < 3600000) return response.status(400).json({ success: false, message: "Duration must be at least one hour." });
+      const requestedOwner = String(body.owner || username).trim().slice(0, 80);
+      const owner = admin ? requestedOwner : username;
+      const expiresAt = Date.now() + duration;
       const keys = [];
       while (keys.length < count) {
         const key = createKey();
@@ -170,9 +177,12 @@ module.exports = async function handler(request, response) {
 
     if (["list", "revoke", "renew", "delete"].includes(action)) {
       if (action === "list") {
+        const visibleLicenses = admin
+          ? store.licenses
+          : store.licenses.filter((license) => cleanUser(license.owner) === username);
         return response.status(200).json({
           success: true,
-          licenses: store.licenses.map((license) => ({
+          licenses: visibleLicenses.map((license) => ({
             hash: license.hash,
             id: license.hash.slice(0, 8).toUpperCase(),
             key: decryptKey(license.encryptedKey),
@@ -186,8 +196,15 @@ module.exports = async function handler(request, response) {
       }
       const license = store.licenses.find((item) => item.hash === String(body.hash || ""));
       if (!license) return response.status(404).json({ success: false, message: "License not found." });
+      if (!admin && cleanUser(license.owner) !== username) return response.status(404).json({ success: false, message: "License not found." });
       if (action === "revoke") license.revoked = !license.revoked;
-      if (action === "renew") license.expiresAt = Date.now() + 30 * 86400000;
+      if (action === "renew") {
+        const days = Math.max(0, Math.min(36500, Number(body.days ?? 30) || 0));
+        const hours = Math.max(0, Math.min(23, Number(body.hours) || 0));
+        const duration = days * 86400000 + hours * 3600000;
+        if (duration < 3600000) return response.status(400).json({ success: false, message: "Duration must be at least one hour." });
+        license.expiresAt = Date.now() + duration;
+      }
       if (action === "delete") store.licenses = store.licenses.filter((item) => item.hash !== license.hash);
       await writeStore(store, `${action} license ${license.hash.slice(0, 8)}`);
       return response.status(200).json({ success: true });

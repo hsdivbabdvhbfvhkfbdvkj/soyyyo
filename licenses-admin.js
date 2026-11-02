@@ -40,11 +40,11 @@ async function enter() {
       await Promise.all([loadLicenses(), loadUsers()]);
     } else {
       document.querySelector("#userManagement").hidden = true;
-      document.querySelector("#licenseTablePanel").hidden = true;
       const ownerInput = document.querySelector("#owner");
       ownerInput.value = result.username;
       ownerInput.readOnly = true;
-      document.querySelector(".page-heading p").textContent = "Crea keys individuales asociadas a tu cuenta.";
+      document.querySelector(".page-heading p").textContent = "Consulta y gestiona las keys asociadas a tu cuenta.";
+      await loadLicenses();
     }
   } catch (error) {
     session = null;
@@ -74,7 +74,11 @@ async function loadLicenses() {
       <td>${license.hwids.length}/1</td>
       <td>${new Date(license.expiresAt).toLocaleString("es")}</td>
       <td><div class="actions">
-        <button data-action="renew" data-hash="${license.hash}" type="button">Renovar</button>
+        <label class="renew-duration" aria-label="Nueva duración">
+          <input data-renew-days type="number" min="0" max="36500" value="30"><span>d</span>
+          <input data-renew-hours type="number" min="0" max="23" value="0"><span>h</span>
+        </label>
+        <button data-action="renew" data-hash="${license.hash}" type="button">Aplicar</button>
         <button data-action="revoke" data-hash="${license.hash}" type="button">${license.revoked ? "Reactivar" : "Bloquear"}</button>
         <button class="danger" data-action="delete" data-hash="${license.hash}" type="button">Eliminar</button>
       </div></td>
@@ -106,12 +110,13 @@ document.querySelector("#generate").addEventListener("click", async () => {
     const result = await api("generate", {
       count: document.querySelector("#count").value,
       days: document.querySelector("#days").value,
+      hours: document.querySelector("#hours").value,
       owner: document.querySelector("#owner").value
     });
     const output = document.querySelector("#newKeys");
     output.value = result.keys.join("\n");
     output.style.display = "block";
-    if (session.role === "admin") await loadLicenses();
+    await loadLicenses();
   } catch (error) {
     alert(error.message);
   } finally {
@@ -149,7 +154,13 @@ licenseRows.addEventListener("click", async (event) => {
   if (!button) return;
   if (button.dataset.action === "delete" && !confirm("¿Eliminar esta licencia permanentemente?")) return;
   try {
-    await api(button.dataset.action, { hash: button.dataset.hash });
+    const data = { hash: button.dataset.hash };
+    if (button.dataset.action === "renew") {
+      const row = button.closest("tr");
+      data.days = row.querySelector("[data-renew-days]").value;
+      data.hours = row.querySelector("[data-renew-hours]").value;
+    }
+    await api(button.dataset.action, data);
     await loadLicenses();
   } catch (error) {
     alert(error.message);

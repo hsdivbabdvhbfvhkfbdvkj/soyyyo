@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#080c14">
   <title>HyperSex | Licencias</title>
   <style>
@@ -161,6 +161,8 @@
     .license-table td { padding: 13px 14px; border-top: 1px solid var(--line); color: #c8d4e4; font-size: 11px; text-align: left; }
     .license-table code { color: #a9caff; font: 11px Consolas, monospace; }
     .actions { display: flex; gap: 5px; flex-wrap: wrap; }
+    .renew-duration { display: inline-flex; align-items: center; gap: 4px; color: var(--muted); font-size: 9px; }
+    .renew-duration input { width: 48px; height: 29px; padding: 0 5px; border: 1px solid var(--line); border-radius: 5px; background: #0a111c; color: var(--text); font-size: 10px; }
     .actions button { min-height: 29px; padding: 0 8px; border: 1px solid var(--line); border-radius: 5px; background: #121e2d; color: #b7c8df; font-size: 9px; }
     .actions .danger, .danger { border-color: rgba(255,114,135,.25); background: rgba(255,114,135,.06); color: #ff91a2; }
     .status { display: inline-flex; padding: 5px 8px; border: 1px solid rgba(76,218,160,.15); border-radius: 12px; background: rgba(76,218,160,.06); color: #83e3b4; font-size: 9px; }
@@ -187,6 +189,8 @@
     .key-cell { display: flex; align-items: center; gap: 7px; min-width: 190px; }
     .key-cell code { max-width: 170px; overflow: hidden; color: #b7d4ff; font: 10px Consolas, monospace; text-overflow: ellipsis; }
     .key-cell button { min-height: 27px; padding: 0 8px; border: 1px solid rgba(103,159,235,.2); border-radius: 5px; background: rgba(57,120,220,.12); color: #a9cbff; font-size: 9px; }
+    .renew-duration { display: inline-flex; align-items: center; gap: 4px; margin-right: 5px; color: var(--muted); font-size: 9px; }
+    .renew-duration input { width: 48px; height: 29px; padding: 0 5px; border: 1px solid var(--line); border-radius: 5px; background: #0a111c; color: var(--text); font-size: 10px; }
     .legacy-key { color: #79869a; font-size: 10px; }
     @media (max-width: 900px) { .license-table table { min-width: 900px; } }
   </style>
@@ -219,7 +223,8 @@
           <div class="panel-head"><div><h2>Generar keys</h2><p>Cada key se vincula a un dispositivo.</p></div></div>
           <div class="panel-content"><div class="toolbar">
             <label>Cantidad<input id="count" type="number" value="10" min="1" max="10000"></label>
-            <label>Duración <span class="unit-note">días</span><input id="days" type="number" value="30" min="1" max="36500"></label>
+            <label>Duración <span class="unit-note">días</span><input id="days" type="number" value="30" min="0" max="36500"></label>
+            <label>Horas adicionales<input id="hours" type="number" value="0" min="0" max="23"></label>
             <label>Dispositivos<input id="devices" type="number" value="1" min="1" max="1" disabled></label>
             <label>Usuario asociado<input id="owner" placeholder="usuario"></label>
             <button class="primary" id="generate" type="button">Crear keys <span aria-hidden="true">?</span></button>
