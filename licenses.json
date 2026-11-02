@@ -8,16 +8,5 @@
       "disabled": false
     }
   ],
-  "licenses": [
-    {
-      "hash": "3fb69f2045478107f0250a2121e0ecfbc57b21fd14a558732fb6c3084219e409",
-      "encryptedKey": "bnXWzWYSjVn/CWswAvgC/zJIXQb2l5fECmDS+2AJ0VpANWg/gKSuepr1LwmbIlkY",
-      "owner": "polakito",
-      "createdAt": 1793622184948,
-      "expiresAt": 1796214184947,
-      "maxDevices": 1,
-      "hwids": [],
-      "revoked": false
-    }
-  ]
+  "licenses": []
 }
