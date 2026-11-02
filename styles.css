@@ -92,16 +92,6 @@
 
 .welcome-player-toggle { border: 1px solid rgba(118, 169, 255, .3) !important; background: rgba(118, 169, 255, .08) !important; }
 .welcome-player-close { color: #91afd3 !important; }
-.welcome-music-frame {
-  display: block;
-  grid-column: 1 / -1;
-  width: 100%;
-  height: 200px;
-  border: 0;
-  border-radius: 6px;
-  background: #000;
-}
-
 html {
   width: 100%;
   min-height: 100%;

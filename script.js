@@ -150,13 +150,8 @@ function getDeviceId() {
 
 const keyauthDeviceId = getDeviceId();
 
-let welcomeMusicFrame;
+let welcomeAudio;
 let welcomePlayer;
-
-function sendWelcomeCommand(func, args = []) {
-  if (!welcomeMusicFrame) return;
-  welcomeMusicFrame.contentWindow.postMessage(JSON.stringify({ event: "command", func, args }), "https://www.youtube-nocookie.com");
-}
 
 function showWelcomePlayer() {
   if (welcomePlayer) {
@@ -170,54 +165,60 @@ function showWelcomePlayer() {
     <img class="welcome-player-cover" src="donde-hubo-fuego-cover.jpg" alt="Portada de Donde hubo fuego">
     <div class="welcome-player-info">
       <strong>Donde hubo fuego</strong>
-      <span>Anuel AA · reproductor</span>
+      <span>Anuel AA - audio local</span>
     </div>
-    <button class="welcome-player-toggle" type="button" aria-label="Pausar música">\u23F8</button>
+    <button class="welcome-player-toggle" type="button" aria-label="Reproducir música">\u25B6</button>
     <button class="welcome-player-close" type="button" aria-label="Cerrar reproductor">\u00D7</button>
   `;
   document.body.appendChild(welcomePlayer);
-  if (welcomeMusicFrame) welcomePlayer.appendChild(welcomeMusicFrame);
 
   const toggle = welcomePlayer.querySelector(".welcome-player-toggle");
   toggle.addEventListener("click", () => {
-    const paused = toggle.dataset.paused === "true";
-    sendWelcomeCommand(paused ? "playVideo" : "pauseVideo");
-    toggle.dataset.paused = String(!paused);
-    toggle.textContent = paused ? "\u23F8" : "\u25B6";
-    toggle.setAttribute("aria-label", paused ? "Pausar música" : "Reanudar música");
+    if (!welcomeAudio) return;
+    if (welcomeAudio.paused) {
+      welcomeAudio.play().catch(() => {});
+    } else {
+      welcomeAudio.pause();
+    }
   });
 
   welcomePlayer.querySelector(".welcome-player-close").addEventListener("click", () => {
-    sendWelcomeCommand("pauseVideo");
+    welcomeAudio?.pause();
+    if (welcomeAudio) welcomeAudio.currentTime = 0;
     welcomePlayer.classList.remove("visible");
   });
   welcomePlayer.classList.add("visible");
 }
 
 function prepareWelcomeMusic() {
-  if (welcomeMusicFrame) return welcomeMusicFrame;
-
-  showWelcomePlayer();
-  welcomeMusicFrame = document.createElement("iframe");
-  welcomeMusicFrame.src = `https://www.youtube-nocookie.com/embed/FboTyBsFZQs?autoplay=1&mute=0&enablejsapi=1&controls=1&playsinline=1&rel=0&origin=${encodeURIComponent(location.origin)}`;
-  welcomeMusicFrame.title = "Reproducción musical";
-  welcomeMusicFrame.allow = "autoplay; encrypted-media; picture-in-picture";
-  welcomeMusicFrame.className = "welcome-music-frame";
-  welcomeMusicFrame.setAttribute("allowfullscreen", "");
-  welcomePlayer.appendChild(welcomeMusicFrame);
-  return welcomeMusicFrame;
+  if (welcomeAudio) return welcomeAudio;
+  welcomeAudio = new Audio("anuel.mp3");
+  welcomeAudio.preload = "auto";
+  welcomeAudio.volume = 0.75;
+  welcomeAudio.addEventListener("play", () => {
+    const toggle = welcomePlayer?.querySelector(".welcome-player-toggle");
+    if (!toggle) return;
+    toggle.dataset.paused = "false";
+    toggle.textContent = "\u23F8";
+    toggle.setAttribute("aria-label", "Pausar música");
+  });
+  const markPaused = () => {
+    const toggle = welcomePlayer?.querySelector(".welcome-player-toggle");
+    if (!toggle) return;
+    toggle.dataset.paused = "true";
+    toggle.textContent = "\u25B6";
+    toggle.setAttribute("aria-label", "Reanudar música");
+  };
+  welcomeAudio.addEventListener("pause", markPaused);
+  welcomeAudio.addEventListener("ended", markPaused);
+  return welcomeAudio;
 }
 
 function playWelcomeMusic() {
-  prepareWelcomeMusic();
+  const audio = prepareWelcomeMusic();
   showWelcomePlayer();
-
-  [0, 500, 1500].forEach((delay) => {
-    window.setTimeout(() => {
-      sendWelcomeCommand("unMute");
-      sendWelcomeCommand("playVideo");
-    }, delay);
-  });
+  audio.currentTime = 0;
+  return audio.play();
 }
 
 async function initializeKeyAuth() {
@@ -272,8 +273,8 @@ if (keyauthLock && keyauthCard && !prefersReducedMotion && window.matchMedia("(h
 
 document.querySelector("#keyauthForm").addEventListener("submit", async (event) => {
   event.preventDefault();
-  showWelcomePlayer();
   prepareWelcomeMusic();
+  const musicPlayback = playWelcomeMusic().then(() => true).catch(() => false);
   const status = document.querySelector("#keyauthStatus");
   status.classList.remove("key-in-use");
   status.textContent = "Validando licencia...";
@@ -299,13 +300,16 @@ document.querySelector("#keyauthForm").addEventListener("submit", async (event) 
     }
     const expiresAt = Number(result.expires) || null;
     if (expiresAt) startLicenseCountdown(expiresAt);
-    playWelcomeMusic();
+    const musicStarted = await musicPlayback;
+    if (!musicStarted) {
+      const trackInfo = welcomePlayer?.querySelector(".welcome-player-info span");
+      if (trackInfo) trackInfo.textContent = "Pulsa reproducir para escuchar";
+    }
     document.querySelector("#keyauthLock").classList.add("hidden");
     status.textContent = "";
   } catch (error) {
-    sendWelcomeCommand("pauseVideo");
-    welcomeMusicFrame?.remove();
-    welcomeMusicFrame = null;
+    welcomeAudio?.pause();
+    if (welcomeAudio) welcomeAudio.currentTime = 0;
     welcomePlayer?.remove();
     welcomePlayer = null;
     status.textContent = error.message;
