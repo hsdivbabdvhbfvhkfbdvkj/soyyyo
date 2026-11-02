@@ -230,7 +230,21 @@ async function initializeKeyAuth() {
 
 const keyauthLock = document.querySelector("#keyauthLock");
 const keyauthCard = document.querySelector("#keyauthForm");
+const keyauthKeyInput = document.querySelector("#keyauthKey");
+const pasteKeyButton = document.querySelector("#pasteKey");
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+pasteKeyButton.addEventListener("click", async () => {
+  try {
+    keyauthKeyInput.value = (await navigator.clipboard.readText()).trim();
+    keyauthKeyInput.focus();
+    pasteKeyButton.textContent = "Pegado";
+    window.setTimeout(() => { pasteKeyButton.textContent = "Pegar"; }, 1200);
+  } catch {
+    document.querySelector("#keyauthStatus").textContent = "Pulsa y mantén el campo para pegar manualmente.";
+    keyauthKeyInput.focus();
+  }
+});
 
 if (keyauthLock && keyauthCard && !prefersReducedMotion && window.matchMedia("(hover: hover)").matches) {
   keyauthLock.addEventListener("pointermove", (event) => {
