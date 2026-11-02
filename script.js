@@ -146,6 +146,47 @@ function getDeviceId() {
 const keyauthDeviceId = getDeviceId();
 
 let welcomeMusicFrame;
+let welcomePlayer;
+
+function sendWelcomeCommand(func, args = []) {
+  if (!welcomeMusicFrame) return;
+  welcomeMusicFrame.contentWindow.postMessage(JSON.stringify({ event: "command", func, args }), "https://www.youtube-nocookie.com");
+}
+
+function showWelcomePlayer() {
+  if (welcomePlayer) {
+    welcomePlayer.classList.add("visible");
+    return;
+  }
+
+  welcomePlayer = document.createElement("div");
+  welcomePlayer.className = "welcome-player";
+  welcomePlayer.innerHTML = `
+    <div class="welcome-player-cover">A</div>
+    <div class="welcome-player-info">
+      <strong>Donde hubo fuego</strong>
+      <span>Anuel AA · reproductor</span>
+    </div>
+    <button class="welcome-player-toggle" type="button" aria-label="Pausar música">Ⅱ</button>
+    <button class="welcome-player-close" type="button" aria-label="Cerrar reproductor">×</button>
+  `;
+  document.body.appendChild(welcomePlayer);
+
+  const toggle = welcomePlayer.querySelector(".welcome-player-toggle");
+  toggle.addEventListener("click", () => {
+    const paused = toggle.dataset.paused === "true";
+    sendWelcomeCommand(paused ? "playVideo" : "pauseVideo");
+    toggle.dataset.paused = String(!paused);
+    toggle.textContent = paused ? "Ⅱ" : "▶";
+    toggle.setAttribute("aria-label", paused ? "Pausar música" : "Reanudar música");
+  });
+
+  welcomePlayer.querySelector(".welcome-player-close").addEventListener("click", () => {
+    sendWelcomeCommand("pauseVideo");
+    welcomePlayer.classList.remove("visible");
+  });
+  welcomePlayer.classList.add("visible");
+}
 
 function prepareWelcomeMusic() {
   if (welcomeMusicFrame) return welcomeMusicFrame;
@@ -160,15 +201,13 @@ function prepareWelcomeMusic() {
 }
 
 function playWelcomeMusic() {
-  const frame = prepareWelcomeMusic();
-  const commands = [
-    { event: "command", func: "unMute", args: [] },
-    { event: "command", func: "playVideo", args: [] }
-  ];
+  prepareWelcomeMusic();
+  showWelcomePlayer();
 
   [0, 500, 1500].forEach((delay) => {
     window.setTimeout(() => {
-      commands.forEach((command) => frame.contentWindow.postMessage(JSON.stringify(command), "https://www.youtube-nocookie.com"));
+      sendWelcomeCommand("unMute");
+      sendWelcomeCommand("playVideo");
     }, delay);
   });
 }

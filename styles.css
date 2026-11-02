@@ -19,6 +19,77 @@
 
 * { box-sizing: border-box; }
 
+.welcome-player {
+  position: fixed;
+  top: 14px;
+  left: 50%;
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: min(340px, calc(100vw - 28px));
+  height: 58px;
+  padding: 7px 8px;
+  border: 1px solid rgba(255, 255, 255, .12);
+  border-radius: 8px;
+  background: rgba(18, 21, 29, .96);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, .38);
+  opacity: 0;
+  transform: translate(-50%, -18px);
+  pointer-events: none;
+  transition: opacity .22s ease, transform .22s ease;
+}
+
+.welcome-player.visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+  pointer-events: auto;
+}
+
+.welcome-player-cover {
+  display: grid;
+  place-items: center;
+  flex: 0 0 42px;
+  height: 42px;
+  border-radius: 5px;
+  background: linear-gradient(135deg, #d84d70, #252a35);
+  color: white;
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+}
+
+.welcome-player-info {
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+  flex: 1;
+}
+
+.welcome-player-info strong,
+.welcome-player-info span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.welcome-player-info strong { font-size: 13px; }
+.welcome-player-info span { color: var(--muted); font-size: 11px; }
+
+.welcome-player button {
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.welcome-player-toggle { border: 1px solid rgba(255, 255, 255, .14) !important; }
+.welcome-player-close { color: var(--muted) !important; }
+
 html {
   width: 100%;
   min-height: 100%;
