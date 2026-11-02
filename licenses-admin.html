@@ -192,7 +192,36 @@
     .renew-duration { display: inline-flex; align-items: center; gap: 4px; margin-right: 5px; color: var(--muted); font-size: 9px; }
     .renew-duration input { width: 48px; height: 29px; padding: 0 5px; border: 1px solid var(--line); border-radius: 5px; background: #0a111c; color: var(--text); font-size: 10px; }
     .legacy-key { color: #79869a; font-size: 10px; }
-    @media (max-width: 900px) { .license-table table { min-width: 900px; } }
+    @media (max-width: 900px) { .license-table table { min-width: 760px; } }
+    @media (max-width: 680px) {
+      .license-table { overflow: visible; }
+      .license-table table, .license-table tbody { display: block; width: 100%; min-width: 0; }
+      .license-table thead { display: none; }
+      .license-table tbody tr { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 8px; padding: 12px; border-top: 1px solid var(--line); }
+      .license-table td { display: grid; align-content: start; gap: 4px; min-width: 0; padding: 4px; border: 0; overflow-wrap: anywhere; }
+      .license-table td::before { color: var(--muted); font-size: 8px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; }
+      .license-table td:nth-child(1) { grid-column: 1; }
+      .license-table td:nth-child(1)::before { content: "ID"; }
+      .license-table td:nth-child(2) { grid-column: 1 / -1; }
+      .license-table td:nth-child(2)::before { content: "Clave"; }
+      .license-table td:nth-child(3) { grid-column: 1; }
+      .license-table td:nth-child(3)::before { content: "Usuario"; }
+      .license-table td:nth-child(4) { grid-column: 2; }
+      .license-table td:nth-child(4)::before { content: "Estado"; }
+      .license-table td:nth-child(5) { grid-column: 1; }
+      .license-table td:nth-child(5)::before { content: "Dispositivos"; }
+      .license-table td:nth-child(6) { grid-column: 2; }
+      .license-table td:nth-child(6)::before { content: "Vence"; }
+      .license-table td:nth-child(7) { grid-column: 1 / -1; }
+      .license-table td:nth-child(7)::before { content: "Acciones"; }
+      .license-table td[colspan] { display: block; grid-column: 1 / -1; padding: 22px 8px; text-align: center; }
+      .license-table td[colspan]::before { content: none; }
+      .key-cell { min-width: 0; flex-wrap: wrap; }
+      .key-cell code { max-width: calc(100vw - 120px); overflow-wrap: anywhere; }
+      .actions { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 7px; }
+      .actions .renew-duration { grid-column: 1 / -1; justify-content: center; }
+      .actions button { width: 100%; min-height: 40px; font-size: 11px; }
+    }
   </style>
 </head>
 <body>
