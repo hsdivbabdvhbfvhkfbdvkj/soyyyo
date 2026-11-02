@@ -600,6 +600,17 @@ body[data-font="rounded"] { font-family: "Trebuchet MS", "DM Sans", sans-serif; 
 .admin-tabs { display: grid; grid-template-columns: repeat(4,1fr); gap: 6px; margin: 24px 0 18px; }
 .admin-tabs button { height: 36px; border: 1px solid var(--line); border-radius: var(--radius); color: var(--muted); background: transparent; cursor: pointer; }
 .admin-tabs button.active { border-color: var(--accent); color: white; background: rgba(216,221,229,.1); }
+.interface-panel-heading { display:grid; gap:4px; margin-bottom:14px; }
+.interface-panel-heading small { color:#7798ce; font-size:9px; letter-spacing:1.5px; }
+.interface-presets { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:18px; }
+.interface-presets button { min-width:0; min-height:118px; display:grid; place-items:center; gap:6px; padding:10px 5px; border:1px solid var(--line); border-radius:8px; background:rgba(255,255,255,.025); color:var(--muted); cursor:pointer; }
+.interface-presets button.active { border-color:rgba(118,169,255,.55); background:rgba(118,169,255,.09); color:white; }
+.interface-presets strong { font-size:11px; }
+.interface-presets small { font-size:8px; }
+.interface-preview { width:74px; height:48px; display:grid; grid-template-columns:1fr 1fr; gap:5px; padding:5px; border:1px solid rgba(118,169,255,.18); border-radius:5px; }
+.interface-preview i { border-radius:3px; background:rgba(118,169,255,.24); }
+.preview-reverse { direction:rtl; }
+.preview-stack { grid-template-columns:1fr; }
 .admin-section { display: none; }
 .admin-section.active { display: grid; gap: 14px; }
 .admin-section label { display: grid; gap: 7px; color: var(--muted); font-size: 11px; }

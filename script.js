@@ -716,6 +716,16 @@ document.querySelectorAll("[data-admin-tab]").forEach((tab) => {
   });
 });
 
+const adminLayoutSelect = document.querySelector("#adminLayout");
+document.querySelectorAll("[data-interface-layout]").forEach((button) => {
+  button.addEventListener("click", () => {
+    adminLayoutSelect.value = button.dataset.interfaceLayout;
+    adminLayoutSelect.dispatchEvent(new Event("change", { bubbles: true }));
+    document.querySelectorAll("[data-interface-layout]").forEach((item) => item.classList.remove("active"));
+    button.classList.add("active");
+  });
+});
+
 function executeButtonAction(action, url) {
   if (action === "url" && url) window.open(url, "_blank", "noopener,noreferrer");
   if (action === "generate") generateButton.click();

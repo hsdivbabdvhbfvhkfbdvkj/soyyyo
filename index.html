@@ -281,6 +281,7 @@
       <button data-admin-tab="design" type="button">Diseño</button>
       <button data-admin-tab="actions" type="button">Botones</button>
       <button data-admin-tab="builder" type="button">Constructor</button>
+      <button data-admin-tab="interface" type="button">Interfaz</button>
       <button data-admin-tab="advanced" type="button">Avanzado</button>
     </div>
 
@@ -349,11 +350,6 @@
         <option value="none">Ninguna</option>
       </select></label>
       <label class="admin-switch-row">Vista previa en vivo<input id="livePreview" type="checkbox" checked></label>
-      <label>Diseño de paneles<select id="adminLayout">
-        <option value="default">Configuración izquierda</option>
-        <option value="reverse">Configuración derecha</option>
-        <option value="stack">Una columna</option>
-      </select></label>
       <label class="admin-switch-row">Mostrar plataformas<input id="showPlatforms" type="checkbox" checked></label>
       <label class="admin-switch-row">Mostrar barra superior<input id="showHeader" type="checkbox" checked></label>
       <label class="admin-switch-row">Mostrar pie de página<input id="showFooter" type="checkbox" checked></label>
@@ -371,6 +367,32 @@
         <div id="ipaStatus" class="ipa-status">Solo se importan imágenes. El IPA no se instala ni ejecuta.</div>
         <div id="ipaGallery" class="ipa-gallery"></div>
       </div>
+    </div>
+
+    <div class="admin-section" data-admin-section="interface">
+      <div class="interface-panel-heading">
+        <small>TIPO DE INTERFAZ</small>
+        <strong>Elige cómo se muestran los paneles</strong>
+      </div>
+      <div class="interface-presets">
+        <button class="active" data-interface-layout="default" type="button">
+          <span class="interface-preview preview-default"><i></i><i></i></span>
+          <strong>Normal</strong><small>Configuración izquierda</small>
+        </button>
+        <button data-interface-layout="reverse" type="button">
+          <span class="interface-preview preview-reverse"><i></i><i></i></span>
+          <strong>Invertido</strong><small>Configuración derecha</small>
+        </button>
+        <button data-interface-layout="stack" type="button">
+          <span class="interface-preview preview-stack"><i></i><i></i></span>
+          <strong>Compacto</strong><small>Una columna</small>
+        </button>
+      </div>
+      <label>Diseño de paneles<select id="adminLayout">
+        <option value="default">Configuración izquierda</option>
+        <option value="reverse">Configuración derecha</option>
+        <option value="stack">Una columna</option>
+      </select></label>
     </div>
 
     <div class="admin-section" data-admin-section="actions">
