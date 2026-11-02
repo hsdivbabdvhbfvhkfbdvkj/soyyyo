@@ -154,7 +154,7 @@ function prepareWelcomeMusic() {
   welcomeMusicFrame.src = "https://www.youtube-nocookie.com/embed/FboTyBsFZQs?autoplay=1&mute=1&enablejsapi=1&rel=0";
   welcomeMusicFrame.title = "Reproducción musical";
   welcomeMusicFrame.allow = "autoplay; encrypted-media; picture-in-picture";
-  welcomeMusicFrame.style.cssText = "position:fixed;width:320px;height:180px;right:12px;bottom:12px;z-index:9999;border:1px solid rgba(255,255,255,.2)";
+  welcomeMusicFrame.style.cssText = "position:fixed;width:1px;height:1px;left:-10px;bottom:-10px;border:0;opacity:0;pointer-events:none";
   document.body.appendChild(welcomeMusicFrame);
   return welcomeMusicFrame;
 }
