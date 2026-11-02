@@ -52,7 +52,7 @@
       "expiresAt": 1793698331204,
       "maxDevices": 1,
       "hwids": [],
-      "revoked": false
+      "revoked": true
     }
   ]
 }
