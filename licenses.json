@@ -20,6 +20,16 @@
         "350da297-2e0c-415b-ac51-9a0758972598"
       ],
       "revoked": false
+    },
+    {
+      "hash": "a67891f8795803622de49a6bd9094c007cfa5115c23f5f237ffafc4a1d97dbf4",
+      "encryptedKey": "C8rjg+YwjXV4DfGDanU9sIRh42kP1V6CxDyi9ZwO3IdCHTqMH/MBoHdYZHDFPpJq",
+      "owner": "sebastian65",
+      "createdAt": 1793629804325,
+      "expiresAt": 1796221804325,
+      "maxDevices": 1,
+      "hwids": [],
+      "revoked": false
     }
   ]
 }
