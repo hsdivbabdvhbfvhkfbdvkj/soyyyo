@@ -9,7 +9,7 @@
       "expiresAt": 1796203255543,
       "maxDevices": 1,
       "hwids": [],
-      "revoked": false
+      "revoked": true
     },
     {
       "hash": "84806b3329c83d2153309105d10473c2683e9c927ed0b26486fdd309bccabd98",
