@@ -32,6 +32,16 @@
         "9ec13e13-efb2-41f9-930b-c093aba62b43"
       ],
       "revoked": false
+    },
+    {
+      "hash": "fbe650d6414a10050447db3736d74920c096e64a03283664630b4fd04599a2f7",
+      "encryptedKey": "ufYt2yg5cbZ80cgHkxAD4IXe1g88t2mtZV/EkoptjGjr0qoMInwkaXqEVoeRHJvC",
+      "owner": "sxba",
+      "createdAt": 1793637948903,
+      "expiresAt": 1794242748903,
+      "maxDevices": 1,
+      "hwids": [],
+      "revoked": false
     }
   ]
 }
