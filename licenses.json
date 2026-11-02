@@ -43,6 +43,16 @@
         "c324995a-a6d5-4619-bcf1-f14a8f6a1b5c"
       ],
       "revoked": false
+    },
+    {
+      "hash": "972e268103be04cc64a91ec234e315e5eda20087b0eb0974831430a99fa366c2",
+      "encryptedKey": "Pv09ehMg3RmZqv/3N/XaJmBfBZPicE/oKWoTwn23R76jJcyOn6XsgLmAZb/vOTEs",
+      "owner": "panel-check",
+      "createdAt": 1793611931205,
+      "expiresAt": 1793698331204,
+      "maxDevices": 1,
+      "hwids": [],
+      "revoked": false
     }
   ]
 }
