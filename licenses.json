@@ -16,7 +16,9 @@
       "createdAt": 1793622542761,
       "expiresAt": 4947222542761,
       "maxDevices": 1,
-      "hwids": [],
+      "hwids": [
+        "350da297-2e0c-415b-ac51-9a0758972598"
+      ],
       "revoked": false
     }
   ]
