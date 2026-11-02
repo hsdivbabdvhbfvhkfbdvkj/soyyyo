@@ -172,17 +172,18 @@ function showWelcomePlayer() {
       <strong>Donde hubo fuego</strong>
       <span>Anuel AA · reproductor</span>
     </div>
-    <button class="welcome-player-toggle" type="button" aria-label="Pausar música">?</button>
-    <button class="welcome-player-close" type="button" aria-label="Cerrar reproductor">×</button>
+    <button class="welcome-player-toggle" type="button" aria-label="Pausar música">\u23F8</button>
+    <button class="welcome-player-close" type="button" aria-label="Cerrar reproductor">\u00D7</button>
   `;
   document.body.appendChild(welcomePlayer);
+  if (welcomeMusicFrame) welcomePlayer.appendChild(welcomeMusicFrame);
 
   const toggle = welcomePlayer.querySelector(".welcome-player-toggle");
   toggle.addEventListener("click", () => {
     const paused = toggle.dataset.paused === "true";
     sendWelcomeCommand(paused ? "playVideo" : "pauseVideo");
     toggle.dataset.paused = String(!paused);
-    toggle.textContent = paused ? "?" : "?";
+    toggle.textContent = paused ? "\u23F8" : "\u25B6";
     toggle.setAttribute("aria-label", paused ? "Pausar música" : "Reanudar música");
   });
 
@@ -196,12 +197,14 @@ function showWelcomePlayer() {
 function prepareWelcomeMusic() {
   if (welcomeMusicFrame) return welcomeMusicFrame;
 
+  showWelcomePlayer();
   welcomeMusicFrame = document.createElement("iframe");
-  welcomeMusicFrame.src = "https://www.youtube-nocookie.com/embed/FboTyBsFZQs?autoplay=1&mute=1&enablejsapi=1&rel=0";
+  welcomeMusicFrame.src = `https://www.youtube-nocookie.com/embed/FboTyBsFZQs?autoplay=1&mute=0&enablejsapi=1&controls=1&playsinline=1&rel=0&origin=${encodeURIComponent(location.origin)}`;
   welcomeMusicFrame.title = "Reproducción musical";
   welcomeMusicFrame.allow = "autoplay; encrypted-media; picture-in-picture";
-  welcomeMusicFrame.style.cssText = "position:fixed;width:1px;height:1px;left:-10px;bottom:-10px;border:0;opacity:0;pointer-events:none";
-  document.body.appendChild(welcomeMusicFrame);
+  welcomeMusicFrame.className = "welcome-music-frame";
+  welcomeMusicFrame.setAttribute("allowfullscreen", "");
+  welcomePlayer.appendChild(welcomeMusicFrame);
   return welcomeMusicFrame;
 }
 
@@ -269,6 +272,7 @@ if (keyauthLock && keyauthCard && !prefersReducedMotion && window.matchMedia("(h
 
 document.querySelector("#keyauthForm").addEventListener("submit", async (event) => {
   event.preventDefault();
+  showWelcomePlayer();
   prepareWelcomeMusic();
   const status = document.querySelector("#keyauthStatus");
   status.classList.remove("key-in-use");
@@ -299,6 +303,11 @@ document.querySelector("#keyauthForm").addEventListener("submit", async (event) 
     document.querySelector("#keyauthLock").classList.add("hidden");
     status.textContent = "";
   } catch (error) {
+    sendWelcomeCommand("pauseVideo");
+    welcomeMusicFrame?.remove();
+    welcomeMusicFrame = null;
+    welcomePlayer?.remove();
+    welcomePlayer = null;
     status.textContent = error.message;
   }
 });
