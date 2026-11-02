@@ -1,17 +1,5 @@
 {
   "version": 1,
   "users": [],
-  "licenses": [
-    {
-      "hash": "7465228a930b4e2e3fa75c583702a81f2fa5c01d9fc007fbdf696df8ffb9dea7",
-      "owner": "prueba",
-      "createdAt": 1793606886445,
-      "expiresAt": 1796198886445,
-      "maxDevices": 1,
-      "hwids": [
-        "test-device-001"
-      ],
-      "revoked": false
-    }
-  ]
+  "licenses": []
 }
