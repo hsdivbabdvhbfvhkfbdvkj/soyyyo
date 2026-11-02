@@ -274,14 +274,11 @@ document.querySelector("#keyauthForm").addEventListener("submit", async (event) 
   status.classList.remove("key-in-use");
   status.textContent = "Validando licencia...";
   try {
-    if (!keyauthSessionId) await initializeKeyAuth();
-    if (!keyauthSessionId) throw new Error("No se pudo crear la sesion de KeyAuth.");
-    const response = await fetch("/api/keyauth?action=license", {
+    const response = await fetch("/api/licenses?action=validate", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: new URLSearchParams({
         key: document.querySelector("#keyauthKey").value.trim(),
-        sessionid: keyauthSessionId,
         hwid: keyauthDeviceId
       })
     });
@@ -296,7 +293,7 @@ document.querySelector("#keyauthForm").addEventListener("submit", async (event) 
       }
       throw new Error(rawMessage);
     }
-    const expiresAt = parseKeyAuthExpiration(result);
+    const expiresAt = Number(result.expires) || null;
     if (expiresAt) startLicenseCountdown(expiresAt);
     playWelcomeMusic();
     document.querySelector("#keyauthLock").classList.add("hidden");
@@ -674,6 +671,21 @@ adminOverlay.addEventListener("click", () => openAdmin(false));
 
 const adminLock = document.querySelector("#adminLock");
 const adminPassword = document.querySelector("#adminPassword");
+
+const advancedSection = document.querySelector('[data-admin-section="advanced"]');
+if (advancedSection) {
+  advancedSection.insertAdjacentHTML("beforeend", `
+    <div class="license-generator">
+      <div class="builder-heading"><small>LICENCIAS PROPIAS</small><strong>Generador de keys</strong></div>
+      <label>Keys a crear<input id="licenseCount" type="number" min="1" max="100" value="10"></label>
+      <label>Días de duración<input id="licenseDays" type="number" min="1" max="36500" value="30"></label>
+      <label>Dispositivos por key<input id="licenseDevices" type="number" min="1" max="10" value="1"></label>
+      <button class="secondary-action" id="generateLicenses" type="button">Generar keys</button>
+      <textarea id="generatedLicenses" rows="7" readonly placeholder="Las keys generadas aparecerán aquí"></textarea>
+      <button class="secondary-action" id="copyLicenses" type="button">Copiar keys</button>
+    </div>
+  `);
+}
 const lockStatus = document.querySelector("#lockStatus");
 
 function showAdminLock() {
