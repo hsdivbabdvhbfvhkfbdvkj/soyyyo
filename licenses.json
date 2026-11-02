@@ -12,17 +12,6 @@
         "test-device-001"
       ],
       "revoked": false
-    },
-    {
-      "hash": "2bbd92be0769557d3583a473127bce12e98d9e568cc2ebadf73a7fa525a57c40",
-      "owner": "",
-      "createdAt": 1793609073175,
-      "expiresAt": 1796201073175,
-      "maxDevices": 1,
-      "hwids": [
-        "c324995a-a6d5-4619-bcf1-f14a8f6a1b5c"
-      ],
-      "revoked": false
     }
   ]
 }
