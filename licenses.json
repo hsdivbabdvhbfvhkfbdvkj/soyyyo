@@ -1,5 +1,12 @@
 {
   "version": 1,
-  "users": [],
+  "users": [
+    {
+      "username": "polakito",
+      "passwordHash": "4e4bb2e542532e745521890350de8411ff3a061f13161c0b2520b52f098ae6cf",
+      "createdAt": 1793622158188,
+      "disabled": false
+    }
+  ],
   "licenses": []
 }
