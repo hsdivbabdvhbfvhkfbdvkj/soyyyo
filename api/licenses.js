@@ -7,7 +7,11 @@ const GITHUB_TOKEN = process.env.GITHUB_TOKEN || process.env.CONFIG_GITHUB_TOKEN
 const ADMIN_USER = process.env.ADMIN_USER?.trim() || "sebastian65";
 const ADMIN_PASSWORD = process.env.ADMIN_EDIT_PASSWORD?.trim();
 const LICENSE_SECRET = process.env.LICENSE_SECRET?.trim();
-const ALLOWED_ORIGINS = new Set(["https://soyyyo.vercel.app", "https://hypersex-licencias.vercel.app"]);
+const ALLOWED_ORIGINS = new Set([
+  "https://soyyyo.vercel.app",
+  "https://hypersex-site.vercel.app",
+  "https://hypersex-licencias.vercel.app"
+]);
 
 const hash = (value) => crypto.createHash("sha256").update(String(value)).digest("hex");
 const keyHash = (key) => hash(String(key).trim().toUpperCase());
