@@ -1,6 +1,11 @@
 const state = {
   device: "android",
-  style: "precision"
+  style: "precision",
+  dpiByDevice: {
+    android: 480,
+    ios: 60,
+    pc: 800
+  }
 };
 
 document.addEventListener("gesturestart", (event) => event.preventDefault(), { passive: false });
@@ -346,6 +351,7 @@ const resetAux = document.querySelector("#resetAux");
 const auxStatus = document.querySelector("#auxStatus");
 
 dpiInput.addEventListener("input", () => {
+  state.dpiByDevice[state.device] = Number(dpiInput.value);
   dpiValue.textContent = dpiInput.value;
 });
 
@@ -447,18 +453,16 @@ function configureDpiRange() {
     dpiInput.min = "1";
     dpiInput.max = "120";
     dpiInput.step = "1";
-    dpiInput.value = "60";
   } else if (state.device === "pc") {
     dpiInput.min = "400";
     dpiInput.max = "1600";
     dpiInput.step = "50";
-    dpiInput.value = "800";
   } else {
     dpiInput.min = "240";
     dpiInput.max = "800";
     dpiInput.step = "20";
-    dpiInput.value = "480";
   }
+  dpiInput.value = String(state.dpiByDevice[state.device]);
   dpiValue.textContent = dpiInput.value;
   document.querySelector("#systemPlatform").textContent =
     state.device === "pc" ? "PC" : state.device === "ios" ? "iOS" : "Android";
@@ -498,7 +502,8 @@ calibrateAux.addEventListener("click", () => {
   window.setTimeout(() => {
     calibrateAux.disabled = false;
     calibrateAux.textContent = "Calibrar";
-    auxStatus.textContent = `Perfil calibrado al ${auxRange.value}%`;
+    auxStatus.textContent = `Perfil calibrado al ${auxRange.value}% · DPI conservado: ${dpiInput.value}`;
+    renderProfile(getGeneratedProfile());
   }, 700);
 });
 
