@@ -157,7 +157,9 @@
       "createdAt": 1793619681524,
       "expiresAt": 1793706081524,
       "maxDevices": 1,
-      "hwids": [],
+      "hwids": [
+        "device-stable-001"
+      ],
       "revoked": false
     }
   ]
