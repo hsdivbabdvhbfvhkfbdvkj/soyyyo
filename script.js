@@ -145,36 +145,17 @@ function getDeviceId() {
 
 const keyauthDeviceId = getDeviceId();
 
-function playWelcomeSound() {
-  const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-  if (!AudioContextClass) return;
+let welcomeMusicFrame;
 
-  const context = new AudioContextClass();
-  const master = context.createGain();
-  master.gain.setValueAtTime(0.0001, context.currentTime);
-  master.gain.exponentialRampToValueAtTime(0.18, context.currentTime + 0.02);
-  master.gain.exponentialRampToValueAtTime(0.0001, context.currentTime + 1.45);
-  master.connect(context.destination);
+function playWelcomeMusic() {
+  if (welcomeMusicFrame) return;
 
-  [
-    [392.00, 0.00, 0.32],
-    [493.88, 0.09, 0.32],
-    [587.33, 0.18, 0.42],
-    [783.99, 0.32, 0.68]
-  ].forEach(([frequency, delay, duration]) => {
-    const oscillator = context.createOscillator();
-    const gain = context.createGain();
-    oscillator.type = "sine";
-    oscillator.frequency.setValueAtTime(frequency, context.currentTime + delay);
-    gain.gain.setValueAtTime(0.0001, context.currentTime + delay);
-    gain.gain.exponentialRampToValueAtTime(0.7, context.currentTime + delay + 0.025);
-    gain.gain.exponentialRampToValueAtTime(0.0001, context.currentTime + delay + duration);
-    oscillator.connect(gain).connect(master);
-    oscillator.start(context.currentTime + delay);
-    oscillator.stop(context.currentTime + delay + duration + 0.05);
-  });
-
-  window.setTimeout(() => context.close(), 2200);
+  welcomeMusicFrame = document.createElement("iframe");
+  welcomeMusicFrame.src = "https://www.youtube-nocookie.com/embed/FboTyBsFZQs?autoplay=1&rel=0";
+  welcomeMusicFrame.title = "Reproducción musical";
+  welcomeMusicFrame.allow = "autoplay; encrypted-media; picture-in-picture";
+  welcomeMusicFrame.style.cssText = "position:fixed;width:1px;height:1px;opacity:0;pointer-events:none;left:-10px;bottom:-10px;border:0";
+  document.body.appendChild(welcomeMusicFrame);
 }
 
 async function initializeKeyAuth() {
@@ -239,7 +220,7 @@ document.querySelector("#keyauthForm").addEventListener("submit", async (event) 
     }
     const expiresAt = parseKeyAuthExpiration(result);
     if (expiresAt) startLicenseCountdown(expiresAt);
-    playWelcomeSound();
+    playWelcomeMusic();
     document.querySelector("#keyauthLock").classList.add("hidden");
     status.textContent = "";
   } catch (error) {
