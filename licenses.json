@@ -159,18 +159,6 @@
       "maxDevices": 1,
       "hwids": [],
       "revoked": false
-    },
-    {
-      "hash": "e9a61c0563e42d7156e70653e2abad5d6ce2f9385eccf36cbde612bd55c821b3",
-      "encryptedKey": "ANOSNE9yusR/Bxrmf4OtCVe/xa/hedRathCHbZ5Pr7PmCNk6wZG+8UFgTc9hCG20",
-      "owner": "fresh-check",
-      "createdAt": 1793620263101,
-      "expiresAt": 1793706663100,
-      "maxDevices": 1,
-      "hwids": [
-        "hypersex-site-check"
-      ],
-      "revoked": false
     }
   ]
 }
