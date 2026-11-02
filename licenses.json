@@ -1,6 +1,13 @@
 {
   "version": 1,
-  "users": [],
+  "users": [
+    {
+      "username": "sebajaja",
+      "passwordHash": "def3b629e1792dfb112cb1193e80f96b6e03f4ee29ced21dcefb7d2f2b549648",
+      "createdAt": 1793613177822,
+      "disabled": false
+    }
+  ],
   "licenses": [
     {
       "hash": "55e086d84e50495736862e85b009c5347134437553122b0293527c81cab66f6c",
@@ -11,6 +18,18 @@
       "maxDevices": 1,
       "hwids": [
         "c324995a-a6d5-4619-bcf1-f14a8f6a1b5c"
+      ],
+      "revoked": false
+    },
+    {
+      "hash": "284ccbb75a6ccc10841e72bef02de1eabba5529642549b04a392b3b4768ade89",
+      "encryptedKey": "RP4tvJceOrLTTfoRHnLap+iQajNfm1d2wBckc12M5yMSJ5kbAVKkPGOoDJUxO+d1",
+      "owner": "sebajaja",
+      "createdAt": 1793613285016,
+      "expiresAt": 1862733285015,
+      "maxDevices": 1,
+      "hwids": [
+        "27c20487-9997-42bc-ae2f-ffc36d93a9c4"
       ],
       "revoked": false
     }
