@@ -22,7 +22,7 @@
 .welcome-player {
   position: fixed;
   top: 14px;
-  left: 50%;
+  left: 14px;
   z-index: 1200;
   display: flex;
   align-items: center;
@@ -35,14 +35,14 @@
   background: rgba(10, 18, 34, .96);
   box-shadow: 0 14px 40px rgba(0, 0, 0, .38);
   opacity: 0;
-  transform: translate(-50%, -18px);
+  transform: translateY(-18px);
   pointer-events: none;
   transition: opacity .22s ease, transform .22s ease;
 }
 
 .welcome-player.visible {
   opacity: 1;
-  transform: translate(-50%, 0);
+  transform: translateY(0);
   pointer-events: auto;
 }
 
@@ -335,7 +335,7 @@ body::after {
 
 .license-countdown:not([hidden]) {
   position: fixed;
-  top: 80px;
+  top: 14px;
   right: 18px;
   z-index: 1201;
   padding: 4px 8px;
@@ -1863,11 +1863,12 @@ footer {
 .login-frame, .login-grid-lines { border-radius: 12px; }
 
 @media (max-width: 560px) {
-  .welcome-player { top: 14px; }
+  .welcome-player { top: 14px; left: 14px; width: calc(100vw - 28px); }
   .license-countdown:not([hidden]) {
     position: fixed;
     top: 80px;
-    right: 14px;
+    left: 14px;
+    right: auto;
     z-index: 1201;
   }
   .keyauth-lock .keyauth-card { width: min(390px, calc(100vw - 24px)); padding: 24px 20px 20px; }
