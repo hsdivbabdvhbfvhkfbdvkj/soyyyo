@@ -1,13 +1,6 @@
 {
   "version": 1,
-  "users": [
-    {
-      "username": "sebajaja",
-      "passwordHash": "def3b629e1792dfb112cb1193e80f96b6e03f4ee29ced21dcefb7d2f2b549648",
-      "createdAt": 1793613177822,
-      "disabled": false
-    }
-  ],
+  "users": [],
   "licenses": [
     {
       "hash": "55e086d84e50495736862e85b009c5347134437553122b0293527c81cab66f6c",
