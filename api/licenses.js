@@ -102,7 +102,7 @@ module.exports = async function handler(request, response) {
     ? Object.fromEntries(new URLSearchParams(request.body))
     : request.body || {};
   const action = request.query?.action;
-  const actions = ["login", "validate", "generate", "list", "revoke", "renew", "delete", "users", "create-user", "delete-user"];
+  const actions = ["login", "validate", "generate", "list", "revoke", "renew", "delete", "unbind", "users", "create-user", "delete-user"];
   if (!actions.includes(action)) return response.status(400).json({ success: false, message: "Invalid action." });
   if (!LICENSE_SECRET || !ADMIN_PASSWORD) return response.status(503).json({ success: false, message: "License authentication is not configured." });
 
@@ -183,7 +183,7 @@ module.exports = async function handler(request, response) {
       return response.status(200).json({ success: true, keys, expiresAt });
     }
 
-    if (["list", "revoke", "renew", "delete"].includes(action)) {
+    if (["list", "revoke", "renew", "delete", "unbind"].includes(action)) {
       if (action === "list") {
         const visibleLicenses = admin
           ? store.licenses
@@ -206,6 +206,7 @@ module.exports = async function handler(request, response) {
       if (!license) return response.status(404).json({ success: false, message: "License not found." });
       if (!admin && cleanUser(license.owner) !== username) return response.status(404).json({ success: false, message: "License not found." });
       if (action === "revoke") license.revoked = !license.revoked;
+      if (action === "unbind") license.hwids = [];
       if (action === "renew") {
         const days = Math.max(0, Math.min(36500, Number(body.days ?? 30) || 0));
         const hours = Math.max(0, Math.min(23, Number(body.hours) || 0));

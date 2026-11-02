@@ -79,6 +79,7 @@ async function loadLicenses() {
           <input data-renew-hours type="number" min="0" max="23" value="0"><span>h</span>
         </label>
         <button data-action="renew" data-hash="${license.hash}" type="button">Aplicar</button>
+        ${license.hwids.length ? `<button data-action="unbind" data-hash="${license.hash}" type="button">Liberar</button>` : ""}
         <button data-action="revoke" data-hash="${license.hash}" type="button">${license.revoked ? "Reactivar" : "Bloquear"}</button>
         <button class="danger" data-action="delete" data-hash="${license.hash}" type="button">Eliminar</button>
       </div></td>
@@ -153,6 +154,7 @@ licenseRows.addEventListener("click", async (event) => {
   const button = event.target.closest("button[data-action]");
   if (!button) return;
   if (button.dataset.action === "delete" && !confirm("¿Eliminar esta licencia permanentemente?")) return;
+  if (button.dataset.action === "unbind" && !confirm("¿Liberar el dispositivo vinculado? La key podrá activarse en otro dispositivo.")) return;
   try {
     const data = { hash: button.dataset.hash };
     if (button.dataset.action === "renew") {
