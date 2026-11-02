@@ -3,18 +3,6 @@
   "users": [],
   "licenses": [
     {
-      "hash": "55e086d84e50495736862e85b009c5347134437553122b0293527c81cab66f6c",
-      "encryptedKey": "UWis71BEJPqbJOfY8AvJnhz5D2bzgCfandnnepAudVB3npBQMaPCI+tKow87x9xl",
-      "owner": "sebastian65",
-      "createdAt": 1793612091938,
-      "expiresAt": 1793698491937,
-      "maxDevices": 1,
-      "hwids": [
-        "c324995a-a6d5-4619-bcf1-f14a8f6a1b5c"
-      ],
-      "revoked": false
-    },
-    {
       "hash": "284ccbb75a6ccc10841e72bef02de1eabba5529642549b04a392b3b4768ade89",
       "encryptedKey": "RP4tvJceOrLTTfoRHnLap+iQajNfm1d2wBckc12M5yMSJ5kbAVKkPGOoDJUxO+d1",
       "owner": "sebajaja",
