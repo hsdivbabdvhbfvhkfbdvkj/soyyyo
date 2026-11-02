@@ -20,6 +20,16 @@
         "c324995a-a6d5-4619-bcf1-f14a8f6a1b5c"
       ],
       "revoked": false
+    },
+    {
+      "hash": "284ccbb75a6ccc10841e72bef02de1eabba5529642549b04a392b3b4768ade89",
+      "encryptedKey": "RP4tvJceOrLTTfoRHnLap+iQajNfm1d2wBckc12M5yMSJ5kbAVKkPGOoDJUxO+d1",
+      "owner": "sebajaja",
+      "createdAt": 1793613285016,
+      "expiresAt": 1862733285015,
+      "maxDevices": 1,
+      "hwids": [],
+      "revoked": false
     }
   ]
 }
