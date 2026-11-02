@@ -6,10 +6,10 @@
       "hash": "bb9269d363c7333b06643b36d393fd63111284d478ba63cb04d360d99a84ba5a",
       "owner": "",
       "createdAt": 1793606426931,
-      "expiresAt": 1793865626931,
+      "expiresAt": 1796203255543,
       "maxDevices": 1,
       "hwids": [],
-      "revoked": false
+      "revoked": true
     },
     {
       "hash": "84806b3329c83d2153309105d10473c2683e9c927ed0b26486fdd309bccabd98",
