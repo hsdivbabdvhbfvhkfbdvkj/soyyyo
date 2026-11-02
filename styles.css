@@ -1940,3 +1940,22 @@ footer {
   .login-hud { margin: -24px -20px 0; padding-inline: 20px 14px; }
   .keyauth-card h2 { font-size: 26px; }
 }
+
+.ff-permission {
+  width: min(390px, calc(100vw - 32px));
+  padding: 0;
+  border: 1px solid rgba(118,169,255,.28);
+  border-radius: 10px;
+  background: rgba(11,18,31,.98);
+  color: var(--text);
+  box-shadow: 0 28px 90px rgba(0,0,0,.62), 0 0 40px rgba(67,132,238,.18);
+}
+.ff-permission::backdrop { background: rgba(2,6,14,.72); backdrop-filter: blur(5px); }
+.ff-permission-content { display:grid; grid-template-columns:42px 1fr; gap:14px; padding:22px; }
+.ff-permission-mark { width:42px; height:42px; display:grid; place-items:center; border:1px solid rgba(118,169,255,.32); border-radius:8px; background:rgba(57,120,220,.15); color:#a9cbff; font-weight:800; }
+.ff-permission-content small { color:#8ba9d5; font-size:9px; letter-spacing:1.4px; }
+.ff-permission-content h2 { margin:5px 0; font-size:18px; }
+.ff-permission-content p { margin:0; color:var(--muted); font-size:12px; line-height:1.5; }
+.ff-permission-actions { grid-column:1/-1; display:flex; justify-content:flex-end; gap:8px; margin-top:5px; }
+.ff-permission-actions button { min-width:90px; min-height:38px; padding:0 12px; border:1px solid rgba(151,177,215,.18); border-radius:6px; background:#101a29; color:#c5d3e8; }
+.ff-permission-actions .primary { border-color:rgba(91,156,255,.52); background:linear-gradient(105deg,#3978dc,#4d91ed); color:white; }
