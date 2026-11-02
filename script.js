@@ -527,20 +527,23 @@ document.querySelectorAll("[data-style]").forEach((button) => {
 function getGeneratedProfile() {
   const base = state.device === "pc" ? pcStyleProfiles[state.style] : styleProfiles[state.style];
   const referenceDpi = state.device === "ios" ? 60 : state.device === "pc" ? 800 : 480;
-  const dpiStep = state.device === "ios" ? 15 : state.device === "pc" ? 100 : 80;
-  const dpiFactor = Math.round((Number(dpiInput.value) - referenceDpi) / dpiStep);
-  const deviceFactor = state.device === "ios" ? -2 : 0;
-  const adjustment = dpiFactor + deviceFactor;
+  const currentDpi = Number(dpiInput.value);
+  const ratio = currentDpi / referenceDpi;
+  const dpiScale = state.device === "pc" ? 0.12 : 0.16;
+  const adjustment = Math.round((ratio - 1) * -1 * (state.device === "pc" ? 30 : 40) * dpiScale / 0.16);
+  const minimum = state.device === "pc" ? 1 : 30;
   const maximum = state.device === "pc" ? 150 : 200;
 
+  const clampProfileValue = (value) => Math.max(minimum, Math.min(maximum, value + adjustment));
+
   return {
-    label: base.label,
-    general: Math.max(30, Math.min(maximum, base.general + adjustment * (state.device === "pc" ? 1 : 2))),
-    red: Math.max(30, Math.min(maximum, base.red + adjustment * (state.device === "pc" ? 1 : 2))),
-    x2: Math.max(30, Math.min(maximum, base.x2 + adjustment * (state.device === "pc" ? 1 : 2))),
-    x4: Math.max(30, Math.min(maximum, base.x4 + adjustment * (state.device === "pc" ? 1 : 2))),
-    sniper: Math.max(30, Math.min(maximum, base.sniper + adjustment * (state.device === "pc" ? 1 : 2))),
-    free: Math.max(30, Math.min(maximum, base.free + adjustment * (state.device === "pc" ? 1 : 2)))
+    label: `${state.device === "pc" ? "PC" : state.device === "ios" ? "iOS" : "Android"} · ${base.label}`,
+    general: clampProfileValue(base.general),
+    red: clampProfileValue(base.red),
+    x2: clampProfileValue(base.x2),
+    x4: clampProfileValue(base.x4),
+    sniper: clampProfileValue(base.sniper),
+    free: clampProfileValue(base.free)
   };
 }
 
