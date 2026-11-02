@@ -170,10 +170,10 @@ function showWelcomePlayer() {
     <img class="welcome-player-cover" src="donde-hubo-fuego-cover.jpg" alt="Portada de Donde hubo fuego">
     <div class="welcome-player-info">
       <strong>Donde hubo fuego</strong>
-      <span>Anuel AA · reproductor</span>
+      <span>Anuel AA Â· reproductor</span>
     </div>
-    <button class="welcome-player-toggle" type="button" aria-label="Pausar música">Ⅱ</button>
-    <button class="welcome-player-close" type="button" aria-label="Cerrar reproductor">×</button>
+    <button class="welcome-player-toggle" type="button" aria-label="Pausar mÃºsica">â…¡</button>
+    <button class="welcome-player-close" type="button" aria-label="Cerrar reproductor">Ã—</button>
   `;
   document.body.appendChild(welcomePlayer);
 
@@ -182,8 +182,8 @@ function showWelcomePlayer() {
     const paused = toggle.dataset.paused === "true";
     sendWelcomeCommand(paused ? "playVideo" : "pauseVideo");
     toggle.dataset.paused = String(!paused);
-    toggle.textContent = paused ? "Ⅱ" : "▶";
-    toggle.setAttribute("aria-label", paused ? "Pausar música" : "Reanudar música");
+    toggle.textContent = paused ? "â…¡" : "â–¶";
+    toggle.setAttribute("aria-label", paused ? "Pausar mÃºsica" : "Reanudar mÃºsica");
   });
 
   welcomePlayer.querySelector(".welcome-player-close").addEventListener("click", () => {
@@ -198,7 +198,7 @@ function prepareWelcomeMusic() {
 
   welcomeMusicFrame = document.createElement("iframe");
   welcomeMusicFrame.src = "https://www.youtube-nocookie.com/embed/FboTyBsFZQs?autoplay=1&mute=1&enablejsapi=1&rel=0";
-  welcomeMusicFrame.title = "Reproducción musical";
+  welcomeMusicFrame.title = "ReproducciÃ³n musical";
   welcomeMusicFrame.allow = "autoplay; encrypted-media; picture-in-picture";
   welcomeMusicFrame.style.cssText = "position:fixed;width:1px;height:1px;left:-10px;bottom:-10px;border:0;opacity:0;pointer-events:none";
   document.body.appendChild(welcomeMusicFrame);
@@ -250,7 +250,7 @@ pasteKeyButton.addEventListener("click", async () => {
     pasteKeyButton.textContent = "Pegado";
     window.setTimeout(() => { pasteKeyButton.textContent = "Pegar"; }, 1200);
   } catch {
-    document.querySelector("#keyauthStatus").textContent = "Pulsa y mantén el campo para pegar manualmente.";
+    document.querySelector("#keyauthStatus").textContent = "Pulsa y mantÃ©n el campo para pegar manualmente.";
     keyauthKeyInput.focus();
   }
 });
@@ -286,7 +286,7 @@ document.querySelector("#keyauthForm").addEventListener("submit", async (event) 
     if (!result.success) {
       const rawMessage = String(result.message || "Credenciales o licencia invalidas.");
       const normalized = rawMessage.toLowerCase();
-      const keyInUse = /key.*used|used.*key|already.*(session|logged|online)|already.*use|hwid|hardware.*id|otra sesi[oó]n|sesión.*activa/.test(normalized);
+      const keyInUse = /key.*used|used.*key|already.*(session|logged|online)|already.*use|hwid|hardware.*id|otra sesi[oÃ³]n|sesiÃ³n.*activa/.test(normalized);
       if (keyInUse) {
         status.classList.add("key-in-use");
         throw new Error("KEY EN USO EN OTRO DISPOSITIVO");
@@ -303,7 +303,7 @@ document.querySelector("#keyauthForm").addEventListener("submit", async (event) 
   }
 });
 
-initializeKeyAuth();
+
 
 const launchGame = document.querySelector("#launchGame");
 const launchPlatform = document.querySelector("#launchPlatform");
@@ -317,19 +317,19 @@ function launchDesktopApp(protocol, statusText) {
   window.setTimeout(() => {
     emulatorStatus.textContent = document.hidden
       ? "BlueStacks abierto."
-      : "Si no abre, verifica que BlueStacks esté instalado en Windows.";
+      : "Si no abre, verifica que BlueStacks estÃ© instalado en Windows.";
   }, 1800);
 }
 
 
 const styleProfiles = {
-  precision: { general: 184, red: 176, x2: 164, x4: 152, sniper: 140, free: 172, label: "Precisión" },
+  precision: { general: 184, red: 176, x2: 164, x4: 152, sniper: 140, free: 172, label: "PrecisiÃ³n" },
   balanced: { general: 176, red: 168, x2: 160, x4: 156, sniper: 148, free: 164, label: "Equilibrado" },
   aggressive: { general: 192, red: 186, x2: 176, x4: 168, sniper: 156, free: 182, label: "Acelerado" }
 };
 
 const pcStyleProfiles = {
-  precision: { general: 92, red: 88, x2: 82, x4: 76, sniper: 68, free: 84, label: "Precisión PC" },
+  precision: { general: 92, red: 88, x2: 82, x4: 76, sniper: 68, free: 84, label: "PrecisiÃ³n PC" },
   balanced: { general: 104, red: 98, x2: 92, x4: 86, sniper: 78, free: 96, label: "Equilibrado PC" },
   aggressive: { general: 118, red: 112, x2: 106, x4: 98, sniper: 88, free: 108, label: "Acelerado PC" }
 };
@@ -427,7 +427,7 @@ downloadDnsProfile.addEventListener("click", () => {
   link.click();
   link.remove();
   window.setTimeout(() => URL.revokeObjectURL(url), 1000);
-  dnsStatus.textContent = "Perfil descargado. Abre Ajustes > General > VPN y gestión de dispositivos para instalarlo.";
+  dnsStatus.textContent = "Perfil descargado. Abre Ajustes > General > VPN y gestiÃ³n de dispositivos para instalarlo.";
 });
 
 launchGame.addEventListener("click", () => {
@@ -494,12 +494,12 @@ auxRange.addEventListener("input", () => {
 calibrateAux.addEventListener("click", () => {
   calibrateAux.disabled = true;
   calibrateAux.textContent = "Calibrando...";
-  auxStatus.textContent = "Analizando configuración...";
+  auxStatus.textContent = "Analizando configuraciÃ³n...";
 
   window.setTimeout(() => {
     calibrateAux.disabled = false;
     calibrateAux.textContent = "Calibrar";
-    auxStatus.textContent = `Perfil calibrado al ${auxRange.value}% · DPI conservado: ${dpiInput.value}`;
+    auxStatus.textContent = `Perfil calibrado al ${auxRange.value}% Â· DPI conservado: ${dpiInput.value}`;
     renderProfile(getGeneratedProfile());
   }, 700);
 });
@@ -539,7 +539,7 @@ function getGeneratedProfile() {
   const clampProfileValue = (value) => Math.max(minimum, Math.min(maximum, value + adjustment));
 
   return {
-    label: `${state.device === "pc" ? "PC" : state.device === "ios" ? "iOS" : "Android"} · ${base.label}`,
+    label: `${state.device === "pc" ? "PC" : state.device === "ios" ? "iOS" : "Android"} Â· ${base.label}`,
     general: clampProfileValue(base.general),
     red: clampProfileValue(base.red),
     x2: clampProfileValue(base.x2),
@@ -607,7 +607,7 @@ const defaultConfig = {
   brand: "HYPERSEX",
   eyebrow: "Hypersex tu mejor opcion",
   title: "Encuentra tu sensibilidad perfecta",
-  description: "Configura tu dispositivo y genera ajustes pensados para mejorar tu precisión y comodidad.",
+  description: "Configura tu dispositivo y genera ajustes pensados para mejorar tu precisiÃ³n y comodidad.",
   accent: "#d8dde5",
   accentTwo: "#8f96a3",
   background: "#080b12",
@@ -640,7 +640,7 @@ const defaultConfig = {
   loginPosition: "center",
   status: "Compatible Android + iOS",
   generateText: "Generar sensibilidad",
-  copyText: "Copiar configuración",
+  copyText: "Copiar configuraciÃ³n",
   tipTitle: "Consejo HyperSex",
   tipText: "Prueba el perfil durante 10 minutos y ajusta un punto a la vez hasta encontrar tu punto de comodidad.",
   footerLeft: "HYPERSEX LABS",
@@ -650,7 +650,7 @@ const defaultConfig = {
   showLaunch: true,
   showSensitivity: true,
   showAux: true,
-  copiedText: "Configuración copiada",
+  copiedText: "ConfiguraciÃ³n copiada",
   errorText: "No se pudo copiar",
   image: "",
   buttons: [],
@@ -665,7 +665,7 @@ function openAdmin(open) {
   adminPanel.setAttribute("aria-hidden", String(!open));
 }
 
-// El acceso protegido se controla mediante el formulario de contraseña.
+// El acceso protegido se controla mediante el formulario de contraseÃ±a.
 document.querySelector("#adminClose").addEventListener("click", () => openAdmin(false));
 adminOverlay.addEventListener("click", () => openAdmin(false));
 
@@ -678,10 +678,10 @@ if (advancedSection) {
     <div class="license-generator">
       <div class="builder-heading"><small>LICENCIAS PROPIAS</small><strong>Generador de keys</strong></div>
       <label>Keys a crear<input id="licenseCount" type="number" min="1" max="100" value="10"></label>
-      <label>Días de duración<input id="licenseDays" type="number" min="1" max="36500" value="30"></label>
+      <label>DÃ­as de duraciÃ³n<input id="licenseDays" type="number" min="1" max="36500" value="30"></label>
       <label>Dispositivos por key<input id="licenseDevices" type="number" min="1" max="10" value="1"></label>
       <button class="secondary-action" id="generateLicenses" type="button">Generar keys</button>
-      <textarea id="generatedLicenses" rows="7" readonly placeholder="Las keys generadas aparecerán aquí"></textarea>
+      <textarea id="generatedLicenses" rows="7" readonly placeholder="Las keys generadas aparecerÃ¡n aquÃ­"></textarea>
       <button class="secondary-action" id="copyLicenses" type="button">Copiar keys</button>
     </div>
   `);
@@ -727,7 +727,7 @@ document.querySelector("#adminLockForm").addEventListener("submit", (event) => {
     adminOverlay.classList.add("open");
     return;
   }
-  lockStatus.textContent = "Contraseña incorrecta";
+  lockStatus.textContent = "ContraseÃ±a incorrecta";
   adminPassword.select();
 });
 
@@ -755,7 +755,7 @@ function executeButtonAction(action, url) {
   if (action === "generate") generateButton.click();
   if (action === "copy") copyButton.click();
   if (action === "scroll") document.querySelector(".dashboard").scrollIntoView({ behavior: "smooth" });
-  if (action === "alert") window.alert("Acción personalizada ejecutada desde HyperSex.");
+  if (action === "alert") window.alert("AcciÃ³n personalizada ejecutada desde HyperSex.");
 }
 
 function renderCustomButtons(buttons) {
@@ -776,7 +776,7 @@ function renderCustomButtons(buttons) {
     const row = document.createElement("div");
     row.className = "admin-added-button";
     const label = document.createElement("span");
-    label.textContent = `${buttonConfig.text} · ${buttonConfig.action}`;
+    label.textContent = `${buttonConfig.text} Â· ${buttonConfig.action}`;
     const remove = document.createElement("button");
     remove.type = "button";
     remove.textContent = "Eliminar";
@@ -977,7 +977,7 @@ function renderCustomSections(sections) {
       article.appendChild(image);
     }
     const copy = document.createElement("div");
-    copy.innerHTML = `<small>SECCIÓN ${String(index + 1).padStart(2, "0")}</small><h2>${section.title}</h2><p>${section.text}</p>`;
+    copy.innerHTML = `<small>SECCIÃ“N ${String(index + 1).padStart(2, "0")}</small><h2>${section.title}</h2><p>${section.text}</p>`;
     article.appendChild(copy);
     container.appendChild(article);
 
@@ -1001,7 +1001,7 @@ document.querySelector("#addSection").addEventListener("click", () => {
   const title = document.querySelector("#sectionTitle").value.trim();
   const text = document.querySelector("#sectionText").value.trim();
   if (!title && !text && !pendingSectionImage) return;
-  savedConfig.sections.push({ title: title || "Nueva sección", text, image: pendingSectionImage });
+  savedConfig.sections.push({ title: title || "Nueva secciÃ³n", text, image: pendingSectionImage });
   renderCustomSections(savedConfig.sections);
   document.querySelector("#sectionTitle").value = "";
   document.querySelector("#sectionText").value = "";
@@ -1080,10 +1080,10 @@ document.querySelector("#adminSave").addEventListener("click", () => {
     localStorage.setItem("hypersex-admin-config", JSON.stringify(cleanConfig));
     applyConfig(savedConfig);
     openAdmin(false);
-    window.alert("Diseño guardado correctamente.");
+    window.alert("DiseÃ±o guardado correctamente.");
   } catch (error) {
-    console.error("No se pudo guardar el diseño:", error);
-    window.alert("No se pudo guardar en este navegador. La configuración contiene datos demasiado grandes.");
+    console.error("No se pudo guardar el diseÃ±o:", error);
+    window.alert("No se pudo guardar en este navegador. La configuraciÃ³n contiene datos demasiado grandes.");
   }
 });
 
@@ -1135,7 +1135,7 @@ document.querySelector("#importConfig").addEventListener("change", (event) => {
       applyConfig(savedConfig);
       localStorage.setItem("hypersex-admin-config", JSON.stringify(savedConfig));
     } catch {
-      window.alert("El archivo de configuración no es válido.");
+      window.alert("El archivo de configuraciÃ³n no es vÃ¡lido.");
     }
   });
   reader.readAsText(file);
@@ -1166,7 +1166,7 @@ async function readIpaImages(file) {
   const source = await file.arrayBuffer();
   const view = new DataView(source);
   const endOffset = findZipEnd(source);
-  if (endOffset < 0) throw new Error("El archivo IPA no contiene un paquete ZIP válido.");
+  if (endOffset < 0) throw new Error("El archivo IPA no contiene un paquete ZIP vÃ¡lido.");
 
   const entriesOffset = view.getUint32(endOffset + 16, true);
   const entryCount = view.getUint16(endOffset + 10, true);
@@ -1220,12 +1220,12 @@ document.querySelector("#scanIpa").addEventListener("click", async () => {
     return;
   }
 
-  ipaStatus.textContent = "Leyendo imágenes...";
+  ipaStatus.textContent = "Leyendo imÃ¡genes...";
   ipaGallery.replaceChildren();
   try {
     const images = await readIpaImages(file);
     if (!images.length) {
-      ipaStatus.textContent = "No se encontraron imágenes PNG, JPG o WEBP dentro del paquete.";
+      ipaStatus.textContent = "No se encontraron imÃ¡genes PNG, JPG o WEBP dentro del paquete.";
       return;
     }
     ipaStatus.textContent = `${images.length} imagen(es) encontrada(s). Selecciona una para usarla.`;
@@ -1244,7 +1244,7 @@ document.querySelector("#scanIpa").addEventListener("click", async () => {
         savedConfig.image = await blobToDataUrl(image.blob);
         showImagePreview(savedConfig.image);
         applyConfig(savedConfig);
-        ipaStatus.textContent = "Imagen aplicada al diseño.";
+        ipaStatus.textContent = "Imagen aplicada al diseÃ±o.";
       });
       ipaGallery.appendChild(button);
     }
