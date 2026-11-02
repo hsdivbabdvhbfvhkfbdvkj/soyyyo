@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "users": [],
+  "licenses": [
+    {
+      "hash": "bb9269d363c7333b06643b36d393fd63111284d478ba63cb04d360d99a84ba5a",
+      "owner": "",
+      "createdAt": 1793606426931,
+      "expiresAt": 1793865626931,
+      "maxDevices": 1,
+      "hwids": [],
+      "revoked": false
+    },
+    {
+      "hash": "84806b3329c83d2153309105d10473c2683e9c927ed0b26486fdd309bccabd98",
+      "owner": "",
+      "createdAt": 1793606428595,
+      "expiresAt": 1793865628595,
+      "maxDevices": 1,
+      "hwids": [
+        "test-device-final"
+      ],
+      "revoked": false
+    },
+    {
+      "hash": "7465228a930b4e2e3fa75c583702a81f2fa5c01d9fc007fbdf696df8ffb9dea7",
+      "owner": "prueba",
+      "createdAt": 1793606886445,
+      "expiresAt": 1796198886445,
+      "maxDevices": 1,
+      "hwids": [
+        "test-device-001"
+      ],
+      "revoked": false
+    }
+  ]
+}
