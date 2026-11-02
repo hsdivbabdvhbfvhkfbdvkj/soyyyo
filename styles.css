@@ -115,6 +115,23 @@ html {
   backdrop-filter: blur(14px) saturate(1.15);
 }
 
+.keyauth-lock::after {
+  content: "";
+  position: absolute;
+  width: min(620px, 85vw);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(83,145,255,.16), rgba(83,145,255,.05) 38%, transparent 68%);
+  filter: blur(18px);
+  pointer-events: none;
+  animation: login-light-breathe 5s ease-in-out infinite alternate;
+}
+
+@keyframes login-light-breathe {
+  from { transform: scale(.82); opacity: .55; }
+  to { transform: scale(1.12); opacity: 1; }
+}
+
 .keyauth-lock.hidden { display: none; }
 
 .keyauth-lock[data-login-position="left"] {
@@ -222,8 +239,9 @@ body::after {
   z-index: 1;
   border: 1px solid rgba(118, 170, 255, .28);
   border-radius: 18px;
+  overflow: hidden;
   background: linear-gradient(145deg, rgba(10, 16, 32, .94), rgba(5, 8, 18, .82));
-  animation: login-card-arrival .7s cubic-bezier(.2,.75,.2,1) both;
+  animation: login-card-arrival .7s cubic-bezier(.2,.75,.2,1) both, login-card-glow 4s ease-in-out infinite;
   box-shadow:
     0 30px 100px rgba(0,0,0,.72),
     inset 0 1px rgba(255,255,255,.06),
@@ -234,6 +252,11 @@ body::after {
 @keyframes login-card-arrival {
   from { opacity: 0; transform: translateY(18px) scale(.98); }
   to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes login-card-glow {
+  0%, 100% { box-shadow: 24px 28px 0 -14px rgba(7,12,25,.96), 18px 22px 0 -9px rgba(35,62,105,.72), 42px 48px 70px rgba(0,0,0,.72), 0 0 45px rgba(42,103,224,.12), inset 0 1px rgba(255,255,255,.10); }
+  50% { box-shadow: 24px 28px 0 -14px rgba(7,12,25,.96), 18px 22px 0 -9px rgba(35,62,105,.72), 42px 48px 70px rgba(0,0,0,.72), 0 0 85px rgba(42,103,224,.28), inset 0 1px rgba(255,255,255,.14); }
 }
 
 .keyauth-card::after {
@@ -1895,7 +1918,13 @@ footer {
   font-size: 9px;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .keyauth-lock::after,
+  .keyauth-card { animation: none; }
+}
+
 @media (max-width: 560px) {
+  .keyauth-lock::after { width: 105vw; filter: blur(12px); }
   .welcome-player { top: 14px; left: 14px; width: calc(100vw - 28px); }
   .profile-countdown-slot { width:100%; margin-top:8px; }
   .profile-countdown-slot .license-countdown:not([hidden]) { width:100%; justify-content:center; }
