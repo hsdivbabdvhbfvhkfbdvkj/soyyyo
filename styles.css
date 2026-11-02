@@ -108,7 +108,9 @@ html {
   padding: 20px;
   overflow: hidden;
   background:
-    linear-gradient(120deg, rgba(2, 4, 12, .92), rgba(4, 12, 38, .62)),
+    radial-gradient(circle at 50% 42%, rgba(53, 111, 255, .22), transparent 26%),
+    radial-gradient(circle at 18% 78%, rgba(76, 201, 240, .11), transparent 22%),
+    linear-gradient(120deg, rgba(2, 4, 12, .96), rgba(4, 12, 38, .82)),
     url("IMG_5697.jpg") center / cover fixed no-repeat;
   backdrop-filter: blur(14px) saturate(1.15);
 }
@@ -220,12 +222,18 @@ body::after {
   z-index: 1;
   border: 1px solid rgba(118, 170, 255, .28);
   border-radius: 18px;
-  background: linear-gradient(145deg, rgba(10, 16, 32, .92), rgba(5, 8, 18, .78));
+  background: linear-gradient(145deg, rgba(10, 16, 32, .94), rgba(5, 8, 18, .82));
+  animation: login-card-arrival .7s cubic-bezier(.2,.75,.2,1) both;
   box-shadow:
     0 30px 100px rgba(0,0,0,.72),
     inset 0 1px rgba(255,255,255,.06),
     0 0 55px rgba(61, 118, 255, .13);
   backdrop-filter: blur(24px) saturate(1.2);
+}
+
+@keyframes login-card-arrival {
+  from { opacity: 0; transform: translateY(18px) scale(.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .keyauth-card::after {
@@ -1872,8 +1880,25 @@ footer {
 .login-discord { height: 38px; margin-top: -5px; border-radius: 6px; font-size: 10px; }
 .login-frame, .login-grid-lines { border-radius: 12px; }
 
+.profile-countdown-slot { margin-left: auto; }
+.profile-countdown-slot:empty { display:none; }
+.profile-countdown-slot .license-countdown:not([hidden]) {
+  position: static;
+  display: inline-flex;
+  min-height: 30px;
+  align-items: center;
+  padding: 0 10px;
+  border: 1px solid rgba(118,169,255,.2);
+  border-radius: 6px;
+  background: rgba(10,18,34,.78);
+  color: #a9cbff;
+  font-size: 9px;
+}
+
 @media (max-width: 560px) {
   .welcome-player { top: 14px; left: 14px; width: calc(100vw - 28px); }
+  .profile-countdown-slot { width:100%; margin-top:8px; }
+  .profile-countdown-slot .license-countdown:not([hidden]) { width:100%; justify-content:center; }
   .license-countdown:not([hidden]) {
     position: static;
     max-width: 150px;

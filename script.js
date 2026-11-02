@@ -228,6 +228,10 @@ async function initializeKeyAuth() {
   }
 }
 
+const profileCountdown = document.querySelector("#licenseCountdown");
+const profileCountdownSlot = document.querySelector("#profileCountdownSlot");
+if (profileCountdown && profileCountdownSlot) profileCountdownSlot.appendChild(profileCountdown);
+
 const keyauthLock = document.querySelector("#keyauthLock");
 const keyauthCard = document.querySelector("#keyauthForm");
 const keyauthKeyInput = document.querySelector("#keyauthKey");
