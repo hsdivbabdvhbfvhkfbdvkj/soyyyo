@@ -149,6 +149,16 @@
       "maxDevices": 1,
       "hwids": [],
       "revoked": false
+    },
+    {
+      "hash": "2b56988756b1996f666b8804047df47e590b82bd76185e55ace69e26e8d12451",
+      "encryptedKey": "NKXVyOiPPBdt1dy2QxTgkhCxeCOexyEtLITh/BubPe3ytICoSRjhKxX5d1xjnJ3k",
+      "owner": "Seba",
+      "createdAt": 1793620020855,
+      "expiresAt": 4947220020855,
+      "maxDevices": 1,
+      "hwids": [],
+      "revoked": false
     }
   ]
 }
