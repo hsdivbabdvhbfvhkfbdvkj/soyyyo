@@ -38,6 +38,16 @@
         "27c20487-9997-42bc-ae2f-ffc36d93a9c4"
       ],
       "revoked": false
+    },
+    {
+      "hash": "942453b46701f7963533f2d715d5bccd228d07ac668f1121b1708e20cd6fb9df",
+      "encryptedKey": "vb3vSNew5vxpn9jZdUUZM8c1sFspG/v6JosLhMlpd6YUOUNWSW93A2bbPId8aEc5",
+      "owner": "verify-5c99c129",
+      "createdAt": 1793614193595,
+      "expiresAt": 1793617793594,
+      "maxDevices": 1,
+      "hwids": [],
+      "revoked": false
     }
   ]
 }
