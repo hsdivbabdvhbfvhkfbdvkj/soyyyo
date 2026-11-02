@@ -1,12 +1,237 @@
 <!doctype html>
 <html lang="es">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Panel de Licencias</title>
-<style>
-:root{color-scheme:dark;font-family:Segoe UI,sans-serif}*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at 50% 0,#1c3158,transparent 35%),#080b12;color:#eef4ff}main{width:min(1100px,calc(100% - 28px));margin:auto;padding:28px 0}.login,.panel{border:1px solid rgba(133,174,255,.18);border-radius:8px;background:rgba(13,18,31,.96);box-shadow:0 18px 60px #0006}.login{width:min(380px,100%);margin:15vh auto 0;padding:24px;display:grid;gap:14px}h1{margin-top:0}input,button{min-height:40px;border:1px solid rgba(133,174,255,.18);border-radius:6px;background:#0b1020;color:#eef4ff;padding:0 12px}button{cursor:pointer;font-weight:700}.primary{background:#3978ed;border-color:#3978ed}.toolbar{display:grid;grid-template-columns:repeat(3,1fr) auto;gap:8px;padding:14px}.toolbar label{display:grid;gap:6px;color:#9cabca;font-size:11px}.panel{margin-top:14px;overflow:auto}table{width:100%;border-collapse:collapse}th,td{padding:12px;border-bottom:1px solid #ffffff12;text-align:left}td{font-size:13px}.actions{display:flex;gap:6px}.actions button{min-height:32px;font-size:11px}.danger{color:#ff91a6;border-color:#ff617e}.status{padding:4px 7px;border-radius:5px;color:#75ffb6}.status.banned{color:#ff91a6}.status.expired{color:#ffc976}[hidden]{display:none!important}@media(max-width:700px){.toolbar{grid-template-columns:1fr 1fr}.actions{flex-direction:column}th:nth-child(3),td:nth-child(3){display:none}}
-</style></head>
-<body><main>
-<section class="login" id="loginPanel"><h1>Licencias</h1><input id="adminUsername" placeholder="Usuario"><input id="adminPassword" type="password" placeholder="ContraseÃ±a"><button class="primary" id="enterAdmin">Entrar</button><small id="loginStatus"></small></section>
-<section id="dashboard" hidden><header><h1>Licencias ilimitadas</h1><button id="logout">Salir</button></header><div class="panel toolbar"><label>Keys<input id="count" type="number" value="10" min="1" max="1000"></label><label>DÃ­as<input id="days" type="number" value="30" min="1" max="36500"></label><label>Dispositivos<input id="devices" type="number" value="1" min="1" max="1" disabled></label><label>Usuario asociado<input id="owner" placeholder="usuario"></label><button class="primary" id="generate">Crear keys</button></div><textarea id="newKeys" rows="8" style="width:100%;display:none;margin-top:14px" readonly></textarea><div class="panel toolbar"><label>Nuevo usuario<input id="newUsername" placeholder="usuario"></label><label>ContraseÃ±a<input id="newUserPassword" type="password" placeholder="mÃ­nimo 8 caracteres"></label><button class="primary" id="createUser">Crear usuario</button></div><div class="panel" id="userList"></div><div class="panel"><table><thead><tr><th>ID</th><th>Usuario</th><th>Estado</th><th>Dispositivos</th><th>Vence</th><th>Acciones</th></tr></thead><tbody id="licenseRows"></tbody></table></div></section>
-</main><script src="licenses-admin.js"></script></body></html>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080c14">
+  <title>HyperSex | Licencias</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      font-family: "DM Sans", "Segoe UI", sans-serif;
+      --bg: #080c14;
+      --surface: #101826;
+      --surface-raised: #131e2d;
+      --line: rgba(151, 177, 215, .13);
+      --text: #edf4ff;
+      --muted: #8795aa;
+      --blue: #5b9cff;
+      --cyan: #62d7ea;
+      --green: #4cdaa0;
+      --red: #ff7287;
+    }
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    body {
+      min-width: 320px;
+      min-height: 100vh;
+      margin: 0;
+      background: radial-gradient(ellipse at 10% -12%, rgba(55,112,212,.18), transparent 38%), var(--bg);
+      color: var(--text);
+      font-size: 14px;
+    }
+    main { width: min(1240px, calc(100% - 48px)); margin: auto; padding: 28px 0 56px; }
+    button, input, textarea { font: inherit; }
+    button { cursor: pointer; transition: background .18s ease, border-color .18s ease, transform .18s ease; }
+    button:hover { transform: translateY(-1px); }
+    input:focus, textarea:focus { outline: 2px solid rgba(91,156,255,.28); border-color: var(--blue); }
+    .login, .panel {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: linear-gradient(155deg, rgba(17,26,40,.98), rgba(12,19,30,.98));
+      box-shadow: 0 16px 48px rgba(0,0,0,.24);
+    }
+    .login {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      width: min(960px, 100%);
+      min-height: 520px;
+      margin: 9vh auto 0;
+      border-radius: 12px;
+    }
+    .login-visual {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      padding: 38px;
+      background: linear-gradient(145deg, #102345, #0a1424 65%, #0b1c2a);
+    }
+    .login-visual::before {
+      position: absolute;
+      top: 70px;
+      right: -120px;
+      width: 380px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(74,145,255,.32), transparent 68%);
+      content: "";
+      filter: blur(8px);
+      pointer-events: none;
+    }
+    .brand-lockup, .login-message, .login-foot { position: relative; z-index: 1; }
+    .brand-lockup, .topbar-brand { display: flex; align-items: center; gap: 12px; }
+    .brand-mark {
+      display: grid;
+      width: 42px;
+      height: 42px;
+      flex: 0 0 42px;
+      place-items: center;
+      border: 1px solid rgba(132,182,255,.42);
+      border-radius: 9px;
+      background: rgba(91,156,255,.2);
+      color: #fff;
+      font-size: 20px;
+      font-weight: 800;
+      box-shadow: 0 0 28px rgba(67,132,238,.18);
+    }
+    .brand-copy { display: grid; gap: 3px; }
+    .brand-copy strong, .topbar-brand strong { font-size: 12px; letter-spacing: 1.8px; }
+    .brand-copy small, .topbar-brand small, .eyebrow {
+      color: #8ba9d5;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+    .login-message { max-width: 390px; }
+    .login-message h2 { margin: 12px 0; font-size: 34px; line-height: 1.12; }
+    .login-message p { max-width: 330px; color: #aab8cd; line-height: 1.7; }
+    .login-foot { color: #8090a8; font-size: 10px; letter-spacing: .7px; }
+    .login-form { display: grid; align-content: center; gap: 15px; padding: 48px; }
+    .login-form h1 { margin: 0; font-size: 25px; }
+    .login-form > p { margin: -8px 0 8px; color: var(--muted); font-size: 12px; }
+    .login-form label, .toolbar label { display: grid; gap: 7px; color: #aab8cb; font-size: 11px; font-weight: 600; }
+    .login-form input, .toolbar input {
+      width: 100%;
+      height: 43px;
+      padding: 0 12px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #0a111c;
+      color: var(--text);
+    }
+    .primary {
+      min-height: 42px;
+      border: 1px solid rgba(91,156,255,.52);
+      border-radius: 6px;
+      background: linear-gradient(105deg, #3978dc, #4d91ed);
+      color: #fff;
+      font-weight: 700;
+    }
+    .primary:hover { background: linear-gradient(105deg, #4689eb, #5ba1ff); }
+    .login-form .primary { min-height: 44px; margin-top: 5px; }
+    #loginStatus { min-height: 18px; color: #ff9aaa; font-size: 11px; }
+    #dashboard { display: block; }
+    #dashboard[hidden] { display: none !important; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-bottom: 22px; border-bottom: 1px solid var(--line); }
+    .topbar-brand .brand-mark { width: 36px; height: 36px; flex-basis: 36px; border-radius: 8px; font-size: 17px; }
+    .topbar-brand strong, .topbar-brand small { display: block; }
+    .topbar-brand small { margin-top: 3px; color: var(--muted); font-size: 9px; letter-spacing: 1px; }
+    .topbar-actions { display: flex; align-items: center; gap: 12px; }
+    .account-label { color: #a7b6cc; font-size: 11px; }
+    .topbar #logout { min-height: 36px; border: 1px solid var(--line); border-radius: 6px; background: #101a29; color: #c5d3e8; font-size: 11px; }
+    .page-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 18px; margin: 30px 0 20px; }
+    .page-heading h1 { margin: 5px 0 0; font-size: 25px; }
+    .page-heading p { margin: 7px 0 0; color: var(--muted); font-size: 12px; }
+    .live-badge { display: inline-flex; align-items: center; gap: 7px; padding: 8px 10px; border: 1px solid rgba(76,218,160,.18); border-radius: 20px; background: rgba(76,218,160,.06); color: #89e6bc; font-size: 10px; }
+    .live-badge::before { width: 6px; height: 6px; border-radius: 50%; background: var(--green); content: ""; box-shadow: 0 0 10px var(--green); }
+    .workspace { display: grid; grid-template-columns: minmax(0,1.35fr) minmax(270px,.65fr); gap: 14px; align-items: start; }
+    .panel { margin: 0; }
+    .panel-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 17px 18px; border-bottom: 1px solid var(--line); }
+    .panel-head h2 { margin: 0; font-size: 13px; }
+    .panel-head p { margin: 5px 0 0; color: var(--muted); font-size: 10px; }
+    .panel-content { display: grid; gap: 14px; padding: 18px; }
+    .toolbar { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 13px; padding: 0; background: transparent; box-shadow: none; }
+    .toolbar .primary { grid-column: 1 / -1; }
+    .toolbar input:disabled { background: #111b29; color: #a6b4c8; }
+    .unit-note { color: #718096; font-size: 9px; font-weight: 400; }
+    .key-output { display: none; width: calc(100% - 36px); min-height: 120px; margin: 0 18px 18px; padding: 12px; border: 1px solid rgba(91,156,255,.24); border-radius: 6px; background: #090f19; color: #b9d5ff; font: 12px/1.6 Consolas, monospace; resize: vertical; }
+    .user-management { display: grid; gap: 14px; }
+    .user-management .toolbar { grid-template-columns: 1fr; }
+    .user-management .toolbar .primary { grid-column: auto; }
+    .user-management #userList { min-height: 50px; }
+    .user-management #userList table { font-size: 11px; }
+    .user-management #userList td, .user-management #userList th { padding: 10px 12px; }
+    .license-table { grid-column: 1 / -1; margin-top: 14px; }
+    .license-table table { width: 100%; min-width: 760px; border-collapse: collapse; }
+    .license-table th { padding: 12px 14px; color: #8797ad; font-size: 9px; font-weight: 700; letter-spacing: 1px; text-align: left; text-transform: uppercase; }
+    .license-table td { padding: 13px 14px; border-top: 1px solid var(--line); color: #c8d4e4; font-size: 11px; text-align: left; }
+    .license-table code { color: #a9caff; font: 11px Consolas, monospace; }
+    .actions { display: flex; gap: 5px; flex-wrap: wrap; }
+    .actions button { min-height: 29px; padding: 0 8px; border: 1px solid var(--line); border-radius: 5px; background: #121e2d; color: #b7c8df; font-size: 9px; }
+    .actions .danger, .danger { border-color: rgba(255,114,135,.25); background: rgba(255,114,135,.06); color: #ff91a2; }
+    .status { display: inline-flex; padding: 5px 8px; border: 1px solid rgba(76,218,160,.15); border-radius: 12px; background: rgba(76,218,160,.06); color: #83e3b4; font-size: 9px; }
+    .status.banned { border-color: rgba(255,114,135,.18); background: rgba(255,114,135,.06); color: #ff98a7; }
+    .status.expired { border-color: rgba(240,185,91,.18); background: rgba(240,185,91,.06); color: #efc77f; }
+    @media (max-width: 760px) {
+      main { width: calc(100% - 28px); padding-top: 14px; }
+      .login { grid-template-columns: 1fr; margin-top: 5vh; }
+      .login-visual { min-height: 190px; padding: 22px; }
+      .login-message h2 { font-size: 25px; }
+      .login-message p, .login-foot { display: none; }
+      .login-form { padding: 24px; }
+      .workspace { grid-template-columns: 1fr; }
+      .license-table { grid-column: auto; }
+      .page-heading { align-items: flex-start; flex-direction: column; }
+      .topbar { gap: 10px; }
+      .account-label { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="login" id="loginPanel">
+      <div class="login-visual">
+        <div class="brand-lockup"><span class="brand-mark">H</span><div class="brand-copy"><strong>HYPERSEX</strong><small>LICENSE CONTROL</small></div></div>
+        <div class="login-message"><span class="eyebrow">CONTROL CENTER</span><h2>Licencias bajo control.</h2><p>Administra accesos, usuarios y dispositivos desde un único panel seguro.</p></div>
+        <div class="login-foot">HYPERSEX SYSTEMS · LICENSE MANAGEMENT</div>
+      </div>
+      <div class="login-form">
+        <span class="eyebrow">ACCESO PRIVADO</span><h1>Iniciar sesión</h1><p>Ingresa con tu cuenta autorizada.</p>
+        <label>Usuario<input id="adminUsername" autocomplete="username" placeholder="Tu usuario"></label>
+        <label>Contraseña<input id="adminPassword" type="password" autocomplete="current-password" placeholder="Tu contraseña"></label>
+        <button class="primary" id="enterAdmin" type="button">Entrar al panel <span aria-hidden="true">→</span></button>
+        <small id="loginStatus" role="status"></small>
+      </div>
+    </section>
+
+    <section id="dashboard" hidden>
+      <header class="topbar">
+        <div class="topbar-brand"><span class="brand-mark">H</span><div><strong>HYPERSEX</strong><small>LICENSE CONTROL</small></div></div>
+        <div class="topbar-actions"><span class="account-label" id="activeUser">Centro de gestión</span><button id="logout" type="button">Cerrar sesión</button></div>
+      </header>
+      <div class="page-heading"><div><span class="eyebrow">OPERACIONES</span><h1>Centro de licencias</h1><p>Genera keys individuales y gestiona las cuentas asociadas.</p></div><span class="live-badge">Sistema activo</span></div>
+      <div class="workspace">
+        <section class="panel key-management">
+          <div class="panel-head"><div><h2>Generar keys</h2><p>Cada key se vincula a un dispositivo.</p></div></div>
+          <div class="panel-content"><div class="toolbar">
+            <label>Cantidad<input id="count" type="number" value="10" min="1" max="10000"></label>
+            <label>Duración <span class="unit-note">días</span><input id="days" type="number" value="30" min="1" max="36500"></label>
+            <label>Dispositivos<input id="devices" type="number" value="1" min="1" max="1" disabled></label>
+            <label>Usuario asociado<input id="owner" placeholder="usuario"></label>
+            <button class="primary" id="generate" type="button">Crear keys <span aria-hidden="true">→</span></button>
+          </div></div>
+          <textarea class="key-output" id="newKeys" rows="6" readonly placeholder="Las nuevas keys aparecerán aquí"></textarea>
+        </section>
+        <section class="panel user-management" id="userManagement">
+          <div class="panel-head"><div><h2>Usuarios</h2><p>Cuentas autorizadas para crear keys.</p></div></div>
+          <div class="panel-content"><div class="toolbar">
+            <label>Nuevo usuario<input id="newUsername" autocomplete="off" placeholder="nombre de usuario"></label>
+            <label>Contraseña<input id="newUserPassword" type="password" autocomplete="new-password" placeholder="Mínimo 8 caracteres"></label>
+            <button class="primary" id="createUser" type="button">Crear usuario</button>
+          </div><div id="userList"></div></div>
+        </section>
+        <section class="panel license-table" id="licenseTablePanel">
+          <div class="panel-head"><div><h2>Licencias registradas</h2><p>Estado, propietario, dispositivo y vencimiento.</p></div></div>
+          <table><thead><tr><th>ID</th><th>Usuario</th><th>Estado</th><th>Dispositivos</th><th>Vence</th><th>Acciones</th></tr></thead><tbody id="licenseRows"></tbody></table>
+        </section>
+      </div>
+    </section>
+  </main>
+  <script src="licenses-admin.js"></script>
+</body>
+</html>
