@@ -13,16 +13,6 @@
       "revoked": false
     },
     {
-      "hash": "1513aaa08fac8adc2ef0c28cff81bd0466a72233c1ef81beee87d216adb0be22",
-      "encryptedKey": "7boocTPBdsfMMuVGo8M+GKRBH+HnWM/d/IWy3YiBrnLkrPnmIf2Dp9T3fbUhedl9",
-      "owner": "sebajaja",
-      "createdAt": 1793614426388,
-      "expiresAt": 1793650426387,
-      "maxDevices": 1,
-      "hwids": [],
-      "revoked": false
-    },
-    {
       "hash": "8b675217d0200d83c46d7de420ec915bd3099da63083eb27fbcdd97c734d59ed",
       "encryptedKey": "8y/sFJXrF4BtInSJFT+iBtcBVX+3vsmUyt4vJ/LgV38/cawehb+EwWdWASJuRm6F",
       "owner": "sebajaja",
