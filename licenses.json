@@ -6,6 +6,12 @@
       "passwordHash": "def3b629e1792dfb112cb1193e80f96b6e03f4ee29ced21dcefb7d2f2b549648",
       "createdAt": 1793613177822,
       "disabled": false
+    },
+    {
+      "username": "verify-5c99c129",
+      "passwordHash": "5389d4c2be241301754182c7f8aa0cd76720b0ad8451bbc341245954c35fe863",
+      "createdAt": 1793614187950,
+      "disabled": false
     }
   ],
   "licenses": [
