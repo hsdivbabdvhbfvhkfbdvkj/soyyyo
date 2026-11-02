@@ -180,6 +180,15 @@
       .account-label { display: none; }
     }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } }
+    body::before { position: fixed; inset: 0; z-index: -1; background-image: linear-gradient(rgba(99,151,226,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(99,151,226,.035) 1px, transparent 1px); background-size: 34px 34px; content: ""; pointer-events: none; mask-image: linear-gradient(to bottom, black, transparent 85%); }
+    .panel, .login { background: linear-gradient(135deg, rgba(20,40,67,.78), rgba(10,18,31,.82)); backdrop-filter: blur(18px) saturate(1.25); }
+    .panel { border-color: rgba(107,161,231,.2); box-shadow: inset 0 1px rgba(255,255,255,.025), 0 18px 45px rgba(0,0,0,.2); }
+    .topbar { border-color: rgba(105,158,228,.18); }
+    .key-cell { display: flex; align-items: center; gap: 7px; min-width: 190px; }
+    .key-cell code { max-width: 170px; overflow: hidden; color: #b7d4ff; font: 10px Consolas, monospace; text-overflow: ellipsis; }
+    .key-cell button { min-height: 27px; padding: 0 8px; border: 1px solid rgba(103,159,235,.2); border-radius: 5px; background: rgba(57,120,220,.12); color: #a9cbff; font-size: 9px; }
+    .legacy-key { color: #79869a; font-size: 10px; }
+    @media (max-width: 900px) { .license-table table { min-width: 900px; } }
   </style>
 </head>
 <body>
@@ -194,7 +203,7 @@
         <span class="eyebrow">ACCESO PRIVADO</span><h1>Iniciar sesión</h1><p>Ingresa con tu cuenta autorizada.</p>
         <label>Usuario<input id="adminUsername" autocomplete="username" placeholder="Tu usuario"></label>
         <label>Contraseña<input id="adminPassword" type="password" autocomplete="current-password" placeholder="Tu contraseña"></label>
-        <button class="primary" id="enterAdmin" type="button">Entrar al panel <span aria-hidden="true">→</span></button>
+        <button class="primary" id="enterAdmin" type="button">Entrar al panel <span aria-hidden="true">?</span></button>
         <small id="loginStatus" role="status"></small>
       </div>
     </section>
@@ -213,7 +222,7 @@
             <label>Duración <span class="unit-note">días</span><input id="days" type="number" value="30" min="1" max="36500"></label>
             <label>Dispositivos<input id="devices" type="number" value="1" min="1" max="1" disabled></label>
             <label>Usuario asociado<input id="owner" placeholder="usuario"></label>
-            <button class="primary" id="generate" type="button">Crear keys <span aria-hidden="true">→</span></button>
+            <button class="primary" id="generate" type="button">Crear keys <span aria-hidden="true">?</span></button>
           </div></div>
           <textarea class="key-output" id="newKeys" rows="6" readonly placeholder="Las nuevas keys aparecerán aquí"></textarea>
         </section>
@@ -227,7 +236,7 @@
         </section>
         <section class="panel license-table" id="licenseTablePanel">
           <div class="panel-head"><div><h2>Licencias registradas</h2><p>Estado, propietario, dispositivo y vencimiento.</p></div></div>
-          <table><thead><tr><th>ID</th><th>Usuario</th><th>Estado</th><th>Dispositivos</th><th>Vence</th><th>Acciones</th></tr></thead><tbody id="licenseRows"></tbody></table>
+          <table><thead><tr><th>ID</th><th>Clave</th><th>Usuario</th><th>Estado</th><th>Dispositivos</th><th>Vence</th><th>Acciones</th></tr></thead><tbody id="licenseRows"></tbody></table>
         </section>
       </div>
     </section>

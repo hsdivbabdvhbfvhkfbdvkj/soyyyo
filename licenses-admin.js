@@ -56,7 +56,7 @@ async function enter() {
 async function loadLicenses() {
   const result = await api("list");
   if (!result.licenses.length) {
-    licenseRows.innerHTML = '<tr><td colspan="6">No hay licencias registradas.</td></tr>';
+    licenseRows.innerHTML = '<tr><td colspan="7">No hay licencias registradas.</td></tr>';
     return;
   }
 
@@ -66,6 +66,9 @@ async function loadLicenses() {
     const statusText = license.revoked ? "Bloqueada" : expired ? "Expirada" : "Activa";
     return `<tr>
       <td><code>${license.id}</code></td>
+      <td>${license.key
+        ? `<div class="key-cell"><code>${license.key}</code><button data-copy-key="${license.key}" type="button" aria-label="Copiar clave">Copiar</button></div>`
+        : '<span class="legacy-key">No recuperable</span>'}</td>
       <td>${license.owner || "—"}</td>
       <td><span class="status ${statusClass}">${statusText}</span></td>
       <td>${license.hwids.length}/1</td>
@@ -131,6 +134,17 @@ document.querySelector("#createUser").addEventListener("click", async () => {
 });
 
 licenseRows.addEventListener("click", async (event) => {
+  const copyButton = event.target.closest("button[data-copy-key]");
+  if (copyButton) {
+    try {
+      await navigator.clipboard.writeText(copyButton.dataset.copyKey);
+      copyButton.textContent = "Copiada";
+      window.setTimeout(() => { copyButton.textContent = "Copiar"; }, 1200);
+    } catch {
+      alert("No se pudo acceder al portapapeles.");
+    }
+    return;
+  }
   const button = event.target.closest("button[data-action]");
   if (!button) return;
   if (button.dataset.action === "delete" && !confirm("¿Eliminar esta licencia permanentemente?")) return;
