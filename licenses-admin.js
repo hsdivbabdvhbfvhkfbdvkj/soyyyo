@@ -171,7 +171,7 @@ document.querySelector("#userList").addEventListener("click", async (event) => {
   const button = event.target.closest("button[data-delete-user]");
   if (!button || !confirm(`¿Eliminar la cuenta ${button.dataset.deleteUser}?`)) return;
   try {
-    await api("delete-user", { username: button.dataset.deleteUser });
+    await api("delete-user", { targetUsername: button.dataset.deleteUser });
     await loadUsers();
   } catch (error) {
     alert(error.message);

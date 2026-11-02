@@ -141,8 +141,12 @@ module.exports = async function handler(request, response) {
     }
 
     if (action === "delete-user") {
-      store.users = store.users.filter((user) => cleanUser(user.username) !== cleanUser(body.username));
-      await writeStore(store, `Delete user ${body.username}`);
+      const targetUsername = cleanUser(body.targetUsername);
+      if (!targetUsername || targetUsername === ADMIN_USER.toLowerCase()) {
+        return response.status(400).json({ success: false, message: "Invalid account to delete." });
+      }
+      store.users = store.users.filter((user) => cleanUser(user.username) !== targetUsername);
+      await writeStore(store, `Delete user ${targetUsername}`);
       return response.status(200).json({ success: true });
     }
 
