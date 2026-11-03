@@ -222,6 +222,114 @@
       .actions .renew-duration { grid-column: 1 / -1; justify-content: center; }
       .actions button { width: 100%; min-height: 40px; font-size: 11px; }
     }
+    body:has(#loginPanel:not([hidden])) {
+      display: grid;
+      align-items: center;
+      background:
+        radial-gradient(ellipse at 50% 45%, rgba(35,91,190,.22), transparent 38%),
+        linear-gradient(90deg, rgba(80,145,255,.035) 1px, transparent 1px),
+        linear-gradient(rgba(80,145,255,.035) 1px, transparent 1px),
+        #050914;
+      background-size: auto, 44px 44px, 44px 44px, auto;
+    }
+    body:has(#loginPanel:not([hidden]))::before {
+      z-index: 0;
+      background-image:
+        radial-gradient(ellipse at 50% 50%, transparent 0 29%, rgba(79,146,255,.08) 29.1% 29.2%, transparent 29.4%),
+        linear-gradient(115deg, transparent 0 49.9%, rgba(79,146,255,.07) 50%, transparent 50.1%);
+      background-size: auto;
+      mask-image: none;
+    }
+    body:has(#loginPanel:not([hidden])) main { position: relative; z-index: 1; }
+    .login {
+      position: relative;
+      min-height: 540px;
+      margin: 0 auto;
+      border-color: rgba(112,173,255,.34);
+      border-radius: 5px 24px 24px;
+      background: linear-gradient(145deg, rgba(13,23,45,.97), rgba(5,10,22,.97) 68%);
+      box-shadow: 0 34px 100px rgba(0,0,0,.7), 0 0 70px rgba(45,114,255,.16), inset 0 1px rgba(255,255,255,.08);
+    }
+    .login-visual {
+      isolation: isolate;
+      padding: 42px;
+      background:
+        linear-gradient(90deg, rgba(91,156,255,.055) 1px, transparent 1px),
+        linear-gradient(rgba(91,156,255,.055) 1px, transparent 1px),
+        linear-gradient(145deg, #10264b, #091428 70%, #08111e);
+      background-size: 38px 38px, 38px 38px, auto;
+    }
+    .login-visual::before { z-index: -2; }
+    .login-visual::after {
+      position: absolute;
+      inset: 12px;
+      z-index: -1;
+      border: 1px solid rgba(111,173,255,.16);
+      border-radius: 3px 17px 17px;
+      content: "";
+      pointer-events: none;
+    }
+    .brand-mark {
+      border-color: rgba(113,180,255,.55);
+      border-radius: 8px;
+      background: linear-gradient(145deg, rgba(75,145,255,.42), rgba(30,66,133,.2));
+      box-shadow: 0 0 30px rgba(75,145,255,.24), inset 0 1px rgba(255,255,255,.18);
+    }
+    .login-message .eyebrow, .login-form > .eyebrow { color: #73cfff; }
+    .login-message h2 { font-size: clamp(30px, 4vw, 40px); letter-spacing: -.8px; }
+    .login-message p { color: #a7b9d3; }
+    .login-foot { color: #8297b8; font-size: 9px; letter-spacing: 1.2px; }
+    .login-form {
+      gap: 17px;
+      padding: 48px;
+      background: linear-gradient(140deg, rgba(14,24,43,.42), rgba(5,10,20,.18));
+    }
+    .login-form h1 { font-size: 30px; letter-spacing: -.5px; }
+    .login-form > p { color: #9aaac3; }
+    .login-form label { color: #aab8cd; }
+    .login-form input {
+      height: 48px;
+      border-color: rgba(119,169,235,.28);
+      border-radius: 8px;
+      background: rgba(2,7,17,.78);
+      transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .login-form input:focus {
+      outline: none;
+      border-color: rgba(91,193,255,.82);
+      background: rgba(4,12,27,.96);
+      box-shadow: 0 0 0 3px rgba(67,151,255,.12), 0 0 26px rgba(67,151,255,.14);
+    }
+    .login-form .primary {
+      min-height: 50px;
+      margin-top: 3px;
+      border-color: rgba(172,216,255,.52);
+      border-radius: 8px;
+      background: linear-gradient(105deg, #72d7ff, #78aaff 52%, #a5a9ff);
+      color: #06101f;
+      box-shadow: 0 10px 28px rgba(69,145,255,.28), inset 0 1px rgba(255,255,255,.65);
+      transition: filter .2s ease, box-shadow .2s ease, transform .2s ease;
+    }
+    .login-form .primary:hover {
+      filter: brightness(1.09);
+      background: linear-gradient(105deg, #72d7ff, #78aaff 52%, #a5a9ff);
+      box-shadow: 0 12px 34px rgba(69,145,255,.4), inset 0 1px rgba(255,255,255,.75);
+    }
+    #loginStatus:not(:empty) {
+      padding: 9px 11px;
+      border: 1px solid rgba(255,120,159,.25);
+      border-radius: 7px;
+      background: rgba(255,58,102,.07);
+    }
+    @media (max-width: 760px) {
+      body:has(#loginPanel:not([hidden])) { display: block; }
+      .login { min-height: 0; margin-top: max(24px, 5vh); }
+      .login-visual { min-height: 210px; padding: 24px; }
+      .login-form { gap: 14px; padding: 26px 24px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .login-form input, .login-form .primary { transition: none; }
+    }
   </style>
 </head>
 <body>
